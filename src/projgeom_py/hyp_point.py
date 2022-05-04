@@ -1,12 +1,13 @@
 from typing import List
-from .pgobject import dot, cross, plckr
+
 from .hyp_line import HypLine
+from .pgobject import cross, dot, plckr
 
 
 class HypPoint:
     coord: List[int]
 
-# impl HypPoint:
+    # impl HypPoint:
 
     def __init__(self, coord: List[int]):
         """_summary_
@@ -16,7 +17,7 @@ class HypPoint:
         """
         self.coord = coord
 
-# impl PartialEq for HypPoint:
+    # impl PartialEq for HypPoint:
 
     def eq(self, other) -> bool:
         """_summary_
@@ -29,7 +30,7 @@ class HypPoint:
         """
         return cross(self.coord, other.coord) == [0, 0, 0]
 
-# impl ProjPlane<HypLine, int> for HypPoint:
+    # impl ProjPlane<HypLine, int> for HypPoint:
 
     def aux(self) -> HypLine:
         """_summary_
@@ -64,7 +65,7 @@ class HypPoint:
         """
         return HypPoint(plckr(ld, p.coord, mu, q.coord))
 
-# impl ProjPlanePrim<HypLine> for HypPoint:
+    # impl ProjPlanePrim<HypLine> for HypPoint:
 
     def incident(self, rhs: HypLine) -> bool:
         """_summary_
@@ -88,7 +89,7 @@ class HypPoint:
         """
         return HypLine(cross(self.coord, rhs.coord))
 
-# impl CKPlanePrim<HypLine> for HypPoint:
+    # impl CKPlanePrim<HypLine> for HypPoint:
 
     def perp(self) -> HypLine:
         """_summary_

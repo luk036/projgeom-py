@@ -64,6 +64,7 @@ def tri_altitude(tri: list) -> list:
 
 # trait CKPlane<L, V: Default + Eq>: ProjPlane<L, V> + CKPlanePrim<L> {}
 
+
 def reflect(mirror, p):
     """_summary_
 

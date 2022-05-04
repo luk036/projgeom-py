@@ -1,12 +1,13 @@
 from typing import List
-from .pg_object import dot, cross, plckr
+
+from .pg_object import cross, dot, plckr
 from .pg_point import PgPoint
 
 
 class PgLine:
     coord: List[int]
 
-# impl PgLine:
+    # impl PgLine:
 
     def __init__(self, coord: List[int]):
         """_summary_
@@ -16,7 +17,7 @@ class PgLine:
         """
         self.coord = coord
 
-# impl PartialEq for PgLine:
+    # impl PartialEq for PgLine:
 
     def eq(self, other) -> bool:
         """_summary_
@@ -29,7 +30,7 @@ class PgLine:
         """
         return cross(self.coord, other.coord) == [0, 0, 0]
 
-# impl ProjPlane<PgPoint, int> for PgLine:
+    # impl ProjPlane<PgPoint, int> for PgLine:
 
     def aux(self) -> PgPoint:
         """_summary_
@@ -65,7 +66,7 @@ class PgLine:
         """
         return PgLine(plckr(ld, p.coord, mu, q.coord))
 
-# impl ProjPlanePrim<PgPoint> for PgLine:
+    # impl ProjPlanePrim<PgPoint> for PgLine:
 
     def incident(self, rhs: PgPoint) -> bool:
         """_summary_
@@ -89,7 +90,7 @@ class PgLine:
         """
         return PgPoint(cross(self.coord, rhs.coord))
 
-# impl CKPlanePrim<PgPoint> for PgLine:
+    # impl CKPlanePrim<PgPoint> for PgLine:
 
     def perp(self) -> PgPoint:
         """_summary_

@@ -1,12 +1,13 @@
 from typing import List
-from .pg_object import dot, cross, plckr
+
 from .ell_point import EllPoint
+from .pg_object import cross, dot, plckr
 
 
 class EllLine:
     coord: List[int]
 
-# impl EllLine:
+    # impl EllLine:
 
     def __init__(self, coord: List[int]):
         """_summary_
@@ -16,7 +17,7 @@ class EllLine:
         """
         self.coord = coord
 
-# impl PartialEq for EllLine:
+    # impl PartialEq for EllLine:
 
     def eq(self, other) -> bool:
         """_summary_
@@ -29,7 +30,7 @@ class EllLine:
         """
         return cross(self.coord, other.coord) == [0, 0, 0]
 
-# impl ProjPlane<EllPoint, int> for EllLine:
+    # impl ProjPlane<EllPoint, int> for EllLine:
 
     def aux(self) -> EllPoint:
         """_summary_
@@ -65,7 +66,7 @@ class EllLine:
         """
         return EllLine(plckr(ld, p.coord, mu, q.coord))
 
-# impl ProjPlanePrim<EllPoint> for EllLine:
+    # impl ProjPlanePrim<EllPoint> for EllLine:
 
     def incident(self, rhs: EllPoint) -> bool:
         """_summary_
@@ -89,7 +90,7 @@ class EllLine:
         """
         return EllPoint(cross(self.coord, rhs.coord))
 
-# impl CKPlanePrim<EllPoint> for EllLine:
+    # impl CKPlanePrim<EllPoint> for EllLine:
 
     def perp(self) -> EllPoint:
         """_summary_
