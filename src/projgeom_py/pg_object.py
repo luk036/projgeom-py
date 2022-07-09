@@ -1,4 +1,5 @@
 from typing import List
+from abc import abstractmethod
 
 
 def dot(a: List[int], b: List[int]) -> int:
@@ -44,9 +45,9 @@ def plckr(ld: int, p: List[int], mu: int, q: List[int]) -> List[int]:
         List[int]: _description_
     """
     return [
-        ld * p[0] + mu + q[0],
-        ld * p[1] + mu + q[1],
-        ld * p[2] + mu + q[2],
+        ld * p[0] + mu * q[0],
+        ld * p[1] + mu * q[1],
+        ld * p[2] + mu * q[2],
     ]
 
 
@@ -89,8 +90,9 @@ class PgObject:
 
     # impl ProjPlane<PgLine, int> for PgObject:
 
+    @abstractmethod
     def dual(self):
-        return list
+        pass
 
     def aux(self):
         """_summary_
@@ -124,8 +126,8 @@ class PgObject:
         Returns:
             PgObject: _description_
         """
-        # P = type(p)
-        return type(p)(plckr(ld, p.coord, mu, q.coord))
+        P = type(p)
+        return P(plckr(ld, p.coord, mu, q.coord))
 
     # impl ProjPlanePrim<PgLine> for PgObject:
 

@@ -1,10 +1,15 @@
+from .pg_object import PgObject
+from typing import List
+
+ProjPlanePrim = PgObject
+
 # trait ProjPlanePrim<L>: Eq {
 #     def circ(self, rhs: Self) -> L
 #     def incident(self, line) -> bool
 # }
 
 
-def check_axiom(p, q, line):
+def check_axiom(p: ProjPlanePrim, q: ProjPlanePrim, line: ProjPlanePrim):
     """_summary_
 
     Args:
@@ -12,6 +17,7 @@ def check_axiom(p, q, line):
         q (ProjPlanePrim<L>): _description_
         line (ProjPlanePrim<P>): _description_
     """
+    assert p == p
     assert (p == q) == (q == p)
     assert p.incident(line) == line.incident(p)
     assert p.circ(q) == q.circ(p)
@@ -19,7 +25,7 @@ def check_axiom(p, q, line):
     assert m.incident(p) and m.incident(q)
 
 
-def coincident(p, q, r) -> bool:
+def coincident(p: ProjPlanePrim, q: ProjPlanePrim, r: ProjPlanePrim) -> bool:
     """_summary_
 
     Args:
@@ -33,12 +39,12 @@ def coincident(p, q, r) -> bool:
     return p.circ(q).incident(r)
 
 
-def check_pappus(co1: list, co2: list) -> bool:
+def check_pappus(co1: List[ProjPlanePrim], co2: List[ProjPlanePrim]) -> bool:
     """Check Pappus Theorem
 
     Args:
-        co1 (list): _description_
-        co2 (list): _description_
+        co1 (List[ProjPlanePrim]): _description_
+        co2 (List[ProjPlanePrim]): _description_
 
     Returns:
         bool: _description_
@@ -51,26 +57,26 @@ def check_pappus(co1: list, co2: list) -> bool:
     return coincident(g, h, i)
 
 
-def tri_dual(tri: list) -> list:
+def tri_dual(tri: List[ProjPlanePrim]) -> List[ProjPlanePrim]:
     """_summary_
 
     Args:
-        tri (list): _description_
+        tri (List[ProjPlanePrim]): _description_
 
     Returns:
-        list: _description_
+        List[ProjPlanePrim]: _description_
     """
     [a1, a2, a3] = tri
     assert not coincident(a1, a2, a3)
     return [a2.circ(a3), a1.circ(a3), a1.circ(a2)]
 
 
-def persp(tri1: list, tri2: list) -> bool:
+def persp(tri1: List[ProjPlanePrim], tri2: List[ProjPlanePrim]) -> bool:
     """Check whether two triangles are perspective
 
     Args:
-        tri1 (list): _description_
-        tri2 (list): _description_
+        tri1 (List[ProjPlanePrim]): _description_
+        tri2 (List[ProjPlanePrim]): _description_
 
     Returns:
         bool: _description_
@@ -81,12 +87,13 @@ def persp(tri1: list, tri2: list) -> bool:
     return c.circ(f).incident(o)
 
 
-def check_desargue(tri1: list, tri2: list) -> bool:
+def check_desargue(tri1: List[ProjPlanePrim],
+                   tri2: List[ProjPlanePrim]) -> bool:
     """_summary_
 
     Args:
-        tri1 (list): _description_
-        tri2 (list): _description_
+        tri1 (List[ProjPlanePrim]): _description_
+        tri2 (List[ProjPlanePrim]): _description_
 
     Returns:
         bool: _description_
@@ -105,8 +112,10 @@ def check_desargue(tri1: list, tri2: list) -> bool:
 #     def incident(self, line) -> bool:
 #         self.dot(line) == V::default()
 
+ProjPlane = PgObject
 
-def harm_conj(a, b, c):
+
+def harm_conj(a: ProjPlane, b: ProjPlane, c: ProjPlane) -> ProjPlane:
     """harmonic conjugate
 
     Args:
@@ -121,10 +130,11 @@ def harm_conj(a, b, c):
     ab = a.circ(b)
     lc = ab.aux().circ(c)
     P = type(a)
-    return P.plucker(lc.dot(a), a, lc.dot(b), b)
+    return P.plucker(lc.dot(b), a, lc.dot(a), b)
 
 
-def involution(origin, mirror, p):
+def involution(origin: ProjPlane, mirror: ProjPlane,
+               p: ProjPlane) -> ProjPlane:
     """_summary_
 
     Args:
