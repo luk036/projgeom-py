@@ -114,6 +114,7 @@ class PgObject:
         """
         return dot(self.coord, line.coord)
 
+    @staticmethod
     def plucker(ld: int, p, mu: int, q):
         """_summary_
 

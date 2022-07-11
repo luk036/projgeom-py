@@ -15,14 +15,14 @@ def check_pg_plane(p: ProjPlane, q: ProjPlane):
     assert harm_conj(p, q, h) == pq
 
 
-@pytest.mark.randomize(pz=int, qz=int, ncalls=5)
+@pytest.mark.randomize(pz=int, qz=int, ncalls=2)
 def test_pg_point(pz, qz):
     p = PgPoint([1, 3, pz])
     q = PgPoint([-2, 1, qz])
     check_pg_plane(p, q)
 
 
-@pytest.mark.randomize(pz=int, qz=int, ncalls=5)
+@pytest.mark.randomize(pz=int, qz=int, ncalls=2)
 def test_pg_line(pz, qz):
     p = PgLine([1, 3, pz])
     q = PgLine([-2, 1, qz])

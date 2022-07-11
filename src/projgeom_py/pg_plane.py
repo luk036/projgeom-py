@@ -57,7 +57,7 @@ def check_pappus(co1: List[ProjPlanePrim], co2: List[ProjPlanePrim]) -> bool:
     return coincident(g, h, i)
 
 
-def tri_dual(tri: List[ProjPlanePrim]) -> List[ProjPlanePrim]:
+def tri_dual(tri: List[ProjPlanePrim]):
     """_summary_
 
     Args:
@@ -102,7 +102,7 @@ def check_desargue(tri1: List[ProjPlanePrim],
     trid2 = tri_dual(tri2)
     b1 = persp(tri1, tri2)
     b2 = persp(trid1, trid2)
-    (b1 and b2) or (not b1 and not b2)
+    return (b1 and b2) or (not b1 and not b2)
 
 
 # trait ProjPlane<L, V: Default + Eq>: ProjPlanePrim<L>:
@@ -115,7 +115,7 @@ def check_desargue(tri1: List[ProjPlanePrim],
 ProjPlane = PgObject
 
 
-def harm_conj(a: ProjPlane, b: ProjPlane, c: ProjPlane) -> ProjPlane:
+def harm_conj(a: ProjPlane, b: ProjPlane, c: ProjPlane):
     """harmonic conjugate
 
     Args:

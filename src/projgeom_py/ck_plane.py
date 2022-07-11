@@ -1,8 +1,9 @@
 from .pg_plane import involution, tri_dual
 from .pg_object import PgObject
-from typing import List
+from .hyp_point import HypLine, HypPoint
+from typing import List, Union
 
-CKPlanePrim = PgObject
+CKPlanePrim = Union[HypLine, HypPoint]
 
 # trait CKPlanePrim<L>: ProjPlanePrim<L>:
 #     def perp(self) -> L
@@ -34,7 +35,7 @@ def altitude(p: CKPlanePrim, m: CKPlanePrim):
     return m.perp().circ(p)
 
 
-def orthcenter(tri: List[CKPlanePrim]):
+def orthocenter(tri: List[CKPlanePrim]):
     """_summary_
 
     Args:
@@ -49,7 +50,7 @@ def orthcenter(tri: List[CKPlanePrim]):
     return t1.circ(t2)
 
 
-def tri_altitude(tri: List[CKPlanePrim]) -> List[CKPlanePrim]:
+def tri_altitude(tri):
     """_summary_
 
     Args:
@@ -68,7 +69,7 @@ def tri_altitude(tri: List[CKPlanePrim]) -> List[CKPlanePrim]:
 
 # trait CKPlane<L, V: Default + Eq>: ProjPlane<L, V> + CKPlanePrim<L> {}
 
-CKPlane = PgObject
+CKPlane = Union[HypLine, HypPoint]
 
 
 def reflect(mirror: CKPlane, p: CKPlane):
