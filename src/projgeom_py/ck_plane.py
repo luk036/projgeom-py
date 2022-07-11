@@ -1,10 +1,14 @@
 from .pg_plane import involution, tri_dual
+from .pg_object import PgObject
+from typing import List
+
+CKPlanePrim = PgObject
 
 # trait CKPlanePrim<L>: ProjPlanePrim<L>:
 #     def perp(self) -> L
 
 
-def is_perpendicular(m1, m2) -> bool:
+def is_perpendicular(m1: CKPlanePrim, m2: CKPlanePrim) -> bool:
     """_summary_
 
     Args:
@@ -17,7 +21,7 @@ def is_perpendicular(m1, m2) -> bool:
     return m1.perp().incident(m2)
 
 
-def altitude(p, m):
+def altitude(p: CKPlanePrim, m: CKPlanePrim):
     """_summary_
 
     Args:
@@ -30,7 +34,7 @@ def altitude(p, m):
     return m.perp().circ(p)
 
 
-def orthcenter(tri: list):
+def orthcenter(tri: List[CKPlanePrim]):
     """_summary_
 
     Args:
@@ -45,7 +49,7 @@ def orthcenter(tri: list):
     return t1.circ(t2)
 
 
-def tri_altitude(tri: list) -> list:
+def tri_altitude(tri: List[CKPlanePrim]) -> List[CKPlanePrim]:
     """_summary_
 
     Args:
@@ -64,8 +68,10 @@ def tri_altitude(tri: list) -> list:
 
 # trait CKPlane<L, V: Default + Eq>: ProjPlane<L, V> + CKPlanePrim<L> {}
 
+CKPlane = PgObject
 
-def reflect(mirror, p):
+
+def reflect(mirror: CKPlane, p: CKPlane):
     """_summary_
 
     Args:
