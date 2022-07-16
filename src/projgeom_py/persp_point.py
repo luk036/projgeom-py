@@ -1,4 +1,5 @@
 from typing import List
+
 from .pg_object import PgObject
 
 

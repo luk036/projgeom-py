@@ -1,7 +1,8 @@
-from .pg_plane import involution, tri_dual
-from .pg_object import PgObject
-from .hyp_point import HypLine, HypPoint
 from typing import List, Union
+
+from .hyp_point import HypLine, HypPoint
+from .pg_object import PgObject
+from .pg_plane import involution, tri_dual
 
 CKPlanePrim = Union[HypLine, HypPoint]
 

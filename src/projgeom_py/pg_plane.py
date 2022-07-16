@@ -1,5 +1,6 @@
-from .pg_object import PgObject
 from typing import List
+
+from .pg_object import PgObject
 
 ProjPlanePrim = PgObject
 
@@ -87,8 +88,7 @@ def persp(tri1: List[ProjPlanePrim], tri2: List[ProjPlanePrim]) -> bool:
     return c.circ(f).incident(o)
 
 
-def check_desargue(tri1: List[ProjPlanePrim],
-                   tri2: List[ProjPlanePrim]) -> bool:
+def check_desargue(tri1: List[ProjPlanePrim], tri2: List[ProjPlanePrim]) -> bool:
     """_summary_
 
     Args:
@@ -133,8 +133,7 @@ def harm_conj(a: ProjPlane, b: ProjPlane, c: ProjPlane):
     return P.plucker(lc.dot(b), a, lc.dot(a), b)
 
 
-def involution(origin: ProjPlane, mirror: ProjPlane,
-               p: ProjPlane) -> ProjPlane:
+def involution(origin: ProjPlane, mirror: ProjPlane, p: ProjPlane) -> ProjPlane:
     """_summary_
 
     Args:

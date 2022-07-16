@@ -24,7 +24,7 @@ class MyCKPoint(PgObject):
         Returns:
             MyCKLine: _description_
         """
-        return MyCKLine([-2*self.coord[0], self.coord[1], -2*self.coord[2]])
+        return MyCKLine([-2 * self.coord[0], self.coord[1], -2 * self.coord[2]])
 
 
 class MyCKLine(PgObject):
@@ -48,4 +48,4 @@ class MyCKLine(PgObject):
         Returns:
             MyCKPoint: _description_
         """
-        return MyCKPoint([-self.coord[0], 2*self.coord[1], -self.coord[2]])
+        return MyCKPoint([-self.coord[0], 2 * self.coord[1], -self.coord[2]])

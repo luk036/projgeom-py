@@ -1,6 +1,7 @@
-from projgeom_py.pg_point import PgPoint, PgLine
-from projgeom_py.pg_plane import ProjPlane, coincident, harm_conj
 import pytest
+
+from projgeom_py.pg_plane import ProjPlane, coincident, harm_conj
+from projgeom_py.pg_point import PgLine, PgPoint
 
 
 def check_pg_plane(p: ProjPlane, q: ProjPlane):

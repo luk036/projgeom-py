@@ -1,5 +1,5 @@
-from typing import List
 from abc import abstractmethod
+from typing import List
 
 
 def dot(a: List[int], b: List[int]) -> int:

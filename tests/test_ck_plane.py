@@ -1,11 +1,17 @@
-from projgeom_py.ell_point import EllPoint, EllLine
-from projgeom_py.hyp_point import HypPoint, HypLine
-from projgeom_py.myck_point import MyCKPoint, MyCKLine
-from projgeom_py.persp_point import PerspPoint
-# from projgeom_py.pg_plane import coincident, harm_conj
-from projgeom_py.ck_plane import CKPlane, tri_altitude, tri_dual
-from projgeom_py.ck_plane import is_perpendicular, orthocenter
 import pytest
+
+# from projgeom_py.pg_plane import coincident, harm_conj
+from projgeom_py.ck_plane import (
+    CKPlane,
+    is_perpendicular,
+    orthocenter,
+    tri_altitude,
+    tri_dual,
+)
+from projgeom_py.ell_point import EllLine, EllPoint
+from projgeom_py.hyp_point import HypLine, HypPoint
+from projgeom_py.myck_point import MyCKLine, MyCKPoint
+from projgeom_py.persp_point import PerspPoint
 
 
 def check_ck_plane(a1: CKPlane, a2: CKPlane, a3: CKPlane):
