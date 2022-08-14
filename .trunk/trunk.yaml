@@ -1,13 +1,14 @@
 version: 0.1
 cli:
-  version: 0.11.0-beta
+  version: 0.16.1-beta
 lint:
   enabled:
-    - black@22.3.0
-    - flake8@4.0.1
-    - gitleaks@8.3.0
-    - isort@5.9.3
-    - prettier@2.5.1
-    - rustfmt@1.58.1
-    - taplo-fmt@release-cli-0.6.0
-    - taplo@release-cli-0.6.0
+    - actionlint@1.6.15
+    - black@22.6.0
+    - flake8@5.0.4
+    - git-diff-check@SYSTEM
+    - gitleaks@8.10.3
+    - isort@5.10.1
+    - markdownlint@0.32.1
+    - prettier@2.7.1
+    - taplo@release-taplo-cli-0.6.8
