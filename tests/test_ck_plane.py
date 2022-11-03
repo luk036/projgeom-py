@@ -26,7 +26,6 @@ def check_ck_plane(a1: CKPlane, a2: CKPlane, a3: CKPlane):
     assert o == t2.circ(t3)
 
 
-@pytest.mark.randomize(a1z=int, a2z=int, a3z=int, ncalls=2)
 def test_ell_point(a1z, a2z, a3z):
     a1 = EllPoint([13, 23, a1z])
     a2 = EllPoint([44, -3, a2z])
@@ -34,7 +33,6 @@ def test_ell_point(a1z, a2z, a3z):
     check_ck_plane(a1, a2, a3)
 
 
-@pytest.mark.randomize(a1z=int, a2z=int, a3z=int, ncalls=2)
 def test_ell_line(a1z, a2z, a3z):
     a1 = EllLine([13, 23, a1z])
     a2 = EllLine([44, -3, a2z])
@@ -42,7 +40,6 @@ def test_ell_line(a1z, a2z, a3z):
     check_ck_plane(a1, a2, a3)
 
 
-@pytest.mark.randomize(a1z=int, a2z=int, a3z=int, ncalls=2)
 def test_hyp_point(a1z, a2z, a3z):
     a1 = HypPoint([13, 23, a1z])
     a2 = HypPoint([44, -3, a2z])
@@ -50,7 +47,6 @@ def test_hyp_point(a1z, a2z, a3z):
     check_ck_plane(a1, a2, a3)
 
 
-@pytest.mark.randomize(a1z=int, a2z=int, a3z=int, ncalls=2)
 def test_hyp_line(a1z, a2z, a3z):
     a1 = HypLine([13, 23, a1z])
     a2 = HypLine([44, -3, a2z])
@@ -58,7 +54,6 @@ def test_hyp_line(a1z, a2z, a3z):
     check_ck_plane(a1, a2, a3)
 
 
-@pytest.mark.randomize(a1z=int, a2z=int, a3z=int, ncalls=2)
 def test_myck_point(a1z, a2z, a3z):
     a1 = MyCKPoint([13, 23, a1z])
     a2 = MyCKPoint([44, -3, a2z])
@@ -66,7 +61,6 @@ def test_myck_point(a1z, a2z, a3z):
     check_ck_plane(a1, a2, a3)
 
 
-@pytest.mark.randomize(a1z=int, a2z=int, a3z=int, ncalls=2)
 def test_myck_line(a1z, a2z, a3z):
     a1 = MyCKLine([13, 23, a1z])
     a2 = MyCKLine([44, -3, a2z])
@@ -74,7 +68,6 @@ def test_myck_line(a1z, a2z, a3z):
     check_ck_plane(a1, a2, a3)
 
 
-@pytest.mark.randomize(a1z=int, a2z=int, a3z=int, ncalls=2)
 def test_persp_point(a1z, a2z, a3z):
     a1 = PerspPoint([13, 23, a1z])
     a2 = PerspPoint([44, -3, a2z])
