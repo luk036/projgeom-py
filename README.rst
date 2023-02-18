@@ -29,6 +29,8 @@
 .. image:: https://readthedocs.org/projects/projgeom-py/badge/?version=latest
     :target: https://projgeom-py.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
+.. image:: https://codecov.io/gh/luk036/projgeom-py/branch/main/graph/badge.svg?token=0yAVLIz6KC 
+    :target: https://codecov.io/gh/luk036/projgeom-py
 
 |
 
