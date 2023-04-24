@@ -121,7 +121,7 @@ class PgObject:
         Args:
             ld (int): _description_
             p (PgObject): _description_
-            mu (PgObject): _description_
+            mu (int): _description_
             q (PgObject): _description_
 
         Returns:
