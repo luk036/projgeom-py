@@ -1,24 +1,11 @@
-from typing import List
-
 from .pg_object import PgObject
 
 
 class EllPoint(PgObject):
-    def __init__(self, coord: List[int]):
-        """_summary_
-
-        Args:
-            coord (List[int]): _description_
-
-        Examples:
-           >>> p = EllPoint([3, 4, 5])
-        """
-        PgObject.__init__(self, coord)
-
-    def dual(self):
+    def dual(self) -> type:
         return EllLine
 
-    def perp(self):
+    def perp(self) -> "EllLine":
         """_summary_
 
         Returns:
@@ -28,18 +15,7 @@ class EllPoint(PgObject):
 
 
 class EllLine(PgObject):
-    def __init__(self, coord: List[int]):
-        """_summary_
-
-        Args:
-            coord (List[int]): _description_
-
-        Examples:
-           >>> p = EllPoint([3, 4, 5])
-        """
-        PgObject.__init__(self, coord)
-
-    def dual(self):
+    def dual(self) -> type:
         return EllPoint
 
     def perp(self) -> EllPoint:

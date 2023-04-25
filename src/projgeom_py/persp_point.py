@@ -15,7 +15,7 @@ class PerspPoint(PgObject):
         """
         PgObject.__init__(self, coord)
 
-    def dual(self):
+    def dual(self) -> type:
         return PerspLine
 
     def perp(self):
@@ -49,7 +49,7 @@ class PerspLine(PgObject):
         """
         PgObject.__init__(self, coord)
 
-    def dual(self):
+    def dual(self) -> type:
         return PerspPoint
 
     def perp(self) -> PerspPoint:

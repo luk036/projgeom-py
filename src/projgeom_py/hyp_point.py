@@ -1,21 +1,8 @@
-from typing import List
-
 from .pg_object import PgObject
 
 
 class HypPoint(PgObject):
-    def __init__(self, coord: List[int]):
-        """_summary_
-
-        Args:
-            coord (List[int]): _description_
-
-        Examples:
-           >>> p = HypPoint([3, 4, 5])
-        """
-        PgObject.__init__(self, coord)
-
-    def dual(self):
+    def dual(self) -> type:
         return HypLine
 
     def perp(self):
@@ -28,18 +15,7 @@ class HypPoint(PgObject):
 
 
 class HypLine(PgObject):
-    def __init__(self, coord: List[int]):
-        """_summary_
-
-        Args:
-            coord (List[int]): _description_
-
-        Examples:
-           >>> p = HypPoint([3, 4, 5])
-        """
-        PgObject.__init__(self, coord)
-
-    def dual(self):
+    def dual(self) -> type:
         return HypPoint
 
     def perp(self) -> HypPoint:

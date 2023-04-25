@@ -15,7 +15,7 @@ class MyCKPoint(PgObject):
         """
         PgObject.__init__(self, coord)
 
-    def dual(self):
+    def dual(self) -> type:
         return MyCKLine
 
     def perp(self):
@@ -39,7 +39,7 @@ class MyCKLine(PgObject):
         """
         PgObject.__init__(self, coord)
 
-    def dual(self):
+    def dual(self) -> type:
         return MyCKPoint
 
     def perp(self) -> MyCKPoint:
