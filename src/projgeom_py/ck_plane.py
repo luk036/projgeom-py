@@ -1,29 +1,32 @@
-from typing import List, Union
+from typing import List
 
-from .hyp_point import HypLine, HypPoint
-from .pg_object import PgObject
+# from .hyp_point import HypLine, HypPoint
+# from .pg_object import PgObject
 from .pg_plane import involution, tri_dual
+from .pg_plane import ProjPlane, Dual, V
+from abc import abstractmethod
 
-CKPlanePrim = Union[HypLine, HypPoint]
+# CKPlanePrim = Union[HypLine, HypPoint]
 
 # trait CKPlanePrim<L>: ProjPlanePrim<L>:
 #     def perp(self) -> L
 
 
-def is_perpendicular(m1: CKPlanePrim, m2: CKPlanePrim) -> bool:
-    """_summary_
+class CKPlane(ProjPlane[Dual, V]):
+    @abstractmethod
+    def perp(self) -> Dual:
+        pass
 
-    Args:
-        m1 (CKPlanePrim): _description_
-        m2 (CKPlanePrim): _description_
 
-    Returns:
-        bool: _description_
-    """
+Pck = CKPlane["Lck", V]
+Lck = CKPlane["Pck", V]
+
+
+def is_perpendicular(m1: Lck, m2: Lck) -> bool:
     return m1.perp().incident(m2)
 
 
-def altitude(p: CKPlanePrim, m: CKPlanePrim):
+def altitude(p: Pck, m) -> Pck:
     """_summary_
 
     Args:
@@ -36,7 +39,7 @@ def altitude(p: CKPlanePrim, m: CKPlanePrim):
     return m.perp().circ(p)
 
 
-def orthocenter(tri: List[CKPlanePrim]):
+def orthocenter(tri: List[Pck]):
     """_summary_
 
     Args:
@@ -69,8 +72,6 @@ def tri_altitude(tri):
 
 
 # trait CKPlane<L, V: Default + Eq>: ProjPlane<L, V> + CKPlanePrim<L> {}
-
-CKPlane = Union[HypLine, HypPoint]
 
 
 def reflect(mirror: CKPlane, p: CKPlane):
