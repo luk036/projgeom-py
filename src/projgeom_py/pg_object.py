@@ -1,5 +1,10 @@
-from abc import abstractmethod
 from typing import List
+from typing import TypeVar
+from typing_extensions import Self
+from abc import abstractmethod
+from .pg_plane import ProjPlane
+
+Dual = TypeVar("Dual", bound="PgObject")
 
 
 def dot(a: List[int], b: List[int]) -> int:
@@ -51,12 +56,12 @@ def plckr(ld: int, p: List[int], mu: int, q: List[int]) -> List[int]:
     ]
 
 
-class PgObject:
+class PgObject(ProjPlane[Dual, int]):
     coord: List[int]
 
     # impl PgObject:
 
-    def __init__(self, coord: List[int]):
+    def __init__(self, coord: List[int]) -> None:
         """_summary_
 
         Args:
@@ -91,10 +96,10 @@ class PgObject:
     # impl ProjPlane<PgLine, int> for PgObject:
 
     @abstractmethod
-    def dual(self):
+    def dual(self) -> type:
         pass
 
-    def aux(self):
+    def aux(self) -> Dual:
         """_summary_
 
         Returns:
@@ -114,8 +119,7 @@ class PgObject:
         """
         return dot(self.coord, line.coord)
 
-    @staticmethod
-    def plucker(ld: int, p, mu: int, q):
+    def plucker(self, ld: int, q: Self, mu: int) -> Self:
         """_summary_
 
         Args:
@@ -127,12 +131,12 @@ class PgObject:
         Returns:
             PgObject: _description_
         """
-        P = type(p)
-        return P(plckr(ld, p.coord, mu, q.coord))
+        P = type(self)
+        return P(plckr(ld, self.coord, mu, q.coord))
 
     # impl ProjPlanePrim<PgLine> for PgObject:
 
-    def incident(self, rhs) -> bool:
+    def incident(self, rhs: Dual) -> bool:
         """_summary_
 
         Args:
@@ -143,7 +147,7 @@ class PgObject:
         """
         return dot(self.coord, rhs.coord) == 0
 
-    def circ(self, rhs):
+    def circ(self, rhs: Self) -> Dual:
         """_summary_
 
         Args:

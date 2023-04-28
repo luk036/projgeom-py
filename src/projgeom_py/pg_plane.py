@@ -1,8 +1,9 @@
-from typing import List
+from typing import List, Sequence
 from typing import Generic, TypeVar
+from typing_extensions import Self
 from abc import abstractmethod
 
-Dual = TypeVar("Dual")
+Dual = TypeVar("Dual", bound="ProjPlane")
 V = TypeVar("V", bound=int)
 
 
@@ -16,7 +17,7 @@ class ProjPlane(Generic[Dual, V]):
         pass
 
     @abstractmethod
-    def circ(self, rhs: "ProjPlane[Dual, V]") -> Dual:
+    def circ(self, rhs: Self) -> Dual:
         pass
 
     @abstractmethod
@@ -28,12 +29,41 @@ class ProjPlane(Generic[Dual, V]):
         pass
 
     @abstractmethod
-    def plucker(self, ld: V, p, mu: V, q) -> "ProjPlane[Dual, V]":
+    def plucker(self, ld: V, q: Self, mu: V) -> Self:
         pass
 
     @abstractmethod
     def incident(self, line: Dual) -> bool:
         return self.dot(line) == 0
+
+    def coincident(self, q: Self, r: Self) -> bool:
+        """_summary_
+
+        Args:
+            p (ProjPlanePrim<P>): _description_
+            q (ProjPlanePrim<P>): _description_
+            r (ProjPlanePrim<P>): _description_
+
+        Returns:
+            bool: _description_
+        """
+        return self.circ(q).incident(r)
+
+    def harm_conj(self, a: Self, b: Self) -> Self:
+        """harmonic conjugate
+
+        Args:
+            a (ProjPlane): _description_
+            b (ProjPlane): _description_
+            c (ProjPlane): _description_
+
+        Returns:
+            ProjPlane: _description_
+        """
+        assert self.coincident(a, b)
+        ab = a.circ(b)
+        lc = ab.aux().circ(self)
+        return a.plucker(lc.dot(b), b, lc.dot(a))
 
 
 P = ProjPlane["L", V]
@@ -95,7 +125,7 @@ def check_pappus(co1: List[P], co2: List[P]) -> bool:
     return coincident(g, h, i)
 
 
-def tri_dual(tri: List[P]) -> List[L]:
+def tri_dual(tri: Sequence) -> List:
     """_summary_
 
     Args:
@@ -165,10 +195,10 @@ def harm_conj(a: P, b: P, c: P):
     ab = a.circ(b)
     lc = ab.aux().circ(c)
     # P = type(a)
-    return a.plucker(lc.dot(b), a, lc.dot(a), b)
+    return a.plucker(lc.dot(b), b, lc.dot(a))
 
 
-def involution(origin: P, mirror: P, p: P) -> P:
+def involution(origin: P, mirror: P, p: P):
     """_summary_
 
     Args:

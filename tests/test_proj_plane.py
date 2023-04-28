@@ -10,8 +10,7 @@ def check_pg_plane(p: ProjPlane, q: ProjPlane):
     assert m == q.circ(p)
     assert m.incident(p)
     assert m.incident(q)
-    P = type(p)
-    pq = P.plucker(2, p, 3, q)
+    pq = p.plucker(2, q, 3)
     assert coincident(p, q, pq)
     h = harm_conj(p, q, pq)
     assert harm_conj(p, q, h) == pq

@@ -1,15 +1,16 @@
-from typing import List
-
-# from .hyp_point import HypLine, HypPoint
-# from .pg_object import PgObject
 from .pg_plane import involution, tri_dual
-from .pg_plane import ProjPlane, Dual, V
+from .pg_plane import ProjPlane, V
+
+from typing import List
+from typing import TypeVar
 from abc import abstractmethod
 
 # CKPlanePrim = Union[HypLine, HypPoint]
 
 # trait CKPlanePrim<L>: ProjPlanePrim<L>:
 #     def perp(self) -> L
+
+Dual = TypeVar("Dual", bound="CKPlane")
 
 
 class CKPlane(ProjPlane[Dual, V]):
@@ -26,7 +27,7 @@ def is_perpendicular(m1: Lck, m2: Lck) -> bool:
     return m1.perp().incident(m2)
 
 
-def altitude(p: Pck, m) -> Pck:
+def altitude(p: Pck, m: Lck) -> Pck:
     """_summary_
 
     Args:

@@ -1,24 +1,12 @@
-from typing import List
-
 from .pg_object import PgObject
+from typing_extensions import Self
 
 
-class PerspPoint(PgObject):
-    def __init__(self, coord: List[int]):
-        """_summary_
-
-        Args:
-            coord (List[int]): _description_
-
-        Examples:
-           >>> p = PerspPoint([3, 4, 5])
-        """
-        PgObject.__init__(self, coord)
-
+class PerspPoint(PgObject["PerspLine"]):
     def dual(self) -> type:
         return PerspLine
 
-    def perp(self):
+    def perp(self) -> "PerspLine":
         """_summary_
 
         Returns:
@@ -26,7 +14,7 @@ class PerspPoint(PgObject):
         """
         return L_INF
 
-    def midpoint(self, other):
+    def midpoint(self, other: Self) -> Self:
         """_summary_
 
         Returns:
@@ -34,21 +22,10 @@ class PerspPoint(PgObject):
         """
         alpha = L_INF.dot(other)
         beta = L_INF.dot(self)
-        return PerspPoint.plucker(alpha, self, beta, other)
+        return self.plucker(alpha, other, beta)
 
 
-class PerspLine(PgObject):
-    def __init__(self, coord: List[int]):
-        """_summary_
-
-        Args:
-            coord (List[int]): _description_
-
-        Examples:
-           >>> p = PerspPoint([3, 4, 5])
-        """
-        PgObject.__init__(self, coord)
-
+class PerspLine(PgObject[PerspPoint]):
     def dual(self) -> type:
         return PerspPoint
 
@@ -60,9 +37,9 @@ class PerspLine(PgObject):
         """
         alpha = I_RE.dot(self)
         beta = I_IM.dot(self)
-        return PerspPoint.plucker(alpha, I_RE, beta, I_IM)
+        return I_RE.plucker(alpha, I_IM, beta)
 
-    def is_parallel(self, other) -> bool:
+    def is_parallel(self, other: Self) -> bool:
         return L_INF.dot(self.circ(other)) == 0
 
 

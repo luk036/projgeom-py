@@ -1,20 +1,7 @@
-from typing import List
-
 from .pg_object import PgObject
 
 
-class MyCKPoint(PgObject):
-    def __init__(self, coord: List[int]):
-        """_summary_
-
-        Args:
-            coord (List[int]): _description_
-
-        Examples:
-           >>> p = MyCKPoint([3, 4, 5])
-        """
-        PgObject.__init__(self, coord)
-
+class MyCKPoint(PgObject["MyCKLine"]):
     def dual(self) -> type:
         return MyCKLine
 
@@ -24,21 +11,11 @@ class MyCKPoint(PgObject):
         Returns:
             MyCKLine: _description_
         """
-        return MyCKLine([-2 * self.coord[0], self.coord[1], -2 * self.coord[2]])
+        coord = self.coord
+        return MyCKLine([-2 * coord[0], coord[1], -2 * coord[2]])
 
 
-class MyCKLine(PgObject):
-    def __init__(self, coord: List[int]):
-        """_summary_
-
-        Args:
-            coord (List[int]): _description_
-
-        Examples:
-           >>> p = MyCKPoint([3, 4, 5])
-        """
-        PgObject.__init__(self, coord)
-
+class MyCKLine(PgObject[MyCKPoint]):
     def dual(self) -> type:
         return MyCKPoint
 
@@ -48,4 +25,5 @@ class MyCKLine(PgObject):
         Returns:
             MyCKPoint: _description_
         """
-        return MyCKPoint([-self.coord[0], 2 * self.coord[1], -self.coord[2]])
+        coord = self.coord
+        return MyCKPoint([-coord[0], 2 * coord[1], -coord[2]])

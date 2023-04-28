@@ -1,7 +1,7 @@
 from .pg_object import PgObject
 
 
-class HypPoint(PgObject):
+class HypPoint(PgObject["HypLine"]):
     def dual(self) -> type:
         return HypLine
 
@@ -14,7 +14,7 @@ class HypPoint(PgObject):
         return HypLine([self.coord[0], self.coord[1], -self.coord[2]])
 
 
-class HypLine(PgObject):
+class HypLine(PgObject[HypPoint]):
     def dual(self) -> type:
         return HypPoint
 

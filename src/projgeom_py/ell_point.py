@@ -1,7 +1,7 @@
 from .pg_object import PgObject
 
 
-class EllPoint(PgObject):
+class EllPoint(PgObject["EllLine"]):
     def dual(self) -> type:
         return EllLine
 
@@ -14,7 +14,7 @@ class EllPoint(PgObject):
         return EllLine(self.coord)
 
 
-class EllLine(PgObject):
+class EllLine(PgObject[EllPoint]):
     def dual(self) -> type:
         return EllPoint
 
