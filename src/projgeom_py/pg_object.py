@@ -16,6 +16,11 @@ def dot(a: List[int], b: List[int]) -> int:
 
     Returns:
         int: _description_
+
+    Examples:
+        >>> dot([1, 2, 3], [4, 5, 6])
+        32
+
     """
     return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
 
@@ -29,6 +34,11 @@ def cross(a: List[int], b: List[int]) -> List[int]:
 
     Returns:
         List[int]: _description_
+
+    Examples:
+        >>> cross([1, 2, 3], [4, 5, 6])
+        [-3, 6, -3]
+
     """
     return [
         a[1] * b[2] - a[2] * b[1],
@@ -48,6 +58,11 @@ def plckr(ld: int, p: List[int], mu: int, q: List[int]) -> List[int]:
 
     Returns:
         List[int]: _description_
+
+    Examples:
+        >>> plckr(1, [1, 2, 3], 2, [4, 5, 6])
+        [9, 12, 15]
+
     """
     return [
         ld * p[0] + mu * q[0],
@@ -69,6 +84,9 @@ class PgObject(ProjPlane[Dual, int]):
 
         Examples:
            >>> p = PgObject([3, 4, 5])
+           >>> p.coord
+           [3, 4, 5]
+
         """
         self.coord = coord
 
@@ -116,6 +134,13 @@ class PgObject(ProjPlane[Dual, int]):
 
         Returns:
             int: _description_
+
+        Examples:
+            >>> p = PgObject([3, 4, 5])
+            >>> q = PgObject([30, 40, 50])
+            >>> p.dot(q)
+            500
+
         """
         return dot(self.coord, line.coord)
 
@@ -130,6 +155,13 @@ class PgObject(ProjPlane[Dual, int]):
 
         Returns:
             PgObject: _description_
+
+        Examples:
+            >>> p = PgObject([3, 4, 5])
+            >>> q = PgObject([30, 40, 50])
+            >>> p.plucker(1, q, 2) == PgObject([9, 12, 15])
+            True
+
         """
         P = type(self)
         return P(plckr(ld, self.coord, mu, q.coord))
@@ -144,6 +176,13 @@ class PgObject(ProjPlane[Dual, int]):
 
         Returns:
             bool: _description_
+
+        Examples:
+            >>> p = PgObject([3, 4, 5])
+            >>> q = PgObject([30, 40, 50])
+            >>> p.incident(q)
+            False
+
         """
         return dot(self.coord, rhs.coord) == 0
 
@@ -154,6 +193,6 @@ class PgObject(ProjPlane[Dual, int]):
             rhs (PgObject): _description_
 
         Returns:
-            PgLine: _description_
+            Dual: _description_
         """
         return self.dual()(cross(self.coord, rhs.coord))

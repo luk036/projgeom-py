@@ -24,10 +24,26 @@ Lck = CKPlane["Pck", V]
 
 
 def is_perpendicular(m1: Lck, m2: Lck) -> bool:
+    """_summary_
+
+    Args:
+        m1 (Lck): _description_
+        m2 (Lck): _description_
+
+    Returns:
+        bool: _description_
+
+    Examples:
+        >>> from projgeom_py.hyp_point import HypLine, HypPoint
+        >>> is_perpendicular(HypLine([0, 1, 0]), HypLine([0, 0, 1]))
+        True
+        >>> is_perpendicular(HypLine([0, 1, 0]), HypLine([0, 0, -1]))
+        True
+    """
     return m1.perp().incident(m2)
 
 
-def altitude(p: Pck, m: Lck) -> Pck:
+def altitude(p: Pck, m: Lck) -> Lck:
     """_summary_
 
     Args:
@@ -36,6 +52,12 @@ def altitude(p: Pck, m: Lck) -> Pck:
 
     Returns:
         CKPlanePrim<L>: _description_
+
+    Examples:
+        >>> from projgeom_py.hyp_point import HypLine, HypPoint
+        >>> t = altitude(HypPoint([0, 1, 0]), HypLine([0, 0, 1]))
+        >>> t == HypLine([1, 0, 0])
+        True
     """
     return m.perp().circ(p)
 
@@ -48,6 +70,13 @@ def orthocenter(tri: List[Pck]):
 
     Returns:
         CKPlanePrim<P>: _description_
+
+    Examples:
+        >>> from projgeom_py.hyp_point import HypLine, HypPoint
+        >>> t = orthocenter([HypPoint([0, 1, 0]), HypPoint([0, 0, 1]), HypPoint([1, 0, 0])])
+        >>> t == HypPoint([1, 1, 1])
+        True
+
     """
     [a1, a2, a3] = tri
     t1 = altitude(a1, a2.circ(a3))

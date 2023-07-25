@@ -103,6 +103,11 @@ def coincident(p: P, q: P, r: P) -> bool:
 
     Returns:
         bool: _description_
+
+    Examples:
+        >>> from projgeom_py.pg_point import PgLine, PgPoint
+        >>> coincident(PgPoint([0, 1, 0]), PgPoint([0, 0, 1]), PgPoint([1, 0, 0]))
+        False
     """
     return p.circ(q).incident(r)
 
