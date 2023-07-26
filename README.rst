@@ -32,6 +32,7 @@
 .. image:: https://codecov.io/gh/luk036/projgeom-py/branch/main/graph/badge.svg?token=0yAVLIz6KC 
     :target: https://codecov.io/gh/luk036/projgeom-py
 
+.. image:: ./projective-geometry.svg
 |
 
 ===========
