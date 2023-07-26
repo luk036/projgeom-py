@@ -93,11 +93,10 @@ def tri_altitude(tri):
     Returns:
         list: _description_
     """
-    [l1, l2, l3] = tri_dual(tri)
     [a1, a2, a3] = tri
-    t1 = altitude(a1, l1)
-    t2 = altitude(a2, l2)
-    t3 = altitude(a3, l3)
+    t1 = altitude(a1, a2.circ(a3))
+    t2 = altitude(a2, a3.circ(a1))
+    t3 = altitude(a3, a1.circ(a2))
     return [t1, t2, t3]
 
 
