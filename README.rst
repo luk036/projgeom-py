@@ -53,3 +53,8 @@ Note
 
 This project has been set up using PyScaffold 4.3.1. For details and usage
 information on PyScaffold see https://pyscaffold.org/.
+
+
+.. image:: https://api.codacy.com/project/badge/Grade/7d29a38d2df94e98be1f46e3c22f6864
+   :alt: Codacy Badge
+   :target: https://app.codacy.com/gh/luk036/projgeom-py?utm_source=github.com&utm_medium=referral&utm_content=luk036/projgeom-py&utm_campaign=Badge_Grade
