@@ -31,6 +31,9 @@
     :alt: Documentation Status
 .. image:: https://codecov.io/gh/luk036/projgeom-py/branch/main/graph/badge.svg?token=0yAVLIz6KC 
     :target: https://codecov.io/gh/luk036/projgeom-py
+.. image:: https://api.codacy.com/project/badge/Grade/7d29a38d2df94e98be1f46e3c22f6864
+   :alt: Codacy Badge
+   :target: https://app.codacy.com/gh/luk036/projgeom-py?utm_source=github.com&utm_medium=referral&utm_content=luk036/projgeom-py&utm_campaign=Badge_Grade
 
 .. image:: ./projective-geometry.svg
 |
