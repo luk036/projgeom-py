@@ -10,7 +10,7 @@ Dual = TypeVar("Dual", bound="PgObject")
 def dot(a: List[int], b: List[int]) -> int:
     """
     The `dot` function calculates the dot product of two lists of integers.
-    
+
     :param a: a is a list of integers
     :type a: List[int]
     :param b: The parameter `b` is a list of integers
@@ -29,7 +29,7 @@ def dot(a: List[int], b: List[int]) -> int:
 def cross(a: List[int], b: List[int]) -> List[int]:
     """
     The `cross` function calculates the cross product of two vectors.
-    
+
     :param a: a is a list of integers
     :type a: List[int]
     :param b: The parameter `b` is a list of integers
@@ -53,14 +53,12 @@ def plckr(ld: int, p: List[int], mu: int, q: List[int]) -> List[int]:
     """
     The `plckr` function calculates the Plucker operation by multiplying each element of `p` by `ld` and
     each element of `q` by `mu`, and then adding the corresponding elements together.
-    
-    :param ld: ld is an integer representing the scalar coefficient for the first vector p in the
-    Plucker operation
+
+    :param ld: ld is an integer representing the scalar coefficient for the first vector p in the Plucker operation
     :type ld: int
     :param p: The parameter `p` is a list of three integers
     :type p: List[int]
-    :param mu: The `mu` parameter represents a scalar value that is used in the Plucker operation. It is
-    multiplied with the corresponding elements of the `q` list to calculate the result
+    :param mu: The `mu` parameter represents a scalar value that is used in the Plucker operation.
     :type mu: int
     :param q: The parameter `q` is a list of integers
     :type q: List[int]
@@ -94,6 +92,7 @@ class PgObject(ProjPlane[Dual, int]):
         >>> p.coord
         [3, 4, 5]
     """
+
     coord: List[int]
 
     # impl PgObject:
@@ -101,7 +100,7 @@ class PgObject(ProjPlane[Dual, int]):
     def __init__(self, coord: List[int]) -> None:
         """
         The function initializes an object with a given coordinate.
-        
+
         :param coord: The `coord` parameter is a list of integers that represents the coordinates of a
         point in a three-dimensional space
         :type coord: List[int]
@@ -118,7 +117,7 @@ class PgObject(ProjPlane[Dual, int]):
     def __eq__(self, other) -> bool:
         """
         The function checks if two PgObject instances are equal by comparing their coordinates.
-        
+
         :param other: The `other` parameter is of type `PgObject`
         :return: The `__eq__` method is returning a boolean value. It returns `True` if the `coord`
         attribute of `self` and `other` are equal, and `False` otherwise.
@@ -148,33 +147,31 @@ class PgObject(ProjPlane[Dual, int]):
         return self.dual()(self.coord.copy())
 
     def dot(self, line) -> int:
-        """basic measurement
+        """
+        The `dot` function calculates the dot product between two vectors.
 
-        Args:
-            line (PgLine): _description_
-
-        Returns:
-            int: _description_
+        :param line: The `line` parameter is of type `PgLine`
+        :return: The dot method is returning an integer value.
 
         Examples:
             >>> p = PgObject([3, 4, 5])
-            >>> q = PgObject([30, 40, 50])
-            >>> p.dot(q)
+            >>> l = PgObject([30, 40, 50])
+            >>> p.dot(l)
             500
         """
         return dot(self.coord, line.coord)
 
     def plucker(self, ld: int, q: Self, mu: int) -> Self:
-        """_summary_
+        """
+        The `plucker` function performs a plucker operation on two PgObject instances.
 
-        Args:
-            ld (int): _description_
-            p (PgObject): _description_
-            mu (int): _description_
-            q (PgObject): _description_
-
-        Returns:
-            PgObject: _description_
+        :param ld: The parameter `ld` represents the index of the coordinate to be used in the plucker operation
+        :type ld: int
+        :param q: The parameter `q` is an instance of the `PgObject` class
+        :type q: Self
+        :param mu: The parameter `mu` is an integer that represents the scalar multiplier for the `q` object in the plucker operation
+        :type mu: int
+        :return: The plucker method returns an instance of the PgObject class.
 
         Examples:
             >>> p = PgObject([1, 2, 3])
@@ -188,23 +185,28 @@ class PgObject(ProjPlane[Dual, int]):
     # impl ProjPlanePrim<PgLine> for PgObject:
 
     def incident(self, rhs: Dual) -> bool:
-        """_summary_
+        """
+        The function checks if two objects have a zero dot product.
 
-        Args:
-            rhs (PgLine): _description_
+        :param rhs: The parameter `rhs` is of type `Dual` and represents the right-hand side of the equation
+        :type rhs: Dual
+        :return: a boolean value.
 
-        Returns:
-            bool: _description_
+        Examples:
+            >>> p = PgObject([1, 2, 3])
+            >>> l = PgObject([4, 5, 6])
+            >>> p.incident(l)
+            False
         """
         return dot(self.coord, rhs.coord) == 0
 
     def circ(self, rhs: Self) -> Dual:
-        """_summary_
+        """
+        The `circ` function performs a join or meet operation on two `PgObject` objects and returns a
+        `Dual` object.
 
-        Args:
-            rhs (PgObject): _description_
-
-        Returns:
-            Dual: _description_
+        :param rhs: The parameter `rhs` stands for "right-hand side" and it represents another `PgObject` object that is being passed as an argument to the `circ` method
+        :type rhs: Self
+        :return: a Dual object.
         """
         return self.dual()(cross(self.coord, rhs.coord))

@@ -37,28 +37,26 @@ class ProjPlane(Generic[Dual, V]):
         return self.dot(line) == 0
 
     def coincident(self, q: Self, r: Self) -> bool:
-        """_summary_
+        """
+        The `coincident` function checks if three points `p`, `q`, and `r` are collinear.
 
-        Args:
-            p (ProjPlanePrim<P>): _description_
-            q (ProjPlanePrim<P>): _description_
-            r (ProjPlanePrim<P>): _description_
-
-        Returns:
-            bool: _description_
+        :param q: q is an instance of the class ProjPlanePrim<P>
+        :type q: Self
+        :param r: The parameter `r` is of type `ProjPlanePrim<P>`
+        :type r: Self
+        :return: A boolean value is being returned.
         """
         return self.circ(q).incident(r)
 
     def harm_conj(self, a: Self, b: Self) -> Self:
-        """harmonic conjugate
+        """
+        The `harm_conj` function calculates the harmonic conjugate of two points on a projective plane.
 
-        Args:
-            a (ProjPlane): _description_
-            b (ProjPlane): _description_
-            c (ProjPlane): _description_
-
-        Returns:
-            ProjPlane: _description_
+        :param a: The parameter `a` is of type `ProjPlane`
+        :type a: Self
+        :param b: The parameter `b` is of type `ProjPlane`
+        :type b: Self
+        :return: a ProjPlane object.
         """
         assert self.coincident(a, b)
         ab = a.circ(b)
@@ -78,12 +76,15 @@ L = ProjPlane["P", V]
 
 
 def check_axiom(p: P, q: P, line: L):
-    """_summary_
+    """
+    The function `check_axiom` checks various axioms related to a projective plane.
 
-    Args:
-        p (ProjPlanePrim<L>): _description_
-        q (ProjPlanePrim<L>): _description_
-        line (ProjPlanePrim<P>): _description_
+    :param p: p is a ProjPlanePrim object, which represents a point in a projective plane
+    :type p: P
+    :param q: The parameter `q` is a ProjPlanePrim object, which represents a point or a line in a projective plane
+    :type q: P
+    :param line: The `line` parameter represents a projective plane line
+    :type line: L
     """
     assert p == p
     assert (p == q) == (q == p)
@@ -94,15 +95,17 @@ def check_axiom(p: P, q: P, line: L):
 
 
 def coincident(p: P, q: P, r: P) -> bool:
-    """_summary_
+    """
+    The `coincident` function checks if three points `p`, `q`, and `r` are collinear in a projective
+    plane.
 
-    Args:
-        p (ProjPlanePrim<P>): _description_
-        q (ProjPlanePrim<P>): _description_
-        r (ProjPlanePrim<P>): _description_
-
-    Returns:
-        bool: _description_
+    :param p: p is an object of type ProjPlanePrim<P>. It represents a point in a projective plane
+    :type p: P
+    :param q: q is a ProjPlanePrim object, which represents a point in a projective plane
+    :type q: P
+    :param r: The parameter `r` represents a point in a projective plane
+    :type r: P
+    :return: The function `coincident` returns a boolean value.
 
     Examples:
         >>> from projgeom_py.pg_point import PgLine, PgPoint
@@ -113,14 +116,21 @@ def coincident(p: P, q: P, r: P) -> bool:
 
 
 def check_pappus(co1: List[P], co2: List[P]) -> bool:
-    """Check Pappus Theorem
+    """
+    The function `check_pappus` checks if three lines in a projective plane satisfy Pappus' theorem.
 
-    Args:
-        co1 (List[ProjPlanePrim]): _description_
-        co2 (List[ProjPlanePrim]): _description_
+    :param co1: The parameter `co1` is a list of `ProjPlanePrim` objects
+    :type co1: List[P]
+    :param co2: The parameter `co2` is a list of `ProjPlanePrim` objects
+    :type co2: List[P]
+    :return: a boolean value.
 
-    Returns:
-        bool: _description_
+    Examples:
+        >>> from projgeom_py.pg_point import PgLine, PgPoint
+        >>> co1 = [PgPoint([0, 1, 0]), PgPoint([0, 0, 1]), PgPoint([1, 0, 0])]
+        >>> co2 = [PgPoint([0, 0, 1]), PgPoint([0, 1, 0]), PgPoint([1, 0, 0])]
+        >>> check_pappus(co1, co2)
+        True
     """
     [a, b, c] = co1
     [d, e, f] = co2
@@ -131,13 +141,14 @@ def check_pappus(co1: List[P], co2: List[P]) -> bool:
 
 
 def tri_dual(tri: Sequence) -> List:
-    """_summary_
+    """
+    The function `tri_dual` takes a list of three `ProjPlanePrim` objects representing a triangle and
+    returns a list of three `ProjPlanePrim` objects representing the circumcircles of the triangle's
+    three edges.
 
-    Args:
-        tri (List[ProjPlanePrim]): _description_
-
-    Returns:
-        List[ProjPlanePrim]: _description_
+    :param tri: The `tri` parameter is expected to be a sequence (e.g., list, tuple) of three elements. Each element should be an object of type `ProjPlanePrim`
+    :type tri: Sequence
+    :return: The function `tri_dual` returns a list of three `ProjPlanePrim` objects.
     """
     [a1, a2, a3] = tri
     assert not coincident(a1, a2, a3)
@@ -145,14 +156,21 @@ def tri_dual(tri: Sequence) -> List:
 
 
 def persp(tri1: List[P], tri2: List[P]) -> bool:
-    """Check whether two triangles are perspective
+    """
+    The `persp` function checks whether two triangles are perspective.
 
-    Args:
-        tri1 (List[ProjPlanePrim]): _description_
-        tri2 (List[ProjPlanePrim]): _description_
+    :param tri1: tri1 is a list of three ProjPlanePrim objects representing the vertices of the first triangle
+    :type tri1: List[P]
+    :param tri2: tri2 is a list of three ProjPlanePrim objects representing the vertices of the second triangle
+    :type tri2: List[P]
+    :return: a boolean value.
 
-    Returns:
-        bool: _description_
+    Examples:
+        >>> from projgeom_py.pg_point import PgLine, PgPoint
+        >>> tri1 = [PgPoint([0, 1, 0]), PgPoint([0, 0, 1]), PgPoint([1, 0, 0])]
+        >>> tri2 = [PgPoint([0, 0, 1]), PgPoint([0, 1, 0]), PgPoint([1, 0, 0])]
+        >>> persp(tri1, tri2)
+        True
     """
     [a, b, c] = tri1
     [d, e, f] = tri2
@@ -161,14 +179,22 @@ def persp(tri1: List[P], tri2: List[P]) -> bool:
 
 
 def check_desargue(tri1: List[P], tri2: List[P]) -> bool:
-    """_summary_
+    """
+    The function `check_desargue` checks if two triangles in a projective plane satisfy the Desargue's
+    theorem.
 
-    Args:
-        tri1 (List[ProjPlanePrim]): _description_
-        tri2 (List[ProjPlanePrim]): _description_
+    :param tri1: tri1 is a list of ProjPlanePrim objects representing the first triangle in the Desargue's theorem
+    :type tri1: List[P]
+    :param tri2: The `tri2` parameter is a list of `ProjPlanePrim` objects representing the second triangle
+    :type tri2: List[P]
+    :return: a boolean value.
 
-    Returns:
-        bool: _description_
+    Examples:
+        >>> from projgeom_py.pg_point import PgLine, PgPoint
+        >>> tri1 = [PgPoint([0, 1, 0]), PgPoint([0, 0, 1]), PgPoint([1, 0, 0])]
+        >>> tri2 = [PgPoint([0, 0, 1]), PgPoint([0, 1, 0]), PgPoint([1, 0, 0])]
+        >>> check_desargue(tri1, tri2)
+        True
     """
     trid1 = tri_dual(tri1)
     trid2 = tri_dual(tri2)
@@ -186,15 +212,16 @@ def check_desargue(tri1: List[P], tri2: List[P]) -> bool:
 
 
 def harm_conj(a: P, b: P, c: P):
-    """harmonic conjugate
+    """
+    The `harm_conj` function calculates the harmonic conjugate of three points on a projective plane.
 
-    Args:
-        a (ProjPlane): _description_
-        b (ProjPlane): _description_
-        c (ProjPlane): _description_
-
-    Returns:
-        ProjPlane: _description_
+    :param a: a is an object of type ProjPlane
+    :type a: P
+    :param b: The parameter `b` represents a point on the projective plane
+    :type b: P
+    :param c: The parameters `a`, `b`, and `c` are of type `ProjPlane`
+    :type c: P
+    :return: The function `harm_conj` returns a `ProjPlane` object.
     """
     assert coincident(a, b, c)
     ab = a.circ(b)
@@ -204,15 +231,19 @@ def harm_conj(a: P, b: P, c: P):
 
 
 def involution(origin: P, mirror: P, p: P):
-    """_summary_
+    """
+    The function `involution` performs an involution transformation on a point `p` with respect to an
+    origin point `origin` and a mirror line `mirror`.
 
-    Args:
-        origin (ProjPlane<P>): _description_
-        mirror (ProjPlane<L>): _description_
-        p (ProjPlane<P>): _description_
-
-    Returns:
-        ProjPlane<P>: _description_
+    :param origin: The `origin` parameter represents a point in a projective plane
+    :type origin: P
+    :param mirror: The `mirror` parameter represents a mirror line or mirror plane in a projective
+    plane. It is used to perform a reflection or mirror transformation on a point `p` with respect to
+    the mirror line or plane
+    :type mirror: P
+    :param p: The parameter `p` represents a point in a projective plane
+    :type p: P
+    :return: a ProjPlane<P> object.
     """
     po = p.circ(origin)
     b = po.circ(mirror)

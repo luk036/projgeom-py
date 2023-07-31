@@ -2,7 +2,15 @@ from .pg_object import PgObject
 from typing_extensions import Self
 
 
+# The PerspPoint class represents a point in a perspective plane and provides methods for calculating
+# the dual, perpendicular line, and midpoint of the point.
 class PerspPoint(PgObject["PerspLine"]):
+    """A point in a perspective plane.
+
+    The PerspPoint class represents a point in a perspective plane and provides methods for calculating
+    the dual, perpendicular line, and midpoint of the point.
+    """
+
     def dual(self) -> type:
         return PerspLine
 
@@ -15,10 +23,13 @@ class PerspPoint(PgObject["PerspLine"]):
         return L_INF
 
     def midpoint(self, other: Self) -> Self:
-        """_summary_
+        """
+        The `midpoint` function calculates the midpoint between two PerspPoint objects.
 
-        Returns:
-            PerspPoint: _description_
+        :param other: The `other` parameter is an instance of the same class as `self`. It represents
+        another point that you want to find the midpoint with
+        :type other: Self
+        :return: The `midpoint` method returns an instance of the `PerspPoint` class.
         """
         alpha = L_INF.dot(other)
         beta = L_INF.dot(self)
@@ -26,6 +37,12 @@ class PerspPoint(PgObject["PerspLine"]):
 
 
 class PerspLine(PgObject[PerspPoint]):
+    """A line in a perspective plane.
+
+    The PerspLine class represents a line in a perspective plane and provides methods for calculating
+    the dual and perpendicular point, as well as checking if two lines are parallel.
+    """
+
     def dual(self) -> type:
         return PerspPoint
 
@@ -40,6 +57,16 @@ class PerspLine(PgObject[PerspPoint]):
         return I_RE.plucker(alpha, I_IM, beta)
 
     def is_parallel(self, other: Self) -> bool:
+        """
+        The function checks if two lines are parallel by calculating the dot product of their direction
+        vectors.
+
+        :param other: The "other" parameter is an object of the same class as the current object. It
+        represents another instance of the class that we want to check for parallelism with the current
+        object
+        :type other: Self
+        :return: a boolean value, indicating whether the two objects are parallel or not.
+        """
         return L_INF.dot(self.circ(other)) == 0
 
 

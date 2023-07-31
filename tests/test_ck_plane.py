@@ -2,12 +2,12 @@ from hypothesis import given
 from hypothesis.strategies import integers
 
 # from projgeom_py.pg_plane import coincident, harm_conj
+from projgeom_py.pg_plane import tri_dual
 from projgeom_py.ck_plane import (
     CKPlane,
     is_perpendicular,
     orthocenter,
     tri_altitude,
-    tri_dual,
 )
 from projgeom_py.ell_point import EllLine, EllPoint
 from projgeom_py.hyp_point import HypLine, HypPoint

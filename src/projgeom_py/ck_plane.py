@@ -13,6 +13,7 @@ from abc import abstractmethod
 Dual = TypeVar("Dual", bound="CKPlane")
 
 
+# Object in Cayley–Klein Plane
 class CKPlane(ProjPlane[Dual, V]):
     @abstractmethod
     def perp(self) -> Dual:
@@ -24,14 +25,14 @@ Lck = CKPlane["Pck", V]
 
 
 def is_perpendicular(m1: Lck, m2: Lck) -> bool:
-    """_summary_
+    """
+    The function `is_perpendicular` checks if two lines are perpendicular.
 
-    Args:
-        m1 (Lck): _description_
-        m2 (Lck): _description_
-
-    Returns:
-        bool: _description_
+    :param m1: The parameter `m1` represents a line in Cayley–Klein geometry. It is of type `Lck`, which is likely a custom class representing a hyperbolic line
+    :type m1: Lck
+    :param m2: The parameter `m2` represents a line in Cayley–Klein geometry
+    :type m2: Lck
+    :return: a boolean value, indicating whether the two given lines are perpendicular to each other.
 
     Examples:
         >>> from projgeom_py.hyp_point import HypLine, HypPoint
@@ -44,14 +45,15 @@ def is_perpendicular(m1: Lck, m2: Lck) -> bool:
 
 
 def altitude(p: Pck, m: Lck) -> Lck:
-    """_summary_
+    """
+    The `altitude` function calculates the altitude of a point `p` with respect to a line `m` in a
+    Cayley–Klein geometry.
 
-    Args:
-        p (CKPlanePrim<P>): _description_
-        m (CKPlanePrim<L>): _description_
-
-    Returns:
-        CKPlanePrim<L>: _description_
+    :param p: p is a CKPlanePrim object representing a point in three-dimensional space
+    :type p: Pck
+    :param m: m is a CKPlanePrim object representing a line in a hyperbolic plane
+    :type m: Lck
+    :return: The function `altitude` returns a `CKPlanePrim<L>` object.
 
     Examples:
         >>> from projgeom_py.hyp_point import HypLine, HypPoint
@@ -63,20 +65,18 @@ def altitude(p: Pck, m: Lck) -> Lck:
 
 
 def orthocenter(tri: List[Pck]):
-    """_summary_
+    """
+    The `orthocenter` function calculates the orthocenter of a triangle in Cayley–Klein geometry.
 
-    Args:
-        tri (List[CKPlanePrim<P>]): _description_
-
-    Returns:
-        CKPlanePrim<P>: _description_
+    :param tri: The `tri` parameter is a list of three `CKPlanePrim<P>` objects.
+    :type tri: List[Pck]
+    :return: The function `orthocenter` returns a `CKPlanePrim<P>` object.
 
     Examples:
         >>> from projgeom_py.hyp_point import HypLine, HypPoint
         >>> t = orthocenter([HypPoint([0, 1, 0]), HypPoint([0, 0, 1]), HypPoint([1, 0, 0])])
         >>> t == HypPoint([1, 1, 1])
         True
-
     """
     [a1, a2, a3] = tri
     t1 = altitude(a1, a2.circ(a3))
@@ -85,13 +85,11 @@ def orthocenter(tri: List[Pck]):
 
 
 def tri_altitude(tri):
-    """_summary_
+    """
+    The function `tri_altitude` calculates the altitudes of a triangle given its side lengths.
 
-    Args:
-        tri (list): _description_
-
-    Returns:
-        list: _description_
+    :param tri: The `tri` parameter is a list containing three elements. Each element represents a side of a triangle
+    :return: a list of altitudes of a triangle.
     """
     [a1, a2, a3] = tri
     t1 = altitude(a1, a2.circ(a3))
@@ -104,10 +102,19 @@ def tri_altitude(tri):
 
 
 def reflect(mirror: CKPlane, p: CKPlane):
-    """_summary_
+    """
+    The `reflect` function performs a reflection of a plane `p` across a mirror plane `mirror`.
 
-    Args:
-        mirror (CKPlane<L>): _description_
-        p (CKPlane<P>): _description_
+    :param mirror: The `mirror` parameter is of type `CKPlane<L>`, which represents a mirror plane. It
+    is used to define the mirror in which the point `p` will be reflected
+    :type mirror: CKPlane
+    :param p: The parameter `p` represents a CKPlane object
+    :type p: CKPlane
+
+    Examples:
+        >>> from projgeom_py.hyp_point import HypLine, HypPoint
+        >>> t = reflect(HypLine([0, 1, 0]), HypPoint([0, 0, 1]))
+        >>> t == HypPoint([0, 1, 0])
+        False
     """
     involution(mirror.perp(), mirror, p)
