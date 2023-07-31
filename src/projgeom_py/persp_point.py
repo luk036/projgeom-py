@@ -15,10 +15,9 @@ class PerspPoint(PgObject["PerspLine"]):
         return PerspLine
 
     def perp(self) -> "PerspLine":
-        """_summary_
-
-        Returns:
-            PerspLine: _description_
+        """
+        The `perp` function returns a `PerspLine` object.
+        :return: The code is returning the value of the variable `L_INF`.
         """
         return L_INF
 
@@ -26,8 +25,7 @@ class PerspPoint(PgObject["PerspLine"]):
         """
         The `midpoint` function calculates the midpoint between two PerspPoint objects.
 
-        :param other: The `other` parameter is an instance of the same class as `self`. It represents
-        another point that you want to find the midpoint with
+        :param other: The `other` parameter is an instance of the same class as `self`. It represents another point that you want to find the midpoint with
         :type other: Self
         :return: The `midpoint` method returns an instance of the `PerspPoint` class.
         """
@@ -47,10 +45,11 @@ class PerspLine(PgObject[PerspPoint]):
         return PerspPoint
 
     def perp(self) -> PerspPoint:
-        """_summary_
-
-        Returns:
-            PerspPoint: _description_
+        """
+        The `perp` function returns a `PerspPoint` object that is obtained by taking the dot product of
+        `self` with `I_RE` and `I_IM`, and then using the results to create a new `PerspPoint` object
+        using the `plucker` method of `I_RE`.
+        :return: a PerspPoint object.
         """
         alpha = I_RE.dot(self)
         beta = I_IM.dot(self)
@@ -61,9 +60,7 @@ class PerspLine(PgObject[PerspPoint]):
         The function checks if two lines are parallel by calculating the dot product of their direction
         vectors.
 
-        :param other: The "other" parameter is an object of the same class as the current object. It
-        represents another instance of the class that we want to check for parallelism with the current
-        object
+        :param other: The "other" parameter is an object of the same class as the current object. It represents another instance of the class that we want to check for parallelism with the current object
         :type other: Self
         :return: a boolean value, indicating whether the two objects are parallel or not.
         """

@@ -237,9 +237,7 @@ def involution(origin: P, mirror: P, p: P):
 
     :param origin: The `origin` parameter represents a point in a projective plane
     :type origin: P
-    :param mirror: The `mirror` parameter represents a mirror line or mirror plane in a projective
-    plane. It is used to perform a reflection or mirror transformation on a point `p` with respect to
-    the mirror line or plane
+    :param mirror: The `mirror` parameter represents a mirror line or mirror plane in a projective plane. It is used to perform a reflection or mirror transformation on a point `p` with respect to the mirror line or plane
     :type mirror: P
     :param p: The parameter `p` represents a point in a projective plane
     :type p: P

@@ -28,9 +28,8 @@ class EllLine(PgObject[EllPoint]):
         return EllPoint
 
     def perp(self) -> EllPoint:
-        """_summary_
-
-        Returns:
-            EllPoint: _description_
+        """
+        The `perp` function returns an `EllPoint` object.
+        :return: An EllPoint object is being returned.
         """
         return EllPoint(self.coord)

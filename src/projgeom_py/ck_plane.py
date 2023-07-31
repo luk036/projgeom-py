@@ -105,8 +105,7 @@ def reflect(mirror: CKPlane, p: CKPlane):
     """
     The `reflect` function performs a reflection of a plane `p` across a mirror plane `mirror`.
 
-    :param mirror: The `mirror` parameter is of type `CKPlane<L>`, which represents a mirror plane. It
-    is used to define the mirror in which the point `p` will be reflected
+    :param mirror: The `mirror` parameter is of type `CKPlane<L>`, which represents a mirror plane. It is used to define the mirror in which the point `p` will be reflected
     :type mirror: CKPlane
     :param p: The parameter `p` represents a CKPlane object
     :type p: CKPlane
