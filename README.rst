@@ -29,7 +29,7 @@
 .. image:: https://readthedocs.org/projects/projgeom-py/badge/?version=latest
     :target: https://projgeom-py.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
-.. image:: https://codecov.io/gh/luk036/projgeom-py/branch/main/graph/badge.svg?token=0yAVLIz6KC 
+.. image:: https://codecov.io/gh/luk036/projgeom-py/branch/main/graph/badge.svg?token=0yAVLIz6KC
     :target: https://codecov.io/gh/luk036/projgeom-py
 .. image:: https://api.codacy.com/project/badge/Grade/7d29a38d2df94e98be1f46e3c22f6864
    :alt: Codacy Badge

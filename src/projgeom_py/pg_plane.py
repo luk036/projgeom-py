@@ -1,7 +1,7 @@
-from typing import List, Sequence
-from typing import Generic, TypeVar
-from typing_extensions import Self
 from abc import abstractmethod
+from typing import Generic, List, Sequence, TypeVar
+
+from typing_extensions import Self
 
 Dual = TypeVar("Dual", bound="ProjPlane")
 V = TypeVar("V", bound=int)

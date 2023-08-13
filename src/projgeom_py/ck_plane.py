@@ -1,9 +1,7 @@
-from .pg_plane import involution, tri_dual
-from .pg_plane import ProjPlane, V
-
-from typing import List
-from typing import TypeVar
 from abc import abstractmethod
+from typing import List, TypeVar
+
+from .pg_plane import ProjPlane, V, involution
 
 # CKPlanePrim = Union[HypLine, HypPoint]
 

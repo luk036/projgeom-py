@@ -1,7 +1,8 @@
-from typing import List
-from typing import TypeVar
-from typing_extensions import Self
 from abc import abstractmethod
+from typing import List, TypeVar
+
+from typing_extensions import Self
+
 from .pg_plane import ProjPlane
 
 Dual = TypeVar("Dual", bound="PgObject")
@@ -128,7 +129,7 @@ class PgObject(ProjPlane[Dual, int]):
            >>> p == q
            True
         """
-        if type(self) != type(other):
+        if type(self) is not type(other):
             return False
         return cross(self.coord, other.coord) == [0, 0, 0]
 
