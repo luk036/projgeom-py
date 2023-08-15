@@ -30,7 +30,7 @@ class PgLine:
         """
         return cross(self.coord, other.coord) == [0, 0, 0]
 
-    # impl ProjPlane<PgPoint, int> for PgLine:
+    # impl ProjectivePlane<PgPoint, int> for PgLine:
 
     def aux(self) -> PgPoint:
         """_summary_
@@ -52,21 +52,21 @@ class PgLine:
         return dot(self.coord, point.coord)
         # basic measurement
 
-    def plucker(ld: int, p, mu: int, q):
+    def plucker(lambda_: int, p, mu_: int, q):
         """_summary_
 
         Args:
-            ld (int): _description_
+            lambda_ (int): _description_
             p (PgLine): _description_
-            mu (int): _description_
+            mu_ (int): _description_
             q (PgLine): _description_
 
         Returns:
             PgLine: _description_
         """
-        return PgLine(plckr(ld, p.coord, mu, q.coord))
+        return PgLine(plckr(lambda_, p.coord, mu_, q.coord))
 
-    # impl ProjPlanePrim<PgPoint> for PgLine:
+    # impl ProjectivePlanePrimitive<PgPoint> for PgLine:
 
     def incident(self, rhs: PgPoint) -> bool:
         """_summary_
@@ -79,7 +79,7 @@ class PgLine:
         """
         return dot(self.coord, rhs.coord) == 0
 
-    def circ(self, rhs) -> PgPoint:
+    def meet(self, rhs) -> PgPoint:
         """_summary_
 
         Args:
@@ -90,7 +90,7 @@ class PgLine:
         """
         return PgPoint(cross(self.coord, rhs.coord))
 
-    # impl CKPlanePrim<PgPoint> for PgLine:
+    # impl CayleyKleinPlanePrimitive<PgPoint> for PgLine:
 
     def perp(self) -> PgPoint:
         """_summary_

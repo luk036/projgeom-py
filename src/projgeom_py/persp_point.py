@@ -65,7 +65,7 @@ class PerspLine(PgObject[PerspPoint]):
         :type other: Self
         :return: a boolean value, indicating whether the two objects are parallel or not.
         """
-        return L_INF.dot(self.circ(other)) == 0
+        return L_INF.dot(self.meet(other)) == 0
 
 
 I_RE = PerspPoint([0, 1, 1])

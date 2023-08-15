@@ -1,7 +1,7 @@
 from hypothesis import given
 from hypothesis.strategies import integers
 
-from projgeom_py.ck_plane import CKPlane, is_perpendicular, orthocenter, tri_altitude
+from projgeom_py.ck_plane import CayleyKleinPlane, is_perpendicular, orthocenter, tri_altitude
 from projgeom_py.ell_point import EllLine, EllPoint
 from projgeom_py.hyp_point import HypLine, HypPoint
 from projgeom_py.myck_point import MyCKLine, MyCKPoint
@@ -11,7 +11,7 @@ from projgeom_py.persp_point import PerspPoint
 from projgeom_py.pg_plane import tri_dual
 
 
-def check_ck_plane(a1: CKPlane, a2: CKPlane, a3: CKPlane):
+def check_ck_plane(a1: CayleyKleinPlane, a2: CayleyKleinPlane, a3: CayleyKleinPlane):
     triangle = [a1, a2, a3]
     trilateral = tri_dual(triangle)
     l1 = trilateral[0]
@@ -20,7 +20,7 @@ def check_ck_plane(a1: CKPlane, a2: CKPlane, a3: CKPlane):
     t1, t2, t3 = tri_altitude(triangle)
     assert is_perpendicular(t1, l1)
     o = orthocenter(triangle)
-    assert o == t2.circ(t3)
+    assert o == t2.meet(t3)
 
 
 @given(integers(), integers(), integers())

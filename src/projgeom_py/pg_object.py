@@ -3,7 +3,7 @@ from typing import List, TypeVar
 
 from typing_extensions import Self
 
-from .pg_plane import ProjPlane
+from .pg_plane import ProjectivePlane
 
 Dual = TypeVar("Dual", bound="PgObject")
 
@@ -50,17 +50,17 @@ def cross(a: List[int], b: List[int]) -> List[int]:
     ]
 
 
-def plckr(ld: int, p: List[int], mu: int, q: List[int]) -> List[int]:
+def plckr(lambda_: int, p: List[int], mu_: int, q: List[int]) -> List[int]:
     """
-    The `plckr` function calculates the Plucker operation by multiplying each element of `p` by `ld` and
-    each element of `q` by `mu`, and then adding the corresponding elements together.
+    The `plckr` function calculates the Plucker operation by multiplying each element of `p` by `lambda_` and
+    each element of `q` by `mu_`, and then adding the corresponding elements together.
 
-    :param ld: ld is an integer representing the scalar coefficient for the first vector p in the Plucker operation
-    :type ld: int
+    :param lambda_: lambda_ is an integer representing the scalar coefficient for the first vector p in the Plucker operation
+    :type lambda_: int
     :param p: The parameter `p` is a list of three integers
     :type p: List[int]
-    :param mu: The `mu` parameter represents a scalar value that is used in the Plucker operation.
-    :type mu: int
+    :param mu_: The `mu_` parameter represents a scalar value that is used in the Plucker operation.
+    :type mu_: int
     :param q: The parameter `q` is a list of integers
     :type q: List[int]
     :return: The `plckr` function returns a list of three integers.
@@ -72,14 +72,14 @@ def plckr(ld: int, p: List[int], mu: int, q: List[int]) -> List[int]:
         True
     """
     return [
-        ld * p[0] + mu * q[0],
-        ld * p[1] + mu * q[1],
-        ld * p[2] + mu * q[2],
+        lambda_ * p[0] + mu_ * q[0],
+        lambda_ * p[1] + mu_ * q[1],
+        lambda_ * p[2] + mu_ * q[2],
     ]
 
 
 # The `PgObject` class represents a geometric object in a projective plane with integer coordinates.
-class PgObject(ProjPlane[Dual, int]):
+class PgObject(ProjectivePlane[Dual, int]):
     """
     The `PgObject` class represents a geometric object in a projective plane with integer coordinates.
 
@@ -133,7 +133,7 @@ class PgObject(ProjPlane[Dual, int]):
             return False
         return cross(self.coord, other.coord) == [0, 0, 0]
 
-    # impl ProjPlane<PgLine, int> for PgObject:
+    # impl ProjectivePlane<PgLine, int> for PgObject:
 
     @abstractmethod
     def dual(self) -> type:
@@ -144,7 +144,7 @@ class PgObject(ProjPlane[Dual, int]):
         The `aux` function returns a `Dual` object with a copy of the `coord` attribute.
         :return: The `aux` function is returning a `Dual` object.
         """
-        # L = self.dual()
+        # Line = self.dual()
         return self.dual()(self.coord.copy())
 
     def dot(self, line) -> int:
@@ -162,16 +162,16 @@ class PgObject(ProjPlane[Dual, int]):
         """
         return dot(self.coord, line.coord)
 
-    def plucker(self, ld: int, q: Self, mu: int) -> Self:
+    def plucker(self, lambda_: int, q: Self, mu_: int) -> Self:
         """
         The `plucker` function performs a plucker operation on two PgObject instances.
 
-        :param ld: The parameter `ld` represents the index of the coordinate to be used in the plucker operation
-        :type ld: int
+        :param lambda_: The parameter `lambda_` represents the index of the coordinate to be used in the plucker operation
+        :type lambda_: int
         :param q: The parameter `q` is an instance of the `PgObject` class
         :type q: Self
-        :param mu: The parameter `mu` is an integer that represents the scalar multiplier for the `q` object in the plucker operation
-        :type mu: int
+        :param mu_: The parameter `mu_` is an integer that represents the scalar multiplier for the `q` object in the plucker operation
+        :type mu_: int
         :return: The plucker method returns an instance of the PgObject class.
 
         Examples:
@@ -180,10 +180,10 @@ class PgObject(ProjPlane[Dual, int]):
             >>> p.plucker(1, q, 2) == PgObject([9, 12, 15])
             True
         """
-        P = type(self)
-        return P(plckr(ld, self.coord, mu, q.coord))
+        Point = type(self)
+        return Point(plckr(lambda_, self.coord, mu_, q.coord))
 
-    # impl ProjPlanePrim<PgLine> for PgObject:
+    # impl ProjectivePlanePrimitive<PgLine> for PgObject:
 
     def incident(self, rhs: Dual) -> bool:
         """
@@ -201,12 +201,12 @@ class PgObject(ProjPlane[Dual, int]):
         """
         return dot(self.coord, rhs.coord) == 0
 
-    def circ(self, rhs: Self) -> Dual:
+    def meet(self, rhs: Self) -> Dual:
         """
-        The `circ` function performs a join or meet operation on two `PgObject` objects and returns a
+        The `meet` function performs a join or meet operation on two `PgObject` objects and returns a
         `Dual` object.
 
-        :param rhs: The parameter `rhs` stands for "right-hand side" and it represents another `PgObject` object that is being passed as an argument to the `circ` method
+        :param rhs: The parameter `rhs` stands for "right-hand side" and it represents another `PgObject` object that is being passed as an argument to the `meet` method
         :type rhs: Self
         :return: a Dual object.
         """

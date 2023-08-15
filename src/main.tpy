@@ -1,6 +1,6 @@
 # use std::cmp::{Eq, PartialEq};
 mod pg_plane;
-use crate::pg_plane::{coincident, ProjPlanePrim};
+use crate::pg_plane::{coincident, ProjectivePlanePrimitive};
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 struct PArch {}
@@ -29,13 +29,13 @@ struct LArch {}
 # }
 # impl Eq for PArch {}
 
-# impl ProjPlanePrim<LArch> for PArch:
+# impl ProjectivePlanePrimitive<LArch> for PArch:
 
     def incident(self, rhs: &LArch) -> bool:
         true
 
 
-    def circ(self, rhs: &Self) -> LArch:
+    def meet(self, rhs: &Self) -> LArch:
         LArch()
 
 
@@ -47,13 +47,13 @@ struct LArch {}
 # }
 # impl Eq for LArch {}
 
-# impl ProjPlanePrim<PArch> for LArch:
+# impl ProjectivePlanePrimitive<PArch> for LArch:
 
     def incident(self, rhs: &PArch) -> bool:
         true
 
 
-    def circ(self, rhs: &Self) -> PArch:
+    def meet(self, rhs: &Self) -> PArch:
         PArch()
 
 

@@ -1,13 +1,13 @@
 from hypothesis import given
 from hypothesis.strategies import integers
 
-from projgeom_py.pg_plane import ProjPlane, coincident, harm_conj
+from projgeom_py.pg_plane import ProjectivePlane, coincident, harm_conj
 from projgeom_py.pg_point import PgLine, PgPoint
 
 
-def check_pg_plane(p: ProjPlane, q: ProjPlane):
-    m = p.circ(q)
-    assert m == q.circ(p)
+def check_pg_plane(p: ProjectivePlane, q: ProjectivePlane):
+    m = p.meet(q)
+    assert m == q.meet(p)
     assert m.incident(p)
     assert m.incident(q)
     pq = p.plucker(2, q, 3)

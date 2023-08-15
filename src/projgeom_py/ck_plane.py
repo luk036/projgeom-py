@@ -1,25 +1,25 @@
 from abc import abstractmethod
 from typing import List, TypeVar
 
-from .pg_plane import ProjPlane, V, involution
+from .pg_plane import ProjectivePlane, Value, involution
 
-# CKPlanePrim = Union[HypLine, HypPoint]
+# CayleyKleinPlanePrimitive = Union[HypLine, HypPoint]
 
-# trait CKPlanePrim<L>: ProjPlanePrim<L>:
-#     def perp(self) -> L
+# trait CayleyKleinPlanePrimitive<Line>: ProjectivePlanePrimitive<Line>:
+#     def perp(self) -> Line
 
-Dual = TypeVar("Dual", bound="CKPlane")
+Dual = TypeVar("Dual", bound="CayleyKleinPlane")
 
 
 # Object in Cayley–Klein Plane
-class CKPlane(ProjPlane[Dual, V]):
+class CayleyKleinPlane(ProjectivePlane[Dual, Value]):
     @abstractmethod
     def perp(self) -> Dual:
         pass
 
 
-Pck = CKPlane["Lck", V]
-Lck = CKPlane["Pck", V]
+Pck = CayleyKleinPlane["Lck", Value]
+Lck = CayleyKleinPlane["Pck", Value]
 
 
 def is_perpendicular(m1: Lck, m2: Lck) -> bool:
@@ -47,11 +47,11 @@ def altitude(p: Pck, m: Lck) -> Lck:
     The `altitude` function calculates the altitude of a point `p` with respect to a line `m` in a
     Cayley–Klein geometry.
 
-    :param p: p is a CKPlanePrim object representing a point in three-dimensional space
+    :param p: p is a CayleyKleinPlanePrimitive object representing a point in three-dimensional space
     :type p: Pck
-    :param m: m is a CKPlanePrim object representing a line in a hyperbolic plane
+    :param m: m is a CayleyKleinPlanePrimitive object representing a line in a hyperbolic plane
     :type m: Lck
-    :return: The function `altitude` returns a `CKPlanePrim<L>` object.
+    :return: The function `altitude` returns a `CayleyKleinPlanePrimitive<Line>` object.
 
     Examples:
         >>> from projgeom_py.hyp_point import HypLine, HypPoint
@@ -59,16 +59,16 @@ def altitude(p: Pck, m: Lck) -> Lck:
         >>> t == HypLine([1, 0, 0])
         True
     """
-    return m.perp().circ(p)
+    return m.perp().meet(p)
 
 
 def orthocenter(tri: List[Pck]):
     """
     The `orthocenter` function calculates the orthocenter of a triangle in Cayley–Klein geometry.
 
-    :param tri: The `tri` parameter is a list of three `CKPlanePrim<P>` objects.
+    :param tri: The `tri` parameter is a list of three `CayleyKleinPlanePrimitive<Point>` objects.
     :type tri: List[Pck]
-    :return: The function `orthocenter` returns a `CKPlanePrim<P>` object.
+    :return: The function `orthocenter` returns a `CayleyKleinPlanePrimitive<Point>` object.
 
     Examples:
         >>> from projgeom_py.hyp_point import HypLine, HypPoint
@@ -77,9 +77,9 @@ def orthocenter(tri: List[Pck]):
         True
     """
     [a1, a2, a3] = tri
-    t1 = altitude(a1, a2.circ(a3))
-    t2 = altitude(a2, a3.circ(a1))
-    return t1.circ(t2)
+    t1 = altitude(a1, a2.meet(a3))
+    t2 = altitude(a2, a3.meet(a1))
+    return t1.meet(t2)
 
 
 def tri_altitude(tri):
@@ -90,23 +90,23 @@ def tri_altitude(tri):
     :return: a list of altitudes of a triangle.
     """
     [a1, a2, a3] = tri
-    t1 = altitude(a1, a2.circ(a3))
-    t2 = altitude(a2, a3.circ(a1))
-    t3 = altitude(a3, a1.circ(a2))
+    t1 = altitude(a1, a2.meet(a3))
+    t2 = altitude(a2, a3.meet(a1))
+    t3 = altitude(a3, a1.meet(a2))
     return [t1, t2, t3]
 
 
-# trait CKPlane<L, V: Default + Eq>: ProjPlane<L, V> + CKPlanePrim<L> {}
+# trait CayleyKleinPlane<Line, Value: Default + Eq>: ProjectivePlane<Line, Value> + CayleyKleinPlanePrimitive<Line> {}
 
 
-def reflect(mirror: CKPlane, p: CKPlane):
+def reflect(mirror: CayleyKleinPlane, p: CayleyKleinPlane):
     """
     The `reflect` function performs a reflection of a plane `p` across a mirror plane `mirror`.
 
-    :param mirror: The `mirror` parameter is of type `CKPlane<L>`, which represents a mirror plane. It is used to define the mirror in which the point `p` will be reflected
-    :type mirror: CKPlane
-    :param p: The parameter `p` represents a CKPlane object
-    :type p: CKPlane
+    :param mirror: The `mirror` parameter is of type `CayleyKleinPlane<Line>`, which represents a mirror plane. It is used to define the mirror in which the point `p` will be reflected
+    :type mirror: CayleyKleinPlane
+    :param p: The parameter `p` represents a CayleyKleinPlane object
+    :type p: CayleyKleinPlane
 
     Examples:
         >>> from projgeom_py.hyp_point import HypLine, HypPoint
