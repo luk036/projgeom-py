@@ -1,9 +1,14 @@
 from hypothesis import given
 from hypothesis.strategies import integers
 
-from projgeom_py.ck_plane import CayleyKleinPlane, is_perpendicular, orthocenter, tri_altitude
-from projgeom_py.ell_point import EllLine, EllPoint
-from projgeom_py.hyp_point import HypLine, HypPoint
+from projgeom_py.ck_plane import (
+    CayleyKleinPlane,
+    is_perpendicular,
+    orthocenter,
+    tri_altitude,
+)
+from projgeom_py.ell_point import EllipticLine, EllipticPoint
+from projgeom_py.hyp_point import HyperbolicLine, HyperbolicPoint
 from projgeom_py.myck_point import MyCKLine, MyCKPoint
 from projgeom_py.persp_point import PerspPoint
 
@@ -25,33 +30,33 @@ def check_ck_plane(a1: CayleyKleinPlane, a2: CayleyKleinPlane, a3: CayleyKleinPl
 
 @given(integers(), integers(), integers())
 def test_ell_point(a1z, a2z, a3y):
-    a1 = EllPoint([13, 23, a1z])
-    a2 = EllPoint([44, -3, a2z])
-    a3 = EllPoint([-2, a3y, 12])
+    a1 = EllipticPoint([13, 23, a1z])
+    a2 = EllipticPoint([44, -3, a2z])
+    a3 = EllipticPoint([-2, a3y, 12])
     check_ck_plane(a1, a2, a3)
 
 
 @given(integers(), integers(), integers())
 def test_ell_line(a1z, a2z, a3y):
-    a1 = EllLine([13, 23, a1z])
-    a2 = EllLine([44, -3, a2z])
-    a3 = EllLine([-2, a3y, 12])
+    a1 = EllipticLine([13, 23, a1z])
+    a2 = EllipticLine([44, -3, a2z])
+    a3 = EllipticLine([-2, a3y, 12])
     check_ck_plane(a1, a2, a3)
 
 
 @given(integers(), integers(), integers())
 def test_hyp_point(a1z, a2z, a3y):
-    a1 = HypPoint([13, 23, a1z])
-    a2 = HypPoint([44, -3, a2z])
-    a3 = HypPoint([-2, a3y, 12])
+    a1 = HyperbolicPoint([13, 23, a1z])
+    a2 = HyperbolicPoint([44, -3, a2z])
+    a3 = HyperbolicPoint([-2, a3y, 12])
     check_ck_plane(a1, a2, a3)
 
 
 @given(integers(), integers(), integers())
 def test_hyp_line(a1z, a2z, a3y):
-    a1 = HypLine([13, 23, a1z])
-    a2 = HypLine([44, -3, a2z])
-    a3 = HypLine([-2, a3y, 12])
+    a1 = HyperbolicLine([13, 23, a1z])
+    a2 = HyperbolicLine([44, -3, a2z])
+    a3 = HyperbolicLine([-2, a3y, 12])
     check_ck_plane(a1, a2, a3)
 
 

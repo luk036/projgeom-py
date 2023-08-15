@@ -1,35 +1,35 @@
 from .pg_object import PgObject
 
 
-class EllPoint(PgObject["EllLine"]):
+class EllipticPoint(PgObject["EllipticLine"]):
     """
-    The `EllPoint` class represents a point in elliptic geometry and provides methods for finding its
+    The `EllipticPoint` class represents a point in elliptic geometry and provides methods for finding its
     dual and perpendicular line.
     """
 
     def dual(self) -> type:
-        return EllLine
+        return EllipticLine
 
-    def perp(self) -> "EllLine":
+    def perp(self) -> "EllipticLine":
         """
-        The `perp` function returns an `EllLine` object.
-        :return: The `perp` method is returning an instance of the `EllLine` class.
+        The `perp` function returns an `EllipticLine` object.
+        :return: The `perp` method is returning an instance of the `EllipticLine` class.
         """
-        return EllLine(self.coord)
+        return EllipticLine(self.coord)
 
 
-class EllLine(PgObject[EllPoint]):
+class EllipticLine(PgObject[EllipticPoint]):
     """
-    The `EllLine` class represents a line in Elliptic geometry and has a method `perp()` that returns
+    The `EllipticLine` class represents a line in Elliptic geometry and has a method `perp()` that returns
     the perpendicular point.
     """
 
     def dual(self) -> type:
-        return EllPoint
+        return EllipticPoint
 
-    def perp(self) -> EllPoint:
+    def perp(self) -> EllipticPoint:
         """
-        The `perp` function returns an `EllPoint` object.
-        :return: An EllPoint object is being returned.
+        The `perp` function returns an `EllipticPoint` object.
+        :return: An EllipticPoint object is being returned.
         """
-        return EllPoint(self.coord)
+        return EllipticPoint(self.coord)

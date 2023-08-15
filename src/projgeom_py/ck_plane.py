@@ -3,7 +3,7 @@ from typing import List, TypeVar
 
 from .pg_plane import ProjectivePlane, Value, involution
 
-# CayleyKleinPlanePrimitive = Union[HypLine, HypPoint]
+# CayleyKleinPlanePrimitive = Union[HyperbolicLine, HyperbolicPoint]
 
 # trait CayleyKleinPlanePrimitive<Line>: ProjectivePlanePrimitive<Line>:
 #     def perp(self) -> Line
@@ -33,10 +33,10 @@ def is_perpendicular(m1: Lck, m2: Lck) -> bool:
     :return: a boolean value, indicating whether the two given lines are perpendicular to each other.
 
     Examples:
-        >>> from projgeom_py.hyp_point import HypLine, HypPoint
-        >>> is_perpendicular(HypLine([0, 1, 0]), HypLine([0, 0, 1]))
+        >>> from projgeom_py.hyp_point import HyperbolicLine, HyperbolicPoint
+        >>> is_perpendicular(HyperbolicLine([0, 1, 0]), HyperbolicLine([0, 0, 1]))
         True
-        >>> is_perpendicular(HypLine([0, 1, 0]), HypLine([0, 0, -1]))
+        >>> is_perpendicular(HyperbolicLine([0, 1, 0]), HyperbolicLine([0, 0, -1]))
         True
     """
     return m1.perp().incident(m2)
@@ -54,9 +54,9 @@ def altitude(p: Pck, m: Lck) -> Lck:
     :return: The function `altitude` returns a `CayleyKleinPlanePrimitive<Line>` object.
 
     Examples:
-        >>> from projgeom_py.hyp_point import HypLine, HypPoint
-        >>> t = altitude(HypPoint([0, 1, 0]), HypLine([0, 0, 1]))
-        >>> t == HypLine([1, 0, 0])
+        >>> from projgeom_py.hyp_point import HyperbolicLine, HyperbolicPoint
+        >>> t = altitude(HyperbolicPoint([0, 1, 0]), HyperbolicLine([0, 0, 1]))
+        >>> t == HyperbolicLine([1, 0, 0])
         True
     """
     return m.perp().meet(p)
@@ -71,9 +71,9 @@ def orthocenter(tri: List[Pck]):
     :return: The function `orthocenter` returns a `CayleyKleinPlanePrimitive<Point>` object.
 
     Examples:
-        >>> from projgeom_py.hyp_point import HypLine, HypPoint
-        >>> t = orthocenter([HypPoint([0, 1, 0]), HypPoint([0, 0, 1]), HypPoint([1, 0, 0])])
-        >>> t == HypPoint([1, 1, 1])
+        >>> from projgeom_py.hyp_point import HyperbolicLine, HyperbolicPoint
+        >>> t = orthocenter([HyperbolicPoint([0, 1, 0]), HyperbolicPoint([0, 0, 1]), HyperbolicPoint([1, 0, 0])])
+        >>> t == HyperbolicPoint([1, 1, 1])
         True
     """
     [a1, a2, a3] = tri
@@ -109,9 +109,9 @@ def reflect(mirror: CayleyKleinPlane, p: CayleyKleinPlane):
     :type p: CayleyKleinPlane
 
     Examples:
-        >>> from projgeom_py.hyp_point import HypLine, HypPoint
-        >>> t = reflect(HypLine([0, 1, 0]), HypPoint([0, 0, 1]))
-        >>> t == HypPoint([0, 1, 0])
+        >>> from projgeom_py.hyp_point import HyperbolicLine, HyperbolicPoint
+        >>> t = reflect(HyperbolicLine([0, 1, 0]), HyperbolicPoint([0, 0, 1]))
+        >>> t == HyperbolicPoint([0, 1, 0])
         False
     """
     involution(mirror.perp(), mirror, p)

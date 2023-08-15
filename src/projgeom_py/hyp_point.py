@@ -1,37 +1,37 @@
 from .pg_object import PgObject
 
 
-class HypPoint(PgObject["HypLine"]):
+class HyperbolicPoint(PgObject["HyperbolicLine"]):
     """
-    The HypPoint class represents a point in Hyperbolic geometry and provides methods for finding its
+    The HyperbolicPoint class represents a point in Hyperbolic geometry and provides methods for finding its
     dual and perpendicular line.
     """
 
     def dual(self) -> type:
-        return HypLine
+        return HyperbolicLine
 
     def perp(self):
         """
-        The `perp` function returns a HypLine object that is perpendicular to the current HypLine
+        The `perp` function returns a HyperbolicLine object that is perpendicular to the current HyperbolicLine
         object.
-        :return: a HypLine object.
+        :return: a HyperbolicLine object.
         """
-        return HypLine([self.coord[0], self.coord[1], -self.coord[2]])
+        return HyperbolicLine([self.coord[0], self.coord[1], -self.coord[2]])
 
 
-class HypLine(PgObject[HypPoint]):
+class HyperbolicLine(PgObject[HyperbolicPoint]):
     """
-    The HypLine class represents a line in Hyperbolic geometry and provides methods for finding its
+    The HyperbolicLine class represents a line in Hyperbolic geometry and provides methods for finding its
     dual and perpendicular point.
     """
 
     def dual(self) -> type:
-        return HypPoint
+        return HyperbolicPoint
 
-    def perp(self) -> HypPoint:
+    def perp(self) -> HyperbolicPoint:
         """
-        The `perp` function returns a HypPoint object that represents the perpendicular point to the
+        The `perp` function returns a HyperbolicPoint object that represents the perpendicular point to the
         given point.
-        :return: The `perp` method returns a `HypPoint` object.
+        :return: The `perp` method returns a `HyperbolicPoint` object.
         """
-        return HypPoint([self.coord[0], self.coord[1], -self.coord[2]])
+        return HyperbolicPoint([self.coord[0], self.coord[1], -self.coord[2]])
