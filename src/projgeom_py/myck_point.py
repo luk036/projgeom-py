@@ -3,7 +3,7 @@ from .pg_object import PgObject
 
 class MyCKPoint(PgObject["MyCKLine"]):
     """
-    A customized point class for Cayley–Klein geometry.
+    A customized point class for Cayley-Klein geometry.
     """
 
     def dual(self) -> type:
@@ -20,7 +20,7 @@ class MyCKPoint(PgObject["MyCKLine"]):
 
 class MyCKLine(PgObject[MyCKPoint]):
     """
-    A customized line class for Cayley–Klein geometry.
+    A customized line class for Cayley-Klein geometry.
     """
 
     def dual(self) -> type:

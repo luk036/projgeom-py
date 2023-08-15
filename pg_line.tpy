@@ -52,19 +52,19 @@ class PgLine:
         return dot(self.coord, point.coord)
         # basic measurement
 
-    def plucker(lambda_: int, p, mu_: int, q):
+    def plucker(lambda_: int, pt_p, mu_: int, pt_q):
         """_summary_
 
         Args:
             lambda_ (int): _description_
-            p (PgLine): _description_
+            pt_p (PgLine): _description_
             mu_ (int): _description_
-            q (PgLine): _description_
+            pt_q (PgLine): _description_
 
         Returns:
             PgLine: _description_
         """
-        return PgLine(plckr(lambda_, p.coord, mu_, q.coord))
+        return PgLine(plckr(lambda_, pt_p.coord, mu_, pt_q.coord))
 
     # impl ProjectivePlanePrimitive<PgPoint> for PgLine:
 

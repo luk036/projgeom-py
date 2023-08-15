@@ -59,10 +59,10 @@ struct LArch {}
 
 
 def main():
-    let p = PArch();
-    let q = PArch();
-    let r = PArch();
-    let l = &LArch();
-    println!("{}", p == q);
-    println!("{}", p.incident(l));
-    println!("{}", coincident(&p, &q, &r));
+    let pt_p = PArch();
+    let pt_q = PArch();
+    let pt_r = PArch();
+    let ln_l = &LArch();
+    println!("{}", pt_p == pt_q);
+    println!("{}", pt_p.incident(ln_l));
+    println!("{}", coincident(&pt_p, &pt_q, &pt_r));

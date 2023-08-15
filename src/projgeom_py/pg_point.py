@@ -9,10 +9,10 @@ class PgPoint(PgObject["PgLine"]):
 
     Examples:
         >>> from projgeom_py.pg_point import PgPoint, PgLine
-        >>> p = PgPoint([1, 2, 3])
-        >>> l = p.aux()
-        >>> assert isinstance(l, PgLine)
-        >>> assert not p.incident(l)
+        >>> pt_p = PgPoint([1, 2, 3])
+        >>> ln_l = pt_p.aux()
+        >>> assert isinstance(ln_l, PgLine)
+        >>> assert not pt_p.incident(ln_l)
     """
 
     def dual(self) -> type:
@@ -31,10 +31,10 @@ class PgLine(PgObject[PgPoint]):
 
     Examples:
         >>> from projgeom_py.pg_point import PgPoint, PgLine
-        >>> l = PgLine([1, 2, 3])
-        >>> p = l.aux()
-        >>> assert isinstance(p, PgPoint)
-        >>> assert not l.incident(p)
+        >>> ln_l = PgLine([1, 2, 3])
+        >>> pt_p = ln_l.aux()
+        >>> assert isinstance(pt_p, PgPoint)
+        >>> assert not ln_l.incident(pt_p)
     """
 
     def dual(self) -> type:

@@ -166,7 +166,7 @@ Implement your changes
 
 #. Create a branch to hold your changes::
 
-    git checkout -b my-feature
+    git checkout -pt_b my-feature
 
    and start making changes. Never work on the main branch!
 
