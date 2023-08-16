@@ -52,7 +52,7 @@ class PgLine:
         return dot(self.coord, point.coord)
         # basic measurement
 
-    def plucker(lambda_: int, pt_p, mu_: int, pt_q):
+    def parametrize(lambda_: int, pt_p, mu_: int, pt_q):
         """_summary_
 
         Args:

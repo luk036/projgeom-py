@@ -1,5 +1,5 @@
 class Foo:
-    def __init__(self, pt_a):
+    def __init__(self, a):
         self.a = a
 
     def whatisme(self):
@@ -13,8 +13,8 @@ class Foo:
 
 
 class FooBar(Foo):
-    def __init__(self, pt_a):
-        Foo.__init__(self, pt_a)
+    def __init__(self, a):
+        Foo.__init__(self, a)
 
     def dual(self):
         return bool

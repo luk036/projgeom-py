@@ -32,7 +32,7 @@ class PerspPoint(PgObject["PerspLine"]):
         """
         alpha = L_INF.dot(other)
         beta = L_INF.dot(self)
-        return self.plucker(alpha, other, beta)
+        return self.parametrize(alpha, other, beta)
 
 
 class PerspLine(PgObject[PerspPoint]):
@@ -49,12 +49,12 @@ class PerspLine(PgObject[PerspPoint]):
         """
         The `perp` function returns a `PerspPoint` object that is obtained by taking the dot product of
         `self` with `I_RE` and `I_IM`, and then using the results to create a new `PerspPoint` object
-        using the `plucker` method of `I_RE`.
+        using the `parametrize` method of `I_RE`.
         :return: a PerspPoint object.
         """
         alpha = I_RE.dot(self)
         beta = I_IM.dot(self)
-        return I_RE.plucker(alpha, I_IM, beta)
+        return I_RE.parametrize(alpha, I_IM, beta)
 
     def is_parallel(self, other: Self) -> bool:
         """

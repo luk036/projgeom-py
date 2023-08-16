@@ -8,14 +8,14 @@ from .pg_plane import ProjectivePlane
 Dual = TypeVar("Dual", bound="PgObject")
 
 
-def dot(pt_a: List[int], pt_b: List[int]) -> int:
+def dot(vec_a: List[int], vec_b: List[int]) -> int:
     """
     The `dot` function calculates the dot product of two lists of integers.
 
-    :param pt_a: a is a list of integers
-    :type pt_a: List[int]
-    :param pt_b: The parameter `pt_b` is a list of integers
-    :type pt_b: List[int]
+    :param vec_a: a is a list of integers
+    :type vec_a: List[int]
+    :param vec_b: The parameter `vec_b` is a list of integers
+    :type vec_b: List[int]
     :return: The function `dot` returns the dot product of two lists of integers.
 
     Examples:
@@ -24,17 +24,17 @@ def dot(pt_a: List[int], pt_b: List[int]) -> int:
         >>> dot([1, 2, 3], [4, 5, 6]) == 32
         True
     """
-    return pt_a[0] * pt_b[0] + pt_a[1] * pt_b[1] + pt_a[2] * pt_b[2]
+    return vec_a[0] * vec_b[0] + vec_a[1] * vec_b[1] + vec_a[2] * vec_b[2]
 
 
-def cross(pt_a: List[int], pt_b: List[int]) -> List[int]:
+def cross(vec_a: List[int], vec_b: List[int]) -> List[int]:
     """
     The `cross` function calculates the cross product of two vectors.
 
-    :param pt_a: a is a list of integers
-    :type pt_a: List[int]
-    :param pt_b: The parameter `pt_b` is a list of integers
-    :type pt_b: List[int]
+    :param vec_a: a is a list of integers
+    :type vec_a: List[int]
+    :param vec_b: The parameter `vec_b` is a list of integers
+    :type vec_b: List[int]
     :return: The function `cross` returns a list of three integers.
 
     Examples:
@@ -44,25 +44,23 @@ def cross(pt_a: List[int], pt_b: List[int]) -> List[int]:
         True
     """
     return [
-        pt_a[1] * pt_b[2] - pt_a[2] * pt_b[1],
-        pt_a[2] * pt_b[0] - pt_a[0] * pt_b[2],
-        pt_a[0] * pt_b[1] - pt_a[1] * pt_b[0],
+        vec_a[1] * vec_b[2] - vec_a[2] * vec_b[1],
+        vec_a[2] * vec_b[0] - vec_a[0] * vec_b[2],
+        vec_a[0] * vec_b[1] - vec_a[1] * vec_b[0],
     ]
 
 
-def plckr(lambda_: int, pt_p: List[int], mu_: int, pt_q: List[int]) -> List[int]:
-    """
-    The `plckr` function calculates the Plucker operation by multiplying each element of `pt_p` by `lambda_` and
-    each element of `pt_q` by `mu_`, and then adding the corresponding elements together.
+def plckr(lambda_: int, vec_a: List[int], mu_: int, vec_b: List[int]) -> List[int]:
+    """Homogeneous parametrization of point or line
 
-    :param lambda_: lambda_ is an integer representing the scalar coefficient for the first vector pt_p in the Plucker operation
+    :param lambda_: lambda_ is an integer representing the scalar coefficient for the first vector vec_a in the Plucker operation
     :type lambda_: int
-    :param pt_p: The parameter `pt_p` is a list of three integers
-    :type pt_p: List[int]
+    :param vec_a: The parameter `vec_a` is a list of three integers
+    :type vec_a: List[int]
     :param mu_: The `mu_` parameter represents a scalar value that is used in the Plucker operation.
     :type mu_: int
-    :param pt_q: The parameter `pt_q` is a list of integers
-    :type pt_q: List[int]
+    :param vec_b: The parameter `vec_b` is a list of integers
+    :type vec_b: List[int]
     :return: The `plckr` function returns a list of three integers.
 
     Examples:
@@ -72,9 +70,9 @@ def plckr(lambda_: int, pt_p: List[int], mu_: int, pt_q: List[int]) -> List[int]
         True
     """
     return [
-        lambda_ * pt_p[0] + mu_ * pt_q[0],
-        lambda_ * pt_p[1] + mu_ * pt_q[1],
-        lambda_ * pt_p[2] + mu_ * pt_q[2],
+        lambda_ * vec_a[0] + mu_ * vec_b[0],
+        lambda_ * vec_a[1] + mu_ * vec_b[1],
+        lambda_ * vec_a[2] + mu_ * vec_b[2],
     ]
 
 
@@ -162,22 +160,21 @@ class PgObject(ProjectivePlane[Dual, int]):
         """
         return dot(self.coord, line.coord)
 
-    def plucker(self, lambda_: int, pt_q: Self, mu_: int) -> Self:
-        """
-        The `plucker` function performs a plucker operation on two PgObject instances.
+    def parametrize(self, lambda_: int, pt_q: Self, mu_: int) -> Self:
+        """Homogeneous parametrization of point or line
 
-        :param lambda_: The parameter `lambda_` represents the index of the coordinate to be used in the plucker operation
+        :param lambda_: The parameter `lambda_` represents the index of the coordinate to be used in the parametrize operation
         :type lambda_: int
         :param pt_q: The parameter `pt_q` is an instance of the `PgObject` class
         :type pt_q: Self
-        :param mu_: The parameter `mu_` is an integer that represents the scalar multiplier for the `pt_q` object in the plucker operation
+        :param mu_: The parameter `mu_` is an integer that represents the scalar multiplier for the `pt_q` object in the parametrize operation
         :type mu_: int
-        :return: The plucker method returns an instance of the PgObject class.
+        :return: The parametrize method returns an instance of the PgObject class.
 
         Examples:
             >>> pt_p = PgObject([1, 2, 3])
             >>> pt_q = PgObject([4, 5, 6])
-            >>> pt_p.plucker(1, pt_q, 2) == PgObject([9, 12, 15])
+            >>> pt_p.parametrize(1, pt_q, 2) == PgObject([9, 12, 15])
             True
         """
         Point = type(self)

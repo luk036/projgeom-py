@@ -29,7 +29,7 @@ class ProjectivePlane(Generic[Dual, Value]):
         pass
 
     @abstractmethod
-    def plucker(self, lambda_: Value, pt_q: Self, mu_: Value) -> Self:
+    def parametrize(self, lambda_: Value, pt_q: Self, mu_: Value) -> Self:
         pass
 
     @abstractmethod
@@ -61,7 +61,7 @@ class ProjectivePlane(Generic[Dual, Value]):
         assert self.coincident(pt_a, pt_b)
         ab = pt_a.meet(pt_b)
         lc = ab.aux().meet(self)
-        return pt_a.plucker(lc.dot(pt_b), pt_b, lc.dot(pt_a))
+        return pt_a.parametrize(lc.dot(pt_b), pt_b, lc.dot(pt_a))
 
 
 Point = ProjectivePlane["Line", Value]
@@ -206,7 +206,7 @@ def check_desargue(tri_1: List[Point], tri_2: List[Point]) -> bool:
 # trait ProjectivePlane<Line, Value: Default + Eq>: ProjectivePlanePrimitive<Line>:
 #     def aux(self) -> Line
 #     def dot(self, line) -> Value; # basic measurement
-#     def plucker(lambda_: Value, pt_p: Self, mu_: Value, pt_q: Self)
+#     def parametrize(lambda_: Value, pt_p: Self, mu_: Value, pt_q: Self)
 #     def incident(self, line) -> bool:
 #         self.dot(line) == Value::default()
 
@@ -227,7 +227,7 @@ def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point):
     ab = pt_a.meet(pt_b)
     lc = ab.aux().meet(pt_c)
     # Point = type(pt_a)
-    return pt_a.plucker(lc.dot(pt_b), pt_b, lc.dot(pt_a))
+    return pt_a.parametrize(lc.dot(pt_b), pt_b, lc.dot(pt_a))
 
 
 def involution(origin: Point, mirror: Point, pt_p: Point):

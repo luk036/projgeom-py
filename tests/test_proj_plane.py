@@ -10,7 +10,7 @@ def check_pg_plane(pt_p: ProjectivePlane, pt_q: ProjectivePlane):
     assert ln_l == pt_q.meet(pt_p)
     assert ln_l.incident(pt_p)
     assert ln_l.incident(pt_q)
-    pq = pt_p.plucker(2, pt_q, 3)
+    pq = pt_p.parametrize(2, pt_q, 3)
     assert coincident(pt_p, pt_q, pq)
     pt_h = harm_conj(pt_p, pt_q, pq)
     assert harm_conj(pt_p, pt_q, pt_h) == pq
@@ -25,6 +25,6 @@ def test_pg_point(pz, qz):
 
 @given(integers(), integers())
 def test_pg_line(pz, qz):
-    pt_p = PgLine([1, 3, pz])
-    pt_q = PgLine([-2, 1, qz])
-    check_pg_plane(pt_p, pt_q)
+    ln_l = PgLine([1, 3, pz])
+    ln_m = PgLine([-2, 1, qz])
+    check_pg_plane(ln_l, ln_m)
