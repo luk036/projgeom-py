@@ -5,13 +5,12 @@ class MyCKPoint(PgObject["MyCKLine"]):
     """
     A customized point class for Cayley-Klein geometry.
     """
-
     def dual(self) -> type:
         return MyCKLine
 
     def perp(self):
         """
-        The `perp` function returns a `MyCKLine` object that is perpendicular to the current line.
+        The perp function returns an instance of the MyCKLine class that represents a polar line.
         :return: an instance of the MyCKLine class.
         """
         coord = self.coord
@@ -27,9 +26,7 @@ class MyCKLine(PgObject[MyCKPoint]):
         return MyCKPoint
 
     def perp(self) -> MyCKPoint:
-        """
-        The `perp` function returns a new `MyCKPoint` object with the coordinates of the original object
-        negated along the x-axis and z-axis, and doubled along the y-axis.
+        """Pole of the line.
         :return: The `perp` method returns a `MyCKPoint` object.
         """
         coord = self.coord

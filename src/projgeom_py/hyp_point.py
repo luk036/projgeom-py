@@ -11,9 +11,8 @@ class HyperbolicPoint(PgObject["HyperbolicLine"]):
         return HyperbolicLine
 
     def perp(self):
-        """
-        The `perp` function returns a HyperbolicLine object that is perpendicular to the current HyperbolicLine
-        object.
+        """Polar line of the point.
+
         :return: a HyperbolicLine object.
         """
         return HyperbolicLine([self.coord[0], self.coord[1], -self.coord[2]])

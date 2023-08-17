@@ -11,10 +11,17 @@ from .pg_plane import ProjectivePlane, Value, involution
 Dual = TypeVar("Dual", bound="CayleyKleinPlane")
 
 
-# Object in Cayley-Klein Plane
 class CayleyKleinPlane(ProjectivePlane[Dual, Value]):
+    """
+    The class CayleyKleinPlane represents a Cayley-Klein plane in projective geometry.
+    """
+
     @abstractmethod
     def perp(self) -> Dual:
+        """Pole or Polar
+ 
+        The `perp` function returns the pole or polar of an object.
+        """
         pass
 
 
