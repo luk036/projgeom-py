@@ -16,7 +16,8 @@ class PerspPoint(PgObject["PerspLine"]):
         return PerspLine
 
     def perp(self) -> "PerspLine":
-        """
+        """Polar
+
         The `perp` function returns a `PerspLine` object.
         :return: The code is returning the value of the variable `L_INF`.
         """
@@ -46,7 +47,8 @@ class PerspLine(PgObject[PerspPoint]):
         return PerspPoint
 
     def perp(self) -> PerspPoint:
-        """
+        """Pole
+
         The `perp` function returns a `PerspPoint` object that is obtained by taking the dot product of
         `self` with `I_RE` and `I_IM`, and then using the results to create a new `PerspPoint` object
         using the `parametrize` method of `I_RE`.
