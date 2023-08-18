@@ -40,7 +40,7 @@ def is_perpendicular(l_1: LineCk, l_2: LineCk) -> bool:
     :return: a boolean value, indicating whether the two given lines are perpendicular to each other.
 
     Examples:
-        >>> from projgeom_py.hyp_point import HyperbolicLine, HyperbolicPoint
+        >>> from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
         >>> is_perpendicular(HyperbolicLine([0, 1, 0]), HyperbolicLine([0, 0, 1]))
         True
         >>> is_perpendicular(HyperbolicLine([0, 1, 0]), HyperbolicLine([0, 0, -1]))
@@ -61,7 +61,7 @@ def altitude(pt_p: PointCk, ln_l: LineCk) -> LineCk:
     :return: The function `altitude` returns a `CayleyKleinPlanePrimitive<Line>` object.
 
     Examples:
-        >>> from projgeom_py.hyp_point import HyperbolicLine, HyperbolicPoint
+        >>> from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
         >>> t = altitude(HyperbolicPoint([0, 1, 0]), HyperbolicLine([0, 0, 1]))
         >>> t == HyperbolicLine([1, 0, 0])
         True
@@ -78,7 +78,7 @@ def orthocenter(triangle: List[PointCk]):
     :return: The function `orthocenter` returns a `CayleyKleinPlanePrimitive<Point>` object.
 
     Examples:
-        >>> from projgeom_py.hyp_point import HyperbolicLine, HyperbolicPoint
+        >>> from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
         >>> t = orthocenter([HyperbolicPoint([0, 1, 0]), HyperbolicPoint([0, 0, 1]), HyperbolicPoint([1, 0, 0])])
         >>> t == HyperbolicPoint([1, 1, 1])
         True
@@ -116,7 +116,7 @@ def reflect(mirror: CayleyKleinPlane, pt_p: CayleyKleinPlane):
     :type pt_p: CayleyKleinPlane
 
     Examples:
-        >>> from projgeom_py.hyp_point import HyperbolicLine, HyperbolicPoint
+        >>> from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
         >>> t = reflect(HyperbolicLine([0, 1, 0]), HyperbolicPoint([0, 0, 1]))
         >>> t == HyperbolicPoint([0, 1, 0])
         False

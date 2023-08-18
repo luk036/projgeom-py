@@ -1,8 +1,8 @@
 from hypothesis import given
 from hypothesis.strategies import integers
 
-from projgeom_py.pg_plane import ProjectivePlane, coincident, harm_conj
-from projgeom_py.pg_point import PgLine, PgPoint
+from projgeom.pg_plane import ProjectivePlane, coincident, harm_conj
+from projgeom.pg_object import PgLine, PgPoint
 
 
 def check_pg_plane(pt_p: ProjectivePlane, pt_q: ProjectivePlane):

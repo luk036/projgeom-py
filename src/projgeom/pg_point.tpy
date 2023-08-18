@@ -8,7 +8,7 @@ class PgPoint(PgObject["PgLine"]):
     the dual line of the point.
 
     Examples:
-        >>> from projgeom_py.pg_point import PgPoint, PgLine
+        >>> from projgeom.pg_point import PgPoint, PgLine
         >>> pt_p = PgPoint([1, 2, 3])
         >>> ln_l = pt_p.aux()
         >>> assert isinstance(ln_l, PgLine)
@@ -30,7 +30,7 @@ class PgLine(PgObject[PgPoint]):
     dual object, which is a `PgPoint`.
 
     Examples:
-        >>> from projgeom_py.pg_point import PgPoint, PgLine
+        >>> from projgeom.pg_point import PgPoint, PgLine
         >>> ln_l = PgLine([1, 2, 3])
         >>> pt_p = ln_l.aux()
         >>> assert isinstance(pt_p, PgPoint)

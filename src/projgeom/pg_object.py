@@ -208,3 +208,44 @@ class PgObject(ProjectivePlane[Dual, int]):
         :return: a Dual object.
         """
         return self.dual()(cross(self.coord, rhs.coord))
+
+
+class PgPoint(PgObject["PgLine"]):
+    """Projective Geometry Point
+
+    The `PgPoint` class represents a point in projective geometry and has a method `dual()` that returns
+    the dual line of the point.
+
+    Examples:
+        >>> from projgeom.pg_point import PgPoint, PgLine
+        >>> pt_p = PgPoint([1, 2, 3])
+        >>> ln_l = pt_p.aux()
+        >>> assert isinstance(ln_l, PgLine)
+        >>> assert not pt_p.incident(ln_l)
+    """
+
+    def dual(self) -> type:
+        """
+        The `dual` function returns the type `PgLine`.
+        :return: The `dual` method is returning the type `PgLine`.
+        """
+        return PgLine
+
+
+class PgLine(PgObject[PgPoint]):
+    """Projective Geometry Line
+
+    The `PgLine` class represents a projective geometry line and has a method `dual()` that returns the
+    dual object, which is a `PgPoint`.
+
+    Examples:
+        >>> from projgeom.pg_point import PgPoint, PgLine
+        >>> ln_l = PgLine([1, 2, 3])
+        >>> pt_p = ln_l.aux()
+        >>> assert isinstance(pt_p, PgPoint)
+        >>> assert not ln_l.incident(pt_p)
+    """
+
+    def dual(self) -> type:
+        return PgPoint
+

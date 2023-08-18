@@ -1,19 +1,19 @@
 from hypothesis import given
 from hypothesis.strategies import integers
 
-from projgeom_py.ck_plane import (
+from projgeom.ck_plane import (
     CayleyKleinPlane,
     is_perpendicular,
     orthocenter,
     tri_altitude,
 )
-from projgeom_py.ell_point import EllipticLine, EllipticPoint
-from projgeom_py.hyp_point import HyperbolicLine, HyperbolicPoint
-from projgeom_py.myck_point import MyCKLine, MyCKPoint
-from projgeom_py.persp_point import PerspPoint
+from projgeom.ell_object import EllipticLine, EllipticPoint
+from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
+from projgeom.myck_object import MyCKLine, MyCKPoint
+from projgeom.persp_object import PerspPoint
 
-# from projgeom_py.pg_plane import coincident, harm_conj
-from projgeom_py.pg_plane import tri_dual
+# from projgeom.pg_plane import coincident, harm_conj
+from projgeom.pg_plane import tri_dual
 
 
 def check_ck_plane(a_1: CayleyKleinPlane, a_2: CayleyKleinPlane, a_3: CayleyKleinPlane):
