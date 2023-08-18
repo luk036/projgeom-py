@@ -108,7 +108,7 @@ def coincident(pt_p: Point, pt_q: Point, pt_r: Point) -> bool:
     :return: The function `coincident` returns a boolean value.
 
     Examples:
-        >>> from projgeom.pg_point import PgLine, PgPoint
+        >>> from projgeom.pg_object import PgLine, PgPoint
         >>> coincident(PgPoint([0, 1, 0]), PgPoint([0, 0, 1]), PgPoint([1, 0, 0]))
         False
     """
@@ -126,7 +126,7 @@ def check_pappus(coline1: List[Point], coline2: List[Point]) -> bool:
     :return: a boolean value.
 
     Examples:
-        >>> from projgeom.pg_point import PgLine, PgPoint
+        >>> from projgeom.pg_object import PgLine, PgPoint
         >>> coline1 = [PgPoint([0, 1, 0]), PgPoint([0, 0, 1]), PgPoint([1, 0, 0])]
         >>> coline2 = [PgPoint([0, 0, 1]), PgPoint([0, 1, 0]), PgPoint([1, 0, 0])]
         >>> check_pappus(coline1, coline2)
@@ -166,7 +166,7 @@ def persp(tri_1: List[Point], tri_2: List[Point]) -> bool:
     :return: a boolean value.
 
     Examples:
-        >>> from projgeom.pg_point import PgLine, PgPoint
+        >>> from projgeom.pg_object import PgLine, PgPoint
         >>> tri_1 = [PgPoint([0, 1, 0]), PgPoint([0, 0, 1]), PgPoint([1, 0, 0])]
         >>> tri_2 = [PgPoint([0, 0, 1]), PgPoint([0, 1, 0]), PgPoint([1, 0, 0])]
         >>> persp(tri_1, tri_2)
@@ -190,7 +190,7 @@ def check_desargue(tri_1: List[Point], tri_2: List[Point]) -> bool:
     :return: a boolean value.
 
     Examples:
-        >>> from projgeom.pg_point import PgLine, PgPoint
+        >>> from projgeom.pg_object import PgLine, PgPoint
         >>> tri_1 = [PgPoint([0, 1, 0]), PgPoint([0, 0, 1]), PgPoint([1, 0, 0])]
         >>> tri_2 = [PgPoint([0, 0, 1]), PgPoint([0, 1, 0]), PgPoint([1, 0, 0])]
         >>> check_desargue(tri_1, tri_2)
