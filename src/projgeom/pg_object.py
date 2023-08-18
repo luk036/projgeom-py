@@ -248,4 +248,3 @@ class PgLine(PgObject[PgPoint]):
 
     def dual(self) -> type:
         return PgPoint
-

@@ -5,6 +5,7 @@ class MyCKPoint(PgObject["MyCKLine"]):
     """
     A customized point class for Cayley-Klein geometry.
     """
+
     def dual(self) -> type:
         return MyCKLine
 

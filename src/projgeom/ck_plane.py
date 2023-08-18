@@ -19,7 +19,7 @@ class CayleyKleinPlane(ProjectivePlane[Dual, Value]):
     @abstractmethod
     def perp(self) -> Dual:
         """Pole or Polar
- 
+
         The `perp` function returns the pole or polar of an object.
         """
         pass

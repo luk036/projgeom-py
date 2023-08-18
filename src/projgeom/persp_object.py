@@ -11,6 +11,7 @@ class PerspPoint(PgObject["PerspLine"]):
     The PerspPoint class represents a point in a perspective plane and provides methods for calculating
     the dual, perpendicular line, and midpoint of the point.
     """
+
     def dual(self) -> type:
         return PerspLine
 
