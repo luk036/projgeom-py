@@ -105,13 +105,26 @@ class PgObject(ProjectivePlane[Dual, int]):
         :type coord: List[int]
 
         Examples:
-           >>> pt_p = PgObject([3, 4, 5])
-           >>> pt_p.coord
-           [3, 4, 5]
+            >>> pt_p = PgObject([3, 4, 5])
+            >>> pt_p.coord
+            [3, 4, 5]
         """
         self.coord = coord
 
     # impl PartialEq for PgObject:
+
+    def __str__(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+
+        Examples:
+            >>> pt_p = PgObject([3, 4, 5])
+            >>> print(pt_p)
+            [3 : 4 : 5]
+        """
+        return "[{self.coord[0]} : {self.coord[1]} : {self.coord[2]}]".format(self=self)
 
     def __eq__(self, other) -> bool:
         """
