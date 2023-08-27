@@ -91,7 +91,7 @@ def orthocenter(triangle: List[PointCk]):
 
 def tri_altitude(triangle):
     """
-    The function `tri_altitude` calculates the altitudes of a triangle given its side lengths.
+    The function `tri_altitude` calculates the altitudes of a triangle.
 
     :param triangle: The `triangle` parameter is a list containing three elements. Each element represents a side of a triangle
     :return: a list of altitudes of a triangle.
