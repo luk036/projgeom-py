@@ -37,7 +37,7 @@ class ProjectivePlane(Generic[Dual, Value]):
         return self.dot(line) == 0
 
     def coincident(self, pt_q: Self, pt_r: Self) -> bool:
-        """
+        r"""
         The `coincident` function checks if three points `pt_p`, `pt_q`, and `pt_r` are collinear.
 
         :param pt_q: pt_q is an instance of the class ProjectivePlanePrimitive<Point>
@@ -45,6 +45,18 @@ class ProjectivePlane(Generic[Dual, Value]):
         :param pt_r: The parameter `pt_r` is of type `ProjectivePlanePrimitive<Point>`
         :type pt_r: Self
         :return: A boolean value is being returned.
+
+        .. svgbob::
+           :align: center
+
+                 |  /
+               \ | /       coincidence
+                \|/
+                 o      -----o------o---o---
+                /|\           A      B   C
+               / | \
+              l  |  \
+                 m   n
         """
         return self.meet(pt_q).incident(pt_r)
 
@@ -141,7 +153,7 @@ def check_pappus(coline1: List[Point], coline2: List[Point]) -> bool:
 
 
 def tri_dual(triangle: Sequence) -> List:
-    """
+    r"""
     The function `tri_dual` takes a list of three `ProjectivePlanePrimitive` objects representing a triangle and
     returns a list of three `ProjectivePlanePrimitive` objects representing the circumcircles of the triangle's
     three edges.
@@ -149,6 +161,20 @@ def tri_dual(triangle: Sequence) -> List:
     :param triangle: The `triangle` parameter is expected to be a sequence (pt_e.pt_g., list, tuple) of three elements. Each element should be an object of type `ProjectivePlanePrimitive`
     :type triangle: Sequence
     :return: The function `tri_dual` returns a list of three `ProjectivePlanePrimitive` objects.
+
+    .. svgbob::
+       :align: center
+
+                          a
+               \         /
+                \ A     /
+         c ------o-----o--------
+                  \   / B
+                   \ /
+                  C o    triangle,
+                   / \     trilateral
+                  /   \
+                       b
     """
     [a_1, a_2, a_3] = triangle
     assert not coincident(a_1, a_2, a_3)
