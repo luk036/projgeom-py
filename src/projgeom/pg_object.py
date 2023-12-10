@@ -1,8 +1,6 @@
 from abc import abstractmethod
 from typing import List, TypeVar
 
-from typing_extensions import Self
-
 from .pg_plane import ProjectivePlane
 
 Dual = TypeVar("Dual", bound="PgObject")
@@ -173,13 +171,15 @@ class PgObject(ProjectivePlane[Dual, int]):
         """
         return dot(self.coord, line.coord)
 
-    def parametrize(self, lambda_: int, pt_q: Self, mu_: int) -> Self:
+    def parametrize(
+        self, lambda_: int, pt_q: "PgObject[Dual]", mu_: int
+    ) -> "PgObject[Dual]":
         """Homogeneous parametrization of point or line
 
         :param lambda_: The parameter `lambda_` represents the index of the coordinate to be used in the parametrize operation
         :type lambda_: int
         :param pt_q: The parameter `pt_q` is an instance of the `PgObject` class
-        :type pt_q: Self
+        :type pt_q: "PgObject[Dual]"
         :param mu_: The parameter `mu_` is an integer that represents the scalar multiplier for the `pt_q` object in the parametrize operation
         :type mu_: int
         :return: The parametrize method returns an instance of the PgObject class.
@@ -211,13 +211,13 @@ class PgObject(ProjectivePlane[Dual, int]):
         """
         return dot(self.coord, rhs.coord) == 0
 
-    def meet(self, rhs: Self) -> Dual:
+    def meet(self, rhs: "PgObject[Dual]") -> Dual:
         """
         The `meet` function performs a join or meet operation on two `PgObject` objects and returns a
         `Dual` object.
 
         :param rhs: The parameter `rhs` stands for "right-hand side" and it represents another `PgObject` object that is being passed as an argument to the `meet` method
-        :type rhs: Self
+        :type rhs: "PgObject[Dual]"
         :return: a Dual object.
         """
         return self.dual()(cross(self.coord, rhs.coord))

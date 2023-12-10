@@ -1,5 +1,3 @@
-from typing_extensions import Self
-
 from .pg_object import PgObject
 
 
@@ -23,12 +21,12 @@ class PerspPoint(PgObject["PerspLine"]):
         """
         return L_INF
 
-    def midpoint(self, other: Self) -> Self:
+    def midpoint(self, other: "PerspPoint") -> "PerspPoint":
         """
         The `midpoint` function calculates the midpoint between two PerspPoint objects.
 
         :param other: The `other` parameter is an instance of the same class as `self`. It represents another point that you want to find the midpoint with
-        :type other: Self
+        :type other: "PerspPoint"
         :return: The `midpoint` method returns an instance of the `PerspPoint` class.
         """
         alpha = L_INF.dot(other)
@@ -58,13 +56,13 @@ class PerspLine(PgObject[PerspPoint]):
         beta = I_IM.dot(self)
         return I_RE.parametrize(alpha, I_IM, beta)
 
-    def is_parallel(self, other: Self) -> bool:
+    def is_parallel(self, other: "PerspPoint") -> bool:
         """
         The function checks if two lines are parallel by calculating the dot product of their direction
         vectors.
 
         :param other: The "other" parameter is an object of the same class as the current object. It represents another instance of the class that we want to check for parallelism with the current object
-        :type other: Self
+        :type other: "PerspPoint"
         :return: a boolean value, indicating whether the two objects are parallel or not.
         """
         return L_INF.dot(self.meet(other)) == 0
