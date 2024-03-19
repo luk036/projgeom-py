@@ -1,66 +1,72 @@
 from abc import abstractmethod
-from typing import Generic, List, Sequence, TypeVar
+from typing import Generic, List, TypeVar
 
 Dual = TypeVar("Dual", bound="ProjectivePlane")
 Value = TypeVar("Value", bound=int)
 
 
 class ProjectivePlane(Generic[Dual, Value]):
+    """The `ProjectivePlane` trait defines the behavior of points and lines in a projective plane.
+    It requires two associated types: `Dual`, which represents the dual object (line or point) in the
+    projective plane, and `Self`, which represents the object implementing the trait.
+    """
+
     @abstractmethod
     def dual(self) -> type:
-        pass
+        """Returns the dual of this point or line."""
 
     @abstractmethod
     def __eq__(self, rhs) -> bool:
-        pass
+        """Returns true if the two objects are equal."""
 
     @abstractmethod
     def meet(self, rhs: "ProjectivePlane[Dual, Value]") -> Dual:
-        pass
+        """Returns the join or meet of two objects."""
 
     @abstractmethod
     def aux(self) -> Dual:
-        pass
+        """Dual not incident with Self"""
 
     @abstractmethod
     def dot(self, line: Dual) -> Value:
-        pass
+        """(for basic measurement)"""
 
     @abstractmethod
     def parametrize(
         self, lambda_: Value, pt_q: "ProjectivePlane[Dual, Value]", mu_: Value
     ) -> "ProjectivePlane[Dual, Value]":
-        pass
+        """Parametrize a point on the line through pt_q and self."""
 
     @abstractmethod
     def incident(self, line: Dual) -> bool:
+        """Check if two objects are incident"""
         return self.dot(line) == 0
 
-    def coincident(
-        self, pt_q: "ProjectivePlane[Dual, Value]", pt_r: "ProjectivePlane[Dual, Value]"
-    ) -> bool:
-        r"""
-        The `coincident` function checks if three points `pt_p`, `pt_q`, and `pt_r` are collinear.
+    # def coincident(
+    #     self, pt_q: "ProjectivePlane[Dual, Value]", pt_r: "ProjectivePlane[Dual, Value]"
+    # ) -> bool:
+    #     r"""
+    #     The `coincident` function checks if three points `pt_p`, `pt_q`, and `pt_r` are collinear.
 
-        :param pt_q: pt_q is an instance of the class ProjectivePlanePrimitive<Point>
-        :type pt_q: "ProjectivePlane[Dual, Value]"
-        :param pt_r: The parameter `pt_r` is of type `ProjectivePlanePrimitive<Point>`
-        :type pt_r: "ProjectivePlane[Dual, Value]"
-        :return: A boolean value is being returned.
+    #     :param pt_q: pt_q is an instance of the class ProjectivePlanePrimitive<Point>
+    #     :type pt_q: "ProjectivePlane[Dual, Value]"
+    #     :param pt_r: The parameter `pt_r` is of type `ProjectivePlanePrimitive<Point>`
+    #     :type pt_r: "ProjectivePlane[Dual, Value]"
+    #     :return: A boolean value is being returned.
 
-        .. svgbob::
-           :align: center
+    #     .. svgbob::
+    #        :align: center
 
-                 |  /
-               \ | /       coincidence
-                \|/
-                 o      -----o------o---o---
-                /|\           A      B   C
-               / | \
-              l  |  \
-                 m   n
-        """
-        return self.meet(pt_q).incident(pt_r)
+    #              |  /
+    #            \ | /       coincidence
+    #             \|/
+    #              o      -----o------o---o---
+    #             /|\           A      B   C
+    #            / | \
+    #           l  |  \
+    #              m   n
+    #     """
+    #     return self.meet(pt_q).incident(pt_r)
 
     def harm_conj(
         self, pt_a: "ProjectivePlane[Dual, Value]", pt_b: "ProjectivePlane[Dual, Value]"
@@ -75,20 +81,13 @@ class ProjectivePlane(Generic[Dual, Value]):
         :return: a ProjectivePlane object.
         """
         assert self.coincident(pt_a, pt_b)
-        ab = pt_a.meet(pt_b)
-        lc = ab.aux().meet(self)
-        return pt_a.parametrize(lc.dot(pt_b), pt_b, lc.dot(pt_a))
+        ln_ab = pt_a.meet(pt_b)
+        ln_c = ln_ab.aux().meet(self)
+        return pt_a.parametrize(ln_c.dot(pt_b), pt_b, ln_c.dot(pt_a))
 
 
 Point = ProjectivePlane["Line", Value]
 Line = ProjectivePlane["Point", Value]
-
-# ProjectivePlanePrimitive = PgObject
-
-# trait ProjectivePlanePrimitive<Line>: Eq {
-#     def meet(self, rhs: "ProjectivePlane[Dual, Value]") -> Line
-#     def incident(self, line) -> bool
-# }
 
 
 def check_axiom(pt_p: Point, pt_q: Point, ln_l: Line):
@@ -111,7 +110,7 @@ def check_axiom(pt_p: Point, pt_q: Point, ln_l: Line):
 
 
 def coincident(pt_p: Point, pt_q: Point, pt_r: Point) -> bool:
-    """
+    r"""
     The `coincident` function checks if three points `pt_p`, `pt_q`, and `pt_r` are collinear in a projective
     plane.
 
@@ -122,6 +121,18 @@ def coincident(pt_p: Point, pt_q: Point, pt_r: Point) -> bool:
     :param pt_r: The parameter `pt_r` represents a point in a projective plane
     :type pt_r: Point
     :return: The function `coincident` returns a boolean value.
+
+    .. svgbob::
+       :align: center
+
+             |  /
+           \ | /       coincidence
+            \|/
+             o      -----o------o---o---
+            /|\           A      B   C
+           / | \
+          l  |  \
+             m   n
 
     Examples:
         >>> from projgeom.pg_object import PgLine, PgPoint
@@ -156,7 +167,7 @@ def check_pappus(coline1: List[Point], coline2: List[Point]) -> bool:
     return coincident(pt_g, pt_h, pt_i)
 
 
-def tri_dual(triangle: Sequence) -> List:
+def tri_dual(triangle: List[Point]) -> List[Line]:
     r"""
     The function `tri_dual` takes a list of three `ProjectivePlanePrimitive` objects representing a triangle and
     returns a list of three `ProjectivePlanePrimitive` objects representing the circumcircles of the triangle's
@@ -240,6 +251,26 @@ def check_desargue(tri_1: List[Point], tri_2: List[Point]) -> bool:
 #     def incident(self, line) -> bool:
 #         self.dot(line) == Value::default()
 
+def check_axiom2(pt_p: Point, pt_q: Point, ln_l: Line, alpha: Value, beta: Value) -> None:
+    """
+    The function `check_axiom2` checks various axioms related to a projective plane.
+
+    :param pt_p: pt_p is a ProjectivePlanePrimitive object, which represents a point in a projective plane
+    :type pt_p: Point
+    :param pt_q: The parameter `pt_q` is a ProjectivePlanePrimitive object, which represents a point or a line in a projective plane
+    :type pt_q: Point
+    :param line: The `line` parameter represents a projective plane line
+    :type line: Line
+    :param alpha: The parameter `alpha` is a value of type Value, which represents an element in the projective plane's underlying field
+    :type alpha: Value
+    :param beta: The parameter `beta` is a value of type Value, which represents an element in the projective plane's underlying field
+    :type beta: Value
+    """
+    assert pt_p.dot(ln_l) == ln_l.dot(pt_p)
+    assert not pt_p.aux().incident(pt_p)
+    ln_m = pt_p.meet(pt_q)
+    assert ln_m.incident(pt_p.parametrize(alpha, pt_q, beta))
+
 
 def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point):
     """
@@ -254,10 +285,10 @@ def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point):
     :return: The function `harm_conj` returns a `ProjectivePlane` object.
     """
     assert coincident(pt_a, pt_b, pt_c)
-    ab = pt_a.meet(pt_b)
-    lc = ab.aux().meet(pt_c)
+    ln_ab = pt_a.meet(pt_b)
+    ln_c = ln_ab.aux().meet(pt_c)
     # Point = type(pt_a)
-    return pt_a.parametrize(lc.dot(pt_b), pt_b, lc.dot(pt_a))
+    return pt_a.parametrize(ln_c.dot(pt_b), pt_b, ln_c.dot(pt_a))
 
 
 def involution(origin: Point, mirror: Point, pt_p: Point):
