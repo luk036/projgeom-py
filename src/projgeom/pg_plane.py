@@ -251,7 +251,10 @@ def check_desargue(tri_1: List[Point], tri_2: List[Point]) -> bool:
 #     def incident(self, line) -> bool:
 #         self.dot(line) == Value::default()
 
-def check_axiom2(pt_p: Point, pt_q: Point, ln_l: Line, alpha: Value, beta: Value) -> None:
+
+def check_axiom2(
+    pt_p: Point, pt_q: Point, ln_l: Line, alpha: Value, beta: Value
+) -> None:
     """
     The function `check_axiom2` checks various axioms related to a projective plane.
 
