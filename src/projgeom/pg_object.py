@@ -111,6 +111,10 @@ class PgObject(ProjectivePlane[Dual, int]):
 
     # impl PartialEq for PgObject:
 
+    def __repr__(self):
+        """repr(self)"""
+        return f"{self.__class__.__name__}({self.coord[0]} : {self.coord[1]} : {self.coord[2]})"
+ 
     def __str__(self):
         """[summary]
 
@@ -122,7 +126,7 @@ class PgObject(ProjectivePlane[Dual, int]):
             >>> print(pt_p)
             [3 : 4 : 5]
         """
-        return "[{self.coord[0]} : {self.coord[1]} : {self.coord[2]}]".format(self=self)
+        return f"({self.coord[0]} : {self.coord[1]} : {self.coord[2]})"
 
     def __eq__(self, other) -> bool:
         """
