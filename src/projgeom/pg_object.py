@@ -114,7 +114,7 @@ class PgObject(ProjectivePlane[Dual, int]):
     def __repr__(self):
         """repr(self)"""
         return f"{self.__class__.__name__}({self.coord[0]} : {self.coord[1]} : {self.coord[2]})"
- 
+
     def __str__(self):
         """[summary]
 
