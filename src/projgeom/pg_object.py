@@ -124,7 +124,7 @@ class PgObject(ProjectivePlane[Dual, int]):
         Examples:
             >>> pt_p = PgObject([3, 4, 5])
             >>> print(pt_p)
-            [3 : 4 : 5]
+            (3 : 4 : 5)
         """
         return f"({self.coord[0]} : {self.coord[1]} : {self.coord[2]})"
 

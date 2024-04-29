@@ -18,7 +18,7 @@
   <img src="./projective-geometry.svg"/>
 </p>
 
-# projgeom-py
+# 🔯 projgeom-py
 
 > Projective Geometry in Python
 
