@@ -68,22 +68,22 @@ class ProjectivePlane(Generic[Dual, Value]):
     #     """
     #     return self.meet(pt_q).incident(pt_r)
 
-    def harm_conj(
-        self, pt_a: "ProjectivePlane[Dual, Value]", pt_b: "ProjectivePlane[Dual, Value]"
-    ) -> "ProjectivePlane[Dual, Value]":
-        """
-        The `harm_conj` function calculates the harmonic conjugate of two points on a projective plane.
-
-        :param pt_a: The parameter `pt_a` is of type `ProjectivePlane`
-        :type pt_a: "ProjectivePlane[Dual, Value]"
-        :param pt_b: The parameter `pt_b` is of type `ProjectivePlane`
-        :type pt_b: "ProjectivePlane[Dual, Value]"
-        :return: a ProjectivePlane object.
-        """
-        assert self.coincident(pt_a, pt_b)
-        ln_ab = pt_a.meet(pt_b)
-        ln_c = ln_ab.aux().meet(self)
-        return pt_a.parametrize(ln_c.dot(pt_b), pt_b, ln_c.dot(pt_a))
+    # def harm_conj(
+    #     self, pt_a: "ProjectivePlane[Dual, Value]", pt_b: "ProjectivePlane[Dual, Value]"
+    # ) -> "ProjectivePlane[Dual, Value]":
+    #     """
+    #     The `harm_conj` function calculates the harmonic conjugate of two points on a projective plane.
+    #
+    #     :param pt_a: The parameter `pt_a` is of type `ProjectivePlane`
+    #     :type pt_a: "ProjectivePlane[Dual, Value]"
+    #     :param pt_b: The parameter `pt_b` is of type `ProjectivePlane`
+    #     :type pt_b: "ProjectivePlane[Dual, Value]"
+    #     :return: a ProjectivePlane object.
+    #     """
+    #     assert self.coincident(pt_a, pt_b)
+    #     ln_ab = pt_a.meet(pt_b)
+    #     ln_c = ln_ab.aux().meet(self)
+    #     return pt_a.parametrize(ln_c.dot(pt_b), pt_b, ln_c.dot(pt_a))
 
 
 Point = ProjectivePlane["Line", Value]
