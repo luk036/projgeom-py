@@ -80,7 +80,7 @@ class PgObject(ProjectivePlane[Dual, int]):
     The `PgObject` class represents a geometric object in a projective plane with integer coordinates.
 
     :param coord: The `coord` parameter represents a list of three integers that represent the
-    coordinates of the geometric object.
+        coordinates of the geometric object.
     :type coord: List[int]
     :raises ValueError: The `coord` parameter must be a list of three integers.
 
@@ -99,7 +99,7 @@ class PgObject(ProjectivePlane[Dual, int]):
         The function initializes an object with a given coordinate.
 
         :param coord: The `coord` parameter is a list of integers that represents the coordinates of a
-        point in a three-dimensional space
+            point in a three-dimensional space
         :type coord: List[int]
 
         Examples:
@@ -134,7 +134,7 @@ class PgObject(ProjectivePlane[Dual, int]):
 
         :param other: The `other` parameter is of type `PgObject`
         :return: The `__eq__` method is returning a boolean value. It returns `True` if the `coord`
-        attribute of `self` and `other` are equal, and `False` otherwise.
+            attribute of `self` and `other` are equal, and `False` otherwise.
 
         Examples:
            >>> pt_p = PgObject([3, 4, 5])
