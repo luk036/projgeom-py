@@ -24,6 +24,12 @@
 
 A longer description of your project goes here...
 
+## 👀 See also
+
+- [projgeom-cpp](https://github.com/luk036/projgeom-cpp)
+- [projgeom-rs](https://github.com/luk036/projgeom-rs)
+- [slides](https://luk036.github.io/projgeom/index.html)
+
 <!-- pyscaffold-notes -->
 
 ## 👉 Note
