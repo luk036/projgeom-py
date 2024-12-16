@@ -1,3 +1,23 @@
+"""
+Cayley-Klein Plane (ck_plane.py)
+
+This code defines a set of classes and functions for working with Cayley-Klein planes, which are a type of geometric structure used in projective geometry. The purpose of this code is to provide tools for performing calculations and operations in Cayley-Klein geometry.
+
+The main input for this code is geometric objects like points and lines in a Cayley-Klein plane. These are represented by the CayleyKleinPlane class and its subclasses PointCk and LineCk. The code doesn't take direct user input, but rather provides a framework for working with these geometric objects programmatically.
+
+The outputs of this code are various geometric calculations and transformations. For example, it can determine if two lines are perpendicular, calculate the altitude of a point with respect to a line, find the orthocenter of a triangle, or reflect a point across a mirror plane.
+
+The code achieves its purpose through a series of mathematical operations and geometric algorithms. It uses abstract methods and type hinting to define the structure of Cayley-Klein planes and their properties. The actual calculations are performed in functions like is_perpendicular, altitude, orthocenter, and reflect.
+
+Some important logic flows in this code include:
+
+1. The use of the perp() method to find polar lines or poles of points, which are essential for various geometric constructions.
+2. The calculation of altitudes using the meet() operation between lines and points.
+3. The determination of the orthocenter by finding the intersection of two altitudes of a triangle.
+4. The reflection of points using an involution operation.
+
+The code uses object-oriented programming concepts to represent geometric entities and their relationships. It also employs type hinting and abstract methods to ensure proper usage of the classes and functions. While the actual mathematical operations are not fully implemented in this snippet, the code provides a clear structure for how these geometric calculations should be performed in a Cayley-Klein plane.
+"""
 from abc import abstractmethod
 from typing import List, TypeVar
 
