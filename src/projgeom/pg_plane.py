@@ -38,6 +38,7 @@ The code achieves its purpose by providing a structured way to represent and man
 
 This code serves as a foundation for implementing and exploring projective geometry concepts in a programming environment. It allows users to create geometric objects, perform basic operations on them, and verify important theorems in projective geometry.
 """
+
 from abc import abstractmethod
 from typing import Generic, List, TypeVar
 

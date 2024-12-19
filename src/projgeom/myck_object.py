@@ -21,6 +21,7 @@ These transformations represent important geometric relationships in Cayley-Klei
 
 Overall, this code provides a simple but powerful tool for working with Cayley-Klein geometry, allowing users to create and manipulate geometric objects with ease.
 """
+
 from .pg_object import PgObject
 
 

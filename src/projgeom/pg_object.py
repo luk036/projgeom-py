@@ -21,6 +21,7 @@ The code uses abstract methods and type hinting to ensure proper implementation 
 
 Overall, this code provides a foundation for working with projective geometry, allowing users to create and manipulate geometric objects in a way that's consistent with the mathematical principles of projective spaces.
 """
+
 from abc import abstractmethod
 from typing import List, TypeVar
 
