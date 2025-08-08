@@ -131,6 +131,8 @@ class PgObject(ProjectivePlane[Dual, int]):
             >>> pt_p.coord
             [3, 4, 5]
         """
+        if len(coord) != 3:
+            raise ValueError("coord must be a list of three integers")
         self.coord = coord
 
     # impl PartialEq for PgObject:
