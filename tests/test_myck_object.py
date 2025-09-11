@@ -1,4 +1,4 @@
-from projgeom.myck_object import MyCKPoint, MyCKLine
+from projgeom.myck_object import MyCKLine, MyCKPoint
 
 
 def test_myck_point():

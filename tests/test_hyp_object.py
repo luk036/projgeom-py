@@ -1,4 +1,4 @@
-from projgeom.hyp_object import HyperbolicPoint, HyperbolicLine
+from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
 
 
 def test_hyperbolic_point():

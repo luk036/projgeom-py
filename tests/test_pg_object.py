@@ -1,5 +1,6 @@
 import pytest
-from projgeom.pg_object import dot, cross, plckr, PgObject, PgPoint, PgLine
+
+from projgeom.pg_object import PgLine, PgObject, PgPoint, cross, dot, plckr
 
 
 def test_dot():

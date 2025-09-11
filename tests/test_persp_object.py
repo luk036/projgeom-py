@@ -1,4 +1,4 @@
-from projgeom.persp_object import PerspPoint, PerspLine, I_RE, I_IM, L_INF
+from projgeom.persp_object import I_IM, I_RE, L_INF, PerspLine, PerspPoint
 
 
 def test_persp_point():

@@ -1,4 +1,4 @@
-from projgeom.ell_object import EllipticPoint, EllipticLine
+from projgeom.ell_object import EllipticLine, EllipticPoint
 
 
 def test_elliptic_point():
