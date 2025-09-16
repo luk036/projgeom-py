@@ -10,7 +10,7 @@ class PerspPoint(PgObject["PerspLine"]):
     the dual, perpendicular line, and midpoint of the point.
     """
 
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         return PerspLine
 
     def perp(self) -> "PerspLine":
@@ -41,7 +41,7 @@ class PerspLine(PgObject[PerspPoint]):
     the dual and perpendicular point, as well as checking if two lines are parallel.
     """
 
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         return PerspPoint
 
     def perp(self) -> PerspPoint:

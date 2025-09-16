@@ -175,7 +175,7 @@ class PgObject(ProjectivePlane[Dual, int]):
     # impl ProjectivePlane<PgLine, int> for PgObject:
 
     @abstractmethod
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         pass
 
     def aux(self) -> Dual:
@@ -183,8 +183,8 @@ class PgObject(ProjectivePlane[Dual, int]):
         The `aux` function returns a `Dual` object with a copy of the `coord` attribute.
         :return: The `aux` function is returning a `Dual` object.
         """
-        # Line = self.dual()
-        return self.dual()(self.coord.copy())
+        # Line = self.dual_type()
+        return self.dual_type()(self.coord.copy())
 
     def dot(self, line) -> int:
         """
@@ -250,7 +250,7 @@ class PgObject(ProjectivePlane[Dual, int]):
         :type rhs: "PgObject[Dual]"
         :return: a Dual object.
         """
-        return self.dual()(cross(self.coord, rhs.coord))
+        return self.dual_type()(cross(self.coord, rhs.coord))
 
 
 class PgPoint(PgObject["PgLine"]):
@@ -267,7 +267,7 @@ class PgPoint(PgObject["PgLine"]):
         >>> assert not pt_p.incident(ln_l)
     """
 
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         """
         The `dual` function returns the type `PgLine`.
         :return: The `dual` method is returning the type `PgLine`.
@@ -289,5 +289,5 @@ class PgLine(PgObject[PgPoint]):
         >>> assert not ln_l.incident(pt_p)
     """
 
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         return PgPoint

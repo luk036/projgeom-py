@@ -9,7 +9,7 @@ class Foo:
         return float
 
     def print_dual(self):
-        print(self.dual())
+        print(self.dual_type())
 
 
 class FooBar(Foo):

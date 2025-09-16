@@ -7,7 +7,7 @@ class EllipticPoint(PgObject["EllipticLine"]):
     dual and perpendicular line.
     """
 
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         return EllipticLine
 
     def perp(self) -> "EllipticLine":
@@ -24,7 +24,7 @@ class EllipticLine(PgObject[EllipticPoint]):
     the perpendicular point.
     """
 
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         return EllipticPoint
 
     def perp(self) -> EllipticPoint:

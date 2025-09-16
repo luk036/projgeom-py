@@ -53,7 +53,7 @@ class ProjectivePlane(Generic[Dual, Value]):
     """
 
     @abstractmethod
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         """Returns the dual of this point or line."""
 
     @abstractmethod

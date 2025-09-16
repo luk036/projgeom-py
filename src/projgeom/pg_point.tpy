@@ -15,7 +15,7 @@ class PgPoint(PgObject["PgLine"]):
         >>> assert not pt_p.incident(ln_l)
     """
 
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         """
         The `dual` function returns the type `PgLine`.
         :return: The `dual` method is returning the type `PgLine`.
@@ -37,5 +37,5 @@ class PgLine(PgObject[PgPoint]):
         >>> assert not ln_l.incident(pt_p)
     """
 
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         return PgPoint

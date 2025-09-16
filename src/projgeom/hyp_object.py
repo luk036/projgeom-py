@@ -7,7 +7,7 @@ class HyperbolicPoint(PgObject["HyperbolicLine"]):
     dual and perpendicular line.
     """
 
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         return HyperbolicLine
 
     def perp(self):
@@ -24,7 +24,7 @@ class HyperbolicLine(PgObject[HyperbolicPoint]):
     dual and perpendicular point.
     """
 
-    def dual(self) -> type:
+    def dual_type(self) -> type:
         return HyperbolicPoint
 
     def perp(self) -> HyperbolicPoint:
