@@ -1,9 +1,15 @@
 """
 ProjectivePlane Class and Projective Geometry Functions
 
-This code defines a ProjectivePlane class and several functions related to projective geometry. The purpose of this code is to provide a framework for working with points and lines in a projective plane, which is a concept in mathematics.
+This code defines a ProjectivePlane class and several functions related to
+    projective geometry. The purpose of this code is to provide a framework for
+    working with points and lines in a projective plane, which is a concept in
+    mathematics.
 
-The ProjectivePlane class is an abstract base class that defines the basic operations and properties of objects in a projective plane. It doesn't take any direct inputs or produce outputs on its own, but it sets up the structure for other classes to inherit from and implement these operations.
+The ProjectivePlane class is an abstract base class that defines the basic
+    operations and properties of objects in a projective plane. It doesn't take any
+    direct inputs or produce outputs on its own, but it sets up the structure for
+    other classes to inherit from and implement these operations.
 
 The class defines several abstract methods that need to be implemented by any concrete subclass:
 
@@ -34,9 +40,17 @@ The code also defines several standalone functions that work with ProjectivePlan
 
 These functions take various combinations of Point and Line objects (which are type aliases for ProjectivePlane) as inputs and typically return boolean values or new Point/Line objects as outputs.
 
-The code achieves its purpose by providing a structured way to represent and manipulate geometric objects in a projective plane. It uses abstract methods to define the interface for working with these objects, and then implements higher-level geometric operations using these basic methods. The logic flows from simple operations like checking if points are incident with lines, to more complex geometric constructions and theorems.
+The code achieves its purpose by providing a structured way to represent and
+    manipulate geometric objects in a projective plane. It uses abstract methods to
+    define the interface for working with these objects, and then implements
+    higher-level geometric operations using these basic methods. The logic flows
+    from simple operations like checking if points are incident with lines, to more
+    complex geometric constructions and theorems.
 
-This code serves as a foundation for implementing and exploring projective geometry concepts in a programming environment. It allows users to create geometric objects, perform basic operations on them, and verify important theorems in projective geometry.
+This code serves as a foundation for implementing and exploring projective
+    geometry concepts in a programming environment. It allows users to create
+    geometric objects, perform basic operations on them, and verify important
+    theorems in projective geometry.
 """
 
 from abc import abstractmethod
@@ -47,9 +61,10 @@ Value = TypeVar("Value", bound=int)
 
 
 class ProjectivePlane(Generic[Dual, Value]):
-    """The `ProjectivePlane` trait defines the behavior of points and lines in a projective plane.
-    It requires two associated types: `Dual`, which represents the dual object (line or point) in the
-    projective plane, and `Self`, which represents the object implementing the trait.
+    """The `ProjectivePlane` trait defines the behavior of points and lines in a
+    projective plane. It requires two associated types: `Dual`, which represents the
+    dual object (line or point) in the projective plane, and `Self`, which
+    represents the object implementing the trait.
     """
 
     @abstractmethod

@@ -1,11 +1,22 @@
 """
 PgObject.py
 
-This code defines a set of classes and functions for working with projective geometry objects in a 2D plane. The main purpose is to represent and manipulate points and lines in projective space, which is a way of thinking about geometry that includes points at infinity.
+This code defines a set of classes and functions for working with projective
+    geometry objects in a 2D plane. The main purpose is to represent and manipulate
+    points and lines in projective space, which is a way of thinking about geometry
+    that includes points at infinity.
 
-The code takes inputs in the form of coordinates, typically represented as lists of three integers. These coordinates define the position of points or the equation of lines in the projective plane. The outputs are various geometric objects (points and lines) and the results of operations performed on them, such as checking if a point lies on a line or finding the intersection of two lines.
+The code takes inputs in the form of coordinates, typically represented as
+    lists of three integers. These coordinates define the position of points or the
+    equation of lines in the projective plane. The outputs are various geometric objects (points and lines) and the results
+    of operations performed on them, such as checking if a point lies on a line or
+    finding the intersection of two lines.
 
-The main class, PgObject, serves as a base for both points (PgPoint) and lines (PgLine). It provides common functionality like equality checking, string representation, and basic geometric operations. The PgPoint and PgLine classes are specialized versions of PgObject that represent points and lines respectively.
+The main class, PgObject, serves as a base for both points (PgPoint) and
+    lines (PgLine). It provides common functionality like equality checking, string
+    representation, and basic geometric operations. The PgPoint and PgLine classes
+    are specialized versions of PgObject that represent points and lines
+    respectively.
 
 The code achieves its purpose through several key functions:
 
@@ -17,9 +28,13 @@ The main logic flow involves creating PgPoint and PgLine objects, then using the
 
 An important concept in this code is duality, where points and lines can be interchanged. This is represented by the 'aux' method, which returns the dual object (a line for a point, or a point for a line).
 
-The code uses abstract methods and type hinting to ensure proper implementation and usage of the geometric objects. It also includes docstrings and examples to help users understand how to use the classes and functions.
+The code uses abstract methods and type hinting to ensure proper implementation
+    and usage of the geometric objects. It also includes docstrings and examples to
+    help users understand how to use the classes and functions.
 
-Overall, this code provides a foundation for working with projective geometry, allowing users to create and manipulate geometric objects in a way that's consistent with the mathematical principles of projective spaces.
+Overall, this code provides a foundation for working with projective geometry,
+    allowing users to create and manipulate geometric objects in a way that's
+    consistent with the mathematical principles of projective spaces.
 """
 
 from abc import abstractmethod
@@ -75,11 +90,13 @@ def cross(vec_a: List[int], vec_b: List[int]) -> List[int]:
 def plckr(lambda_: int, vec_a: List[int], mu_: int, vec_b: List[int]) -> List[int]:
     """Homogeneous parametrization of point or line
 
-    :param lambda_: lambda_ is an integer representing the scalar coefficient for the first vector vec_a in the Plucker operation
+    :param lambda_: lambda_ is an integer representing the scalar coefficient for
+    the first vector vec_a in the Plucker operation
     :type lambda_: int
     :param vec_a: The parameter `vec_a` is a list of three integers
     :type vec_a: List[int]
-    :param mu_: The `mu_` parameter represents a scalar value that is used in the Plucker operation.
+    :param mu_: The `mu_` parameter represents a scalar value that is used in the
+    Plucker operation
     :type mu_: int
     :param vec_b: The parameter `vec_b` is a list of integers
     :type vec_b: List[int]
