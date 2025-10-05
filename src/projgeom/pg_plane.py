@@ -246,6 +246,13 @@ def tri_dual(triangle: List[Point]) -> List[Line]:
                    / \     trilateral
                   /   \
                        b
+
+    Examples:
+        >>> from projgeom.pg_object import PgPoint, PgLine
+        >>> tri_1 = [PgPoint([1, 0, 0]), PgPoint([0, 1, 0]), PgPoint([0, 0, 1])]
+        >>> dual_1 = tri_dual(tri_1)
+        >>> isinstance(dual_1[0], PgLine)
+        True
     """
     [a_1, a_2, a_3] = triangle
     assert not coincident(a_1, a_2, a_3)
@@ -342,6 +349,15 @@ def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point):
     :param pt_c: The parameters `pt_a`, `pt_b`, and `pt_c` are of type `ProjectivePlane`
     :type pt_c: Point
     :return: The function `harm_conj` returns a `ProjectivePlane` object.
+
+    Examples:
+        >>> from projgeom.pg_object import PgPoint
+        >>> pt_a = PgPoint([1, 0, 0])
+        >>> pt_b = PgPoint([0, 1, 0])
+        >>> pt_c = PgPoint([1, 1, 0])
+        >>> pt_d = harm_conj(pt_a, pt_b, pt_c)
+        >>> harm_conj(pt_a, pt_b, pt_d) == pt_c
+        True
     """
     assert coincident(pt_a, pt_b, pt_c)
     ln_ab = pt_a.meet(pt_b)
@@ -362,6 +378,15 @@ def involution(origin: Point, mirror: Point, pt_p: Point):
     :param pt_p: The parameter `pt_p` represents a point in a projective plane
     :type pt_p: Point
     :return: a ProjectivePlane<Point> object.
+
+    Examples:
+        >>> from projgeom.pg_object import PgPoint, PgLine
+        >>> origin = PgPoint([0, 0, 1])
+        >>> mirror = PgLine([0, 1, 0])
+        >>> pt_p = PgPoint([1, 2, 1])
+        >>> pt_q = involution(origin, mirror, pt_p)
+        >>> involution(origin, mirror, pt_q) == pt_p
+        True
     """
     ln_x = pt_p.meet(origin)
     pt_b = ln_x.meet(mirror)
