@@ -8,7 +8,6 @@ from projgeom.pg_plane import (
     persp,
     check_desargue,
     involution,
-    harm_conj,
 )
 
 
