@@ -42,9 +42,9 @@ Overall, this code provides a foundation for working with projective geometry,
 """
 
 from abc import abstractmethod
-from typing import List, TypeVar
+from typing import List, TypeVar, cast, Self
 
-from .pg_plane import ProjectivePlane
+from .pg_plane import ProjectivePlane, Value
 
 Dual = TypeVar("Dual", bound="PgObject")
 
@@ -222,9 +222,7 @@ class PgObject(ProjectivePlane[Dual, int]):
         """
         return dot(self.coord, line.coord)
 
-    def parametrize(
-        self, lambda_: int, pt_q: "PgObject[Dual]", mu_: int
-    ) -> "PgObject[Dual]":
+    def parametrize(self, lambda_: Value, pt_q: Self, mu_: Value) -> Self:
         """Homogeneous parametrization of point or line
 
         :param lambda_: The parameter `lambda_` represents the index of the coordinate to be used in the parametrize operation
@@ -242,7 +240,9 @@ class PgObject(ProjectivePlane[Dual, int]):
             True
         """
         Point = type(self)
-        return Point(plckr(lambda_, self.coord, mu_, pt_q.coord))
+        # Cast pt_q to PgObject[Dual] to access .coord
+        pg_q = cast("PgObject[Dual]", pt_q)
+        return Point(plckr(lambda_, self.coord, mu_, pg_q.coord))
 
     # impl ProjectivePlanePrimitive<PgLine> for PgObject:
 
@@ -262,7 +262,7 @@ class PgObject(ProjectivePlane[Dual, int]):
         """
         return dot(self.coord, rhs.coord) == 0
 
-    def meet(self, rhs: "PgObject[Dual]") -> Dual:
+    def meet(self, rhs: Self) -> Dual:
         """
         The `meet` function performs a join or meet operation on two `PgObject` objects and returns a
         `Dual` object.
@@ -271,7 +271,9 @@ class PgObject(ProjectivePlane[Dual, int]):
         :type rhs: "PgObject[Dual]"
         :return: a Dual object.
         """
-        return self.dual_type()(cross(self.coord, rhs.coord))
+        # Cast rhs to PgObject[Dual] to access .coord
+        pg_rhs = cast("PgObject[Dual]", rhs)
+        return self.dual_type()(cross(self.coord, pg_rhs.coord))
 
 
 class PgPoint(PgObject["PgLine"]):

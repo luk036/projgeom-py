@@ -56,7 +56,7 @@ class PerspLine(PgObject[PerspPoint]):
         beta = I_IM.dot(self)
         return I_RE.parametrize(alpha, I_IM, beta)
 
-    def is_parallel(self, other: "PerspPoint") -> bool:
+    def is_parallel(self, other: "PerspLine") -> bool:
         """
         The function checks if two lines are parallel by calculating the dot product of their direction
         vectors.

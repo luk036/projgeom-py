@@ -54,7 +54,7 @@ This code serves as a foundation for implementing and exploring projective
 """
 
 from abc import abstractmethod
-from typing import Generic, List, TypeVar
+from typing import Generic, List, TypeVar, Self
 
 Dual = TypeVar("Dual", bound="ProjectivePlane")
 Value = TypeVar("Value", bound=int)
@@ -76,7 +76,7 @@ class ProjectivePlane(Generic[Dual, Value]):
         """Returns true if the two objects are equal."""
 
     @abstractmethod
-    def meet(self, rhs: "ProjectivePlane[Dual, Value]") -> Dual:
+    def meet(self, rhs: Self) -> Dual:
         """Returns the join or meet of two objects."""
 
     @abstractmethod
@@ -88,9 +88,7 @@ class ProjectivePlane(Generic[Dual, Value]):
         """(for basic measurement)"""
 
     @abstractmethod
-    def parametrize(
-        self, lambda_: Value, pt_q: "ProjectivePlane[Dual, Value]", mu_: Value
-    ) -> "ProjectivePlane[Dual, Value]":
+    def parametrize(self, lambda_: Value, pt_q: Self, mu_: Value) -> Self:
         """Parametrize a point on the line through pt_q and self."""
 
     @abstractmethod
