@@ -2,7 +2,6 @@ from hypothesis import given
 from hypothesis.strategies import integers
 
 from projgeom.ck_plane import (
-    CayleyKleinPlane,
     is_perpendicular,
     orthocenter,
     tri_altitude,
@@ -16,7 +15,7 @@ from projgeom.persp_object import PerspPoint
 from projgeom.pg_plane import tri_dual
 
 
-def check_ck_plane(a_1: CayleyKleinPlane, a_2: CayleyKleinPlane, a_3: CayleyKleinPlane):
+def check_ck_plane(a_1, a_2, a_3):
     triangle = [a_1, a_2, a_3]
     trilateral = tri_dual(triangle)
     l_1 = trilateral[0]
