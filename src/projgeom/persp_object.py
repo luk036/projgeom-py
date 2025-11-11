@@ -4,18 +4,20 @@ from .pg_object import PgObject, plckr
 # The PerspPoint class represents a point in a perspective plane and provides methods for calculating
 # the dual, perpendicular line, and midpoint of the point.
 class PerspPoint(PgObject["PerspLine"]):
-    r"""A point in a perspective plane.
+    """A point in a perspective plane.
 
     The PerspPoint class represents a point in a perspective plane and provides methods for calculating
+    the dual, perpendicular line, and midpoint of the point.
+
     .. svgbob::
        :align: center
 
-          / \
-         /   \
-        /-----\
-        \-----/
-         \   /
-          \ /
+          / \\
+         /   \\
+        /-----\\
+        \\-----/
+         \\   /
+          \\ /
     """
 
     def dual_type(self) -> type:

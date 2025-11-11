@@ -164,7 +164,7 @@ def check_axiom(pt_p: Point, pt_q: Point, ln_l: Line):
 
 
 def coincident(pt_p: Point, pt_q: Point, pt_r: Point) -> bool:
-    r"""
+    """
     The `coincident` function checks if three points `pt_p`, `pt_q`, and `pt_r` are collinear in a projective
     plane.
 
@@ -180,12 +180,12 @@ def coincident(pt_p: Point, pt_q: Point, pt_r: Point) -> bool:
        :align: center
 
              |  /
-           \ | /       coincidence
-            \|/
+           \\ | /       coincidence
+            \\|/
              o      -----o------o---o---
-            /|\           A      B   C
-           / | \
-          l  |  \
+            /|\\           A      B   C
+           / | \\
+          l  |  \\
              m   n
 
     Examples:
@@ -222,7 +222,7 @@ def check_pappus(coline1: List[Point], coline2: List[Point]) -> bool:
 
 
 def tri_dual(triangle: List[Point]) -> List[Line]:
-    r"""
+    """
     The function `tri_dual` takes a list of three `ProjectivePlanePrimitive` objects representing a triangle and
     returns a list of three `ProjectivePlanePrimitive` objects representing the circumcircles of the triangle's
     three edges.
@@ -235,14 +235,14 @@ def tri_dual(triangle: List[Point]) -> List[Line]:
        :align: center
 
                           a
-               \         /
-                \ A     /
+               \\         /
+                \\ A     /
          c ------o-----o--------
-                  \   / B
-                   \ /
+                  \\   / B
+                   \\ /
                   C o    triangle,
-                   / \     trilateral
-                  /   \
+                   / \\     trilateral
+                  /   \\
                        b
 
     Examples:
@@ -294,12 +294,12 @@ def check_desargue(tri_1: List[Point], tri_2: List[Point]) -> bool:
     .. svgbob::
        :align: center
 
-          / \
-         / _ \
-        | / \ |
-        | \_/ |
-         \ _ /
-          \ /
+          / \\
+         / _ \\
+        | / \\ |
+        | \\_/ |
+         \\ _ /
+          \\ /
 
     Examples:
         >>> from projgeom.pg_object import PgLine, PgPoint

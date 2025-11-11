@@ -55,12 +55,12 @@ class MyCKPoint(PgObject["MyCKLine"]):
     .. svgbob::
        :align: center
 
-          / \
-         / _ \
-        | / \ |
-        | \_/ |
-         \ _ /
-          \ /
+          / \\
+         / _ \\
+        | / \\ |
+        | \\_/ |
+         \\ _ /
+          \\ /
     """
 
     def dual_type(self) -> type:
@@ -88,12 +88,12 @@ class MyCKLine(PgObject[MyCKPoint]):
     .. svgbob::
        :align: center
 
-          / \
-         / _ \
-        | / \ |
-        | \_/ |
-         \ _ /
-          \ /
+          / \\
+         / _ \\
+        | / \\ |
+        | \\_/ |
+         \\ _ /
+          \\ /
     """
 
     def dual_type(self) -> type:

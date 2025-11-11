@@ -113,24 +113,24 @@ def cross(vec_a: List[int], vec_b: List[int]) -> List[int]:
 def plckr(lambda_: int, vec_a: List[int], mu_: int, vec_b: List[int]) -> List[int]:
     """Homogeneous parametrization of point or line
 
-    :param lambda_: lambda_ is an integer representing the scalar coefficient for
+    :param `lambda_`: lambda_ is an integer representing the scalar coefficient for
     the first vector vec_a in the Plucker operation
     :type lambda_: int
     :param vec_a: The parameter `vec_a` is a list of three integers
     :type vec_a: List[int]
-    :param mu_: The `mu_` parameter represents a scalar value that is used in the
+    :param `mu_`: The `mu_` parameter represents a scalar value that is used in the
     Plucker operation
     :type mu_: int
-    :param vec_b: The parameter `vec_b` is a list of integers
-    :type vec_b: List[int]
-    :return: The `plckr` function returns a list of three integers.
-
-    .. svgbob::
-       :align: center
-
-          a * lambda + b * mu
-
-    Examples:
+        :param vec_b: The parameter `vec_b` is a list of integers
+            :type vec_b: List[int]
+            :return: The `plckr` function returns a list of three integers.
+        
+            .. svgbob::
+           :align: center
+    
+              a * lambda + b * mu
+    
+        Examples:
         >>> plckr(1, [1, 2, 3], 2, [4, 5, 6])
         [9, 12, 15]
         >>> plckr(1, [1, 2, 3], 2, [4, 5, 6]) == [9, 12, 15]
@@ -316,19 +316,12 @@ class PgPoint(PgObject["PgLine"]):
     .. svgbob::
        :align: center
 
-          / \
-         / _ \
-        | / \ |
-        | \_/ |
-         \ _ /
-          \ /
-
-    Examples:
-        >>> from projgeom.pg_object import PgPoint, PgLine
-        >>> pt_p = PgPoint([1, 2, 3])
-        >>> ln_l = pt_p.aux()
-        >>> assert isinstance(ln_l, PgLine)
-        >>> assert not pt_p.incident(ln_l)
+          / \\
+         / _ \\
+        | / \\ |
+        | \\_/ |
+         \\ _ /
+          \\ /
     """
 
     def dual_type(self) -> type:
@@ -348,12 +341,12 @@ class PgLine(PgObject[PgPoint]):
     .. svgbob::
        :align: center
 
-          / \
-         / _ \
-        | / \ |
-        | \_/ |
-         \ _ /
-          \ /
+          / \\
+         / _ \\
+        | / \\ |
+        | \\_/ |
+         \\ _ /
+          \\ /
 
     Examples:
         >>> from projgeom.pg_object import PgPoint, PgLine

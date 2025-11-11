@@ -140,10 +140,10 @@ def orthocenter(triangle: List[PointCk]):
        :align: center
 
            A
-           |\
-           | \
-          /   \
-         /_____\
+           |\\
+           | \\
+          /   \\
+         /_____\\
         B       C
 
     Examples:
@@ -195,8 +195,8 @@ def reflect(mirror: CayleyKleinPlane, pt_p: CayleyKleinPlane):
        :align: center
 
         P'          P
-         \         /
-          \       /
+         \\         /
+          \\       /
            ._____.
               |
               |
