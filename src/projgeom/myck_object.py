@@ -51,6 +51,16 @@ from .pg_object import PgObject
 class MyCKPoint(PgObject["MyCKLine"]):
     """
     A customized point class for Cayley-Klein geometry.
+
+    .. svgbob::
+       :align: center
+
+          / \
+         / _ \
+        | / \ |
+        | \_/ |
+         \ _ /
+          \ /
     """
 
     def dual_type(self) -> type:
@@ -68,6 +78,16 @@ class MyCKPoint(PgObject["MyCKLine"]):
 class MyCKLine(PgObject[MyCKPoint]):
     """
     A customized line class for Cayley-Klein geometry.
+
+    .. svgbob::
+       :align: center
+
+          / \
+         / _ \
+        | / \ |
+        | \_/ |
+         \ _ /
+          \ /
     """
 
     def dual_type(self) -> type:

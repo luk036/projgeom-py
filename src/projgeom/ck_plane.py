@@ -78,6 +78,17 @@ def is_perpendicular(l_1: LineCk, l_2: LineCk) -> bool:
     :type l_2: LineCk
     :return: a boolean value, indicating whether the two given lines are perpendicular to each other.
 
+    .. svgbob::
+       :align: center
+
+           l perpendicular to m
+          /
+         /
+        /_____ m
+       /
+      /
+     l
+
     Examples:
         >>> from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
         >>> is_perpendicular(HyperbolicLine([0, 1, 0]), HyperbolicLine([0, 0, 1]))
@@ -99,6 +110,15 @@ def altitude(pt_p: PointCk, ln_l: LineCk) -> LineCk:
     :type ln_l: LineCk
     :return: The function `altitude` returns a `CayleyKleinPlanePrimitive<Line>` object.
 
+    .. svgbob::
+       :align: center
+
+             P
+             |
+             |
+       l ----*-----------
+             Q
+
     Examples:
         >>> from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
         >>> t = altitude(HyperbolicPoint([0, 1, 0]), HyperbolicLine([0, 0, 1]))
@@ -115,6 +135,16 @@ def orthocenter(triangle: List[PointCk]):
     :param triangle: The `triangle` parameter is a list of three `CayleyKleinPlanePrimitive<Point>` objects.
     :type triangle: List[PointCk]
     :return: The function `orthocenter` returns a `CayleyKleinPlanePrimitive<Point>` object.
+
+    .. svgbob::
+       :align: center
+
+           A
+           |\
+           | \
+          /   \
+         /_____\
+        B       C
 
     Examples:
         >>> from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
@@ -153,6 +183,17 @@ def reflect(mirror: CayleyKleinPlane, pt_p: CayleyKleinPlane):
     :type mirror: CayleyKleinPlane
     :param pt_p: The parameter `pt_p` represents a CayleyKleinPlane object
     :type pt_p: CayleyKleinPlane
+
+    .. svgbob::
+       :align: center
+
+        P'          P
+         \         /
+          \       /
+           ._____.
+              |
+              |
+            mirror
 
     Examples:
         >>> from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint

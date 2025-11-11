@@ -291,6 +291,16 @@ def check_desargue(tri_1: List[Point], tri_2: List[Point]) -> bool:
     :type tri_2: List[Point]
     :return: a boolean value.
 
+    .. svgbob::
+       :align: center
+
+          / \
+         / _ \
+        | / \ |
+        | \_/ |
+         \ _ /
+          \ /
+
     Examples:
         >>> from projgeom.pg_object import PgLine, PgPoint
         >>> tri_1 = [PgPoint([0, 1, 0]), PgPoint([0, 0, 1]), PgPoint([1, 0, 0])]
@@ -348,6 +358,11 @@ def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point):
     :type pt_c: Point
     :return: The function `harm_conj` returns a `ProjectivePlane` object.
 
+    .. svgbob::
+       :align: center
+
+        A--C--B--D
+
     Examples:
         >>> from projgeom.pg_object import PgPoint
         >>> pt_a = PgPoint([1, 0, 0])
@@ -376,6 +391,13 @@ def involution(origin: Point, mirror: Point, pt_p: Point):
     :param pt_p: The parameter `pt_p` represents a point in a projective plane
     :type pt_p: Point
     :return: a ProjectivePlane<Point> object.
+
+    .. svgbob::
+       :align: center
+
+        P' -----o----- P
+                |
+              mirror
 
     Examples:
         >>> from projgeom.pg_object import PgPoint, PgLine

@@ -5,6 +5,17 @@ class HyperbolicPoint(PgObject["HyperbolicLine"]):
     """
     The HyperbolicPoint class represents a point in Hyperbolic geometry and provides methods for finding its
     dual and perpendicular line.
+
+    .. svgbob::
+       :align: center
+
+        \  |  /
+         \ | /
+          \|/
+      -----o-----
+          /|\
+         / | \
+        /  |  \
     """
 
     def dual_type(self) -> type:
@@ -22,6 +33,17 @@ class HyperbolicLine(PgObject[HyperbolicPoint]):
     """
     The HyperbolicLine class represents a line in Hyperbolic geometry and provides methods for finding its
     dual and perpendicular point.
+
+    .. svgbob::
+       :align: center
+
+        \  |  /
+         \ | /
+          \|/
+      -----o-----
+          /|\
+         / | \
+        /  |  \
     """
 
     def dual_type(self) -> type:

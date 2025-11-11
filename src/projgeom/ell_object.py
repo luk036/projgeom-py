@@ -5,6 +5,16 @@ class EllipticPoint(PgObject["EllipticLine"]):
     """
     The `EllipticPoint` class represents a point in elliptic geometry and provides methods for finding its
     dual and perpendicular line.
+
+    .. svgbob::
+       :align: center
+
+          / \
+         /   \
+        /-----\
+        \-----/
+         \   /
+          \ /
     """
 
     def dual_type(self) -> type:
@@ -22,6 +32,16 @@ class EllipticLine(PgObject[EllipticPoint]):
     """
     The `EllipticLine` class represents a line in Elliptic geometry and has a method `perp()` that returns
     the perpendicular point.
+
+    .. svgbob::
+       :align: center
+
+          / \
+         /   \
+        /-----\
+        \-----/
+         \   /
+          \ /
     """
 
     def dual_type(self) -> type:

@@ -8,6 +8,16 @@ class PerspPoint(PgObject["PerspLine"]):
 
     The PerspPoint class represents a point in a perspective plane and provides methods for calculating
     the dual, perpendicular line, and midpoint of the point.
+
+    .. svgbob::
+       :align: center
+
+          / \
+         /   \
+        /-----\
+        \-----/
+         \   /
+          \ /
     """
 
     def dual_type(self) -> type:
@@ -39,6 +49,16 @@ class PerspLine(PgObject[PerspPoint]):
 
     The PerspLine class represents a line in a perspective plane and provides methods for calculating
     the dual and perpendicular point, as well as checking if two lines are parallel.
+
+    .. svgbob::
+       :align: center
+
+          / \
+         /   \
+        /-----\
+        \-----/
+         \   /
+          \ /
     """
 
     def dual_type(self) -> type:

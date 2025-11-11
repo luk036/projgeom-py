@@ -59,6 +59,11 @@ def dot(vec_a: List[int], vec_b: List[int]) -> int:
     :type vec_b: List[int]
     :return: The function `dot` returns the dot product of two lists of integers.
 
+    .. svgbob::
+       :align: center
+
+        a . b = |a| |b| cos(theta)
+
     Examples:
         >>> dot([1, 2, 3], [4, 5, 6])
         32
@@ -77,6 +82,20 @@ def cross(vec_a: List[int], vec_b: List[int]) -> List[int]:
     :param vec_b: The parameter `vec_b` is a list of integers
     :type vec_b: List[int]
     :return: The function `cross` returns a list of three integers.
+
+    .. svgbob::
+       :align: center
+
+          a x b
+          ^
+          |
+          |  /
+          | /
+          |/
+          +------> b
+         /
+        /
+       a
 
     Examples:
         >>> cross([1, 2, 3], [4, 5, 6])
@@ -105,6 +124,11 @@ def plckr(lambda_: int, vec_a: List[int], mu_: int, vec_b: List[int]) -> List[in
     :param vec_b: The parameter `vec_b` is a list of integers
     :type vec_b: List[int]
     :return: The `plckr` function returns a list of three integers.
+
+    .. svgbob::
+       :align: center
+
+          a * lambda + b * mu
 
     Examples:
         >>> plckr(1, [1, 2, 3], 2, [4, 5, 6])
@@ -282,6 +306,16 @@ class PgPoint(PgObject["PgLine"]):
     The `PgPoint` class represents a point in projective geometry and has a method `dual()` that returns
     the dual line of the point.
 
+    .. svgbob::
+       :align: center
+
+          / \
+         / _ \
+        | / \ |
+        | \_/ |
+         \ _ /
+          \ /
+
     Examples:
         >>> from projgeom.pg_object import PgPoint, PgLine
         >>> pt_p = PgPoint([1, 2, 3])
@@ -303,6 +337,16 @@ class PgLine(PgObject[PgPoint]):
 
     The `PgLine` class represents a projective geometry line and has a method `dual()` that returns the
     dual object, which is a `PgPoint`.
+
+    .. svgbob::
+       :align: center
+
+          / \
+         / _ \
+        | / \ |
+        | \_/ |
+         \ _ /
+          \ /
 
     Examples:
         >>> from projgeom.pg_object import PgPoint, PgLine
