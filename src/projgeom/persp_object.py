@@ -1,14 +1,12 @@
-from .pg_object import PgObject
+from .pg_object import PgObject, plckr
 
 
 # The PerspPoint class represents a point in a perspective plane and provides methods for calculating
 # the dual, perpendicular line, and midpoint of the point.
 class PerspPoint(PgObject["PerspLine"]):
-    """A point in a perspective plane.
+    r"""A point in a perspective plane.
 
     The PerspPoint class represents a point in a perspective plane and provides methods for calculating
-    the dual, perpendicular line, and midpoint of the point.
-
     .. svgbob::
        :align: center
 
@@ -38,6 +36,13 @@ class PerspPoint(PgObject["PerspLine"]):
         :param other: The `other` parameter is an instance of the same class as `self`. It represents another point that you want to find the midpoint with
         :type other: "PerspPoint"
         :return: The `midpoint` method returns an instance of the `PerspPoint` class.
+
+        Examples:
+            >>> from projgeom.persp_object import PerspPoint
+            >>> p1 = PerspPoint([1, 2, 3])
+            >>> p2 = PerspPoint([4, 5, 6])
+            >>> p1.midpoint(p2)
+            PerspPoint(5 : 7 : 9)
         """
         alpha = L_INF.dot(other)
         beta = L_INF.dot(self)
@@ -53,12 +58,12 @@ class PerspLine(PgObject[PerspPoint]):
     .. svgbob::
        :align: center
 
-          / \
-         /   \
-        /-----\
-        \-----/
-         \   /
-          \ /
+          / \\
+         /   \\
+        /-----\\
+        \\-----/
+         \\   /
+          \\ /
     """
 
     def dual_type(self) -> type:
@@ -84,6 +89,13 @@ class PerspLine(PgObject[PerspPoint]):
         :param other: The "other" parameter is an object of the same class as the current object. It represents another instance of the class that we want to check for parallelism with the current object
         :type other: "PerspPoint"
         :return: a boolean value, indicating whether the two objects are parallel or not.
+
+        Examples:
+            >>> from projgeom.persp_object import PerspLine
+            >>> l1 = PerspLine([1, 2, 3])
+            >>> l2 = PerspLine([1, 2, 4])
+            >>> l1.is_parallel(l2)
+            False
         """
         return L_INF.dot(self.meet(other)) == 0
 

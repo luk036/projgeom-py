@@ -339,6 +339,13 @@ def check_axiom2(
     :type alpha: Value
     :param beta: The parameter `beta` is a value of type Value, which represents an element in the projective plane's underlying field
     :type beta: Value
+
+    Examples:
+        >>> from projgeom.pg_object import PgPoint, PgLine
+        >>> pt_p = PgPoint([1, 2, 3])
+        >>> pt_q = PgPoint([4, 5, 6])
+        >>> ln_l = PgLine([7, 8, 9])
+        >>> check_axiom2(pt_p, pt_q, ln_l, 1, 2)
     """
     assert pt_p.dot(ln_l) == ln_l.dot(pt_p)
     assert not pt_p.aux().incident(pt_p)

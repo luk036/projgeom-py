@@ -294,6 +294,13 @@ class PgObject(ProjectivePlane[Dual, int]):
         :param rhs: The parameter `rhs` stands for "right-hand side" and it represents another `PgObject` object that is being passed as an argument to the `meet` method
         :type rhs: "PgObject[Dual]"
         :return: a Dual object.
+
+        Examples:
+            >>> from projgeom.pg_object import PgPoint, PgLine
+            >>> p1 = PgPoint([1, 2, 3])
+            >>> p2 = PgPoint([4, 5, 6])
+            >>> p1.meet(p2)
+            PgLine(-3 : 6 : -3)
         """
         # Cast rhs to PgObject[Dual] to access .coord
         pg_rhs = cast("PgObject[Dual]", rhs)

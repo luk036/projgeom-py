@@ -25,6 +25,12 @@ class HyperbolicPoint(PgObject["HyperbolicLine"]):
         """Polar line of the point.
 
         :return: a HyperbolicLine object.
+
+        Examples:
+            >>> from projgeom.hyp_object import HyperbolicPoint, HyperbolicLine
+            >>> p = HyperbolicPoint([1, 2, 3])
+            >>> p.perp()
+            HyperbolicLine(1 : 2 : -3)
         """
         return HyperbolicLine([self.coord[0], self.coord[1], -self.coord[2]])
 
@@ -54,5 +60,11 @@ class HyperbolicLine(PgObject[HyperbolicPoint]):
         The `perp` function returns a HyperbolicPoint object that represents the perpendicular point to the
         given point.
         :return: The `perp` method returns a `HyperbolicPoint` object.
+
+        Examples:
+            >>> from projgeom.hyp_object import HyperbolicPoint, HyperbolicLine
+            >>> l = HyperbolicLine([1, 2, 3])
+            >>> l.perp()
+            HyperbolicPoint(1 : 2 : -3)
         """
         return HyperbolicPoint([self.coord[0], self.coord[1], -self.coord[2]])

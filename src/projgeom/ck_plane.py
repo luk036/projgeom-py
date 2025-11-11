@@ -164,6 +164,13 @@ def tri_altitude(triangle):
 
     :param triangle: The `triangle` parameter is a list containing three elements. Each element represents a side of a triangle
     :return: a list of altitudes of a triangle.
+
+    Examples:
+        >>> from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
+        >>> triangle = [HyperbolicPoint([0, 1, 0]), HyperbolicPoint([0, 0, 1]), HyperbolicPoint([1, 0, 0])]
+        >>> altitudes = tri_altitude(triangle)
+        >>> len(altitudes)
+        3
     """
     [a_1, a_2, a_3] = triangle
     t_1 = altitude(a_1, a_2.meet(a_3))
