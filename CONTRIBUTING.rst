@@ -299,5 +299,10 @@ on PyPI_, the following steps can be used to release a new version for
 .. _virtual environment: https://realpython.com/python-virtual-environments-a-primer/
 .. _virtualenv: https://virtualenv.pypa.io/en/stable/
 
+.. |the repository service| replace:: GitHub
+.. |contribute button| replace:: `Pull Request`
+.. _issue tracker: https://github.com/luk036/projgeom-py/issues
+.. _repository: https://github.com/luk036/projgeom-py
+
 .. _GitHub web interface: https://docs.github.com/en/repositories/working-with-files/managing-files/editing-files
 .. _GitHub's code editor: https://docs.github.com/en/repositories/working-with-files/managing-files/editing-files

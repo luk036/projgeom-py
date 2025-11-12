@@ -35,7 +35,7 @@
    :alt: Codacy Badge
    :target: https://app.codacy.com/gh/luk036/projgeom-py?utm_source=github.com&utm_medium=referral&utm_content=luk036/projgeom-py&utm_campaign=Badge_Grade
 
-.. image:: docs/projective-geometry.svg
+.. image:: projective-geometry.svg
 
 |
 
