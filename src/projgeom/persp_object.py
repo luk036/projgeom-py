@@ -1,4 +1,4 @@
-from .pg_object import PgObject, plckr
+from .pg_object import PgObject
 
 
 # The PerspPoint class represents a point in a perspective plane and provides methods for calculating

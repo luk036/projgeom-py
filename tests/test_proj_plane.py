@@ -17,14 +17,14 @@ def check_pg_plane(pt_p: ProjectivePlane, pt_q: ProjectivePlane):
 
 
 @given(integers(), integers())
-def test_pg_point(pz, qz):
+def test_pg_point(pz, qz) -> None:
     pt_p = PgPoint([133333333333, 322222222222, pz])
     pt_q = PgPoint([-244444444444, 166666666666, qz])
     check_pg_plane(pt_p, pt_q)
 
 
 @given(integers(), integers())
-def test_pg_line(pz, qz):
+def test_pg_line(pz, qz) -> None:
     ln_l = PgLine([133333333333, 322222222222, pz])
     ln_m = PgLine([-244444444444, 166666666666, qz])
     check_pg_plane(ln_l, ln_m)

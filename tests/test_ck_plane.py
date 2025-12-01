@@ -28,7 +28,7 @@ def check_ck_plane(a_1, a_2, a_3):
 
 
 @given(integers(), integers(), integers())
-def test_ell_point(a1z, a2z, a3y):
+def test_ell_point(a1z, a2z, a3y) -> None:
     a_1 = EllipticPoint([13333333333, 2333333333, a1z])
     a_2 = EllipticPoint([44444444444, -333333333, a2z])
     a_3 = EllipticPoint([-2333333333, a3y, 1222222222])
@@ -36,7 +36,7 @@ def test_ell_point(a1z, a2z, a3y):
 
 
 @given(integers(), integers(), integers())
-def test_ell_line(a1z, a2z, a3y):
+def test_ell_line(a1z, a2z, a3y) -> None:
     a_1 = EllipticLine([1333333333, 2333333333, a1z])
     a_2 = EllipticLine([4444444444, -333333333, a2z])
     a_3 = EllipticLine([-233333333, a3y, 1222222222])
@@ -44,7 +44,7 @@ def test_ell_line(a1z, a2z, a3y):
 
 
 @given(integers(), integers(), integers())
-def test_hyp_point(a1z, a2z, a3y):
+def test_hyp_point(a1z, a2z, a3y) -> None:
     a_1 = HyperbolicPoint([1333333333, 2333333333, a1z])
     a_2 = HyperbolicPoint([4444444444, -333333333, a2z])
     a_3 = HyperbolicPoint([-233333333, a3y, 1222222222])
@@ -52,7 +52,7 @@ def test_hyp_point(a1z, a2z, a3y):
 
 
 @given(integers(), integers(), integers())
-def test_hyp_line(a1z, a2z, a3y):
+def test_hyp_line(a1z, a2z, a3y) -> None:
     a_1 = HyperbolicLine([1333333333, 2333333333, a1z])
     a_2 = HyperbolicLine([4444444444, -333333333, a2z])
     a_3 = HyperbolicLine([-233333333, a3y, 1222222222])
@@ -60,7 +60,7 @@ def test_hyp_line(a1z, a2z, a3y):
 
 
 @given(integers(), integers(), integers())
-def test_myck_point(a1z, a2z, a3y):
+def test_myck_point(a1z, a2z, a3y) -> None:
     a_1 = MyCKPoint([1333333333, 2333333333, a1z])
     a_2 = MyCKPoint([4444444444, -333333333, a2z])
     a_3 = MyCKPoint([-233333333, a3y, 1222222222])
@@ -68,7 +68,7 @@ def test_myck_point(a1z, a2z, a3y):
 
 
 @given(integers(), integers(), integers())
-def test_myck_line(a1z, a2z, a3y):
+def test_myck_line(a1z, a2z, a3y) -> None:
     a_1 = MyCKLine([1333333333, 2333333333, a1z])
     a_2 = MyCKLine([4444444444, -333333333, a2z])
     a_3 = MyCKLine([-233333333, a3y, 1222222222])
@@ -76,7 +76,7 @@ def test_myck_line(a1z, a2z, a3y):
 
 
 @given(integers(), integers(), integers())
-def test_persp_point(a1z, a2z, a3y):
+def test_persp_point(a1z, a2z, a3y) -> None:
     a_1 = PerspPoint([1333333333, 2333333333, a1z])
     a_2 = PerspPoint([4444444444, -333333333, a2z])
     a_3 = PerspPoint([-233333333, a3y, 1222222222])

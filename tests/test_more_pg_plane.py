@@ -11,14 +11,14 @@ from projgeom.pg_plane import (
 )
 
 
-def test_check_axiom():
+def test_check_axiom() -> None:
     pt_p = PgPoint([1, 2, 3])
     pt_q = PgPoint([4, 5, 6])
     ln_l = PgLine([7, 8, 9])
     check_axiom(pt_p, pt_q, ln_l)
 
 
-def test_check_axiom2():
+def test_check_axiom2() -> None:
     pt_p = PgPoint([1, 2, 3])
     pt_q = PgPoint([4, 5, 6])
     ln_l = PgLine([7, 8, 9])
@@ -27,7 +27,7 @@ def test_check_axiom2():
     check_axiom2(pt_p, pt_q, ln_l, alpha, beta)
 
 
-def test_coincident():
+def test_coincident() -> None:
     pt_a = PgPoint([1, 0, 0])
     pt_b = PgPoint([0, 1, 0])
     pt_c = PgPoint([1, 1, 0])
@@ -37,7 +37,7 @@ def test_coincident():
     assert not coincident(pt_a, pt_b, pt_d)
 
 
-def test_check_pappus():
+def test_check_pappus() -> None:
     pt_a = PgPoint([1, 0, 0])
     pt_b = PgPoint([0, 1, 0])
     pt_c = PgPoint([1, 1, 0])
@@ -51,7 +51,7 @@ def test_check_pappus():
     assert not check_pappus(coline1, coline2)
 
 
-def test_tri_dual():
+def test_tri_dual() -> None:
     pt_a = PgPoint([1, 0, 0])
     pt_b = PgPoint([0, 1, 0])
     pt_c = PgPoint([0, 0, 1])
@@ -61,7 +61,7 @@ def test_tri_dual():
     assert isinstance(duals[0], PgLine)
 
 
-def test_persp():
+def test_persp() -> None:
     tri_1 = [PgPoint([1, 0, 0]), PgPoint([0, 1, 0]), PgPoint([0, 0, 1])]
     tri_2 = [PgPoint([1, 1, 1]), PgPoint([1, 2, 1]), PgPoint([2, 1, 1])]
     assert not persp(tri_1, tri_2)
@@ -70,7 +70,7 @@ def test_persp():
     assert persp(tri_1, tri_3)
 
 
-def test_check_desargue():
+def test_check_desargue() -> None:
     tri_1 = [PgPoint([1, 0, 0]), PgPoint([0, 1, 0]), PgPoint([0, 0, 1])]
     tri_2 = [PgPoint([1, 1, 1]), PgPoint([1, 2, 1]), PgPoint([2, 1, 1])]
     assert check_desargue(tri_1, tri_2)
@@ -79,7 +79,7 @@ def test_check_desargue():
     assert check_desargue(tri_1, tri_3)
 
 
-def test_involution():
+def test_involution() -> None:
     origin = PgPoint([0, 0, 1])
     mirror = PgLine([0, 1, 0])
     pt_p = PgPoint([1, 2, 1])
