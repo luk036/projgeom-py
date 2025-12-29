@@ -2,8 +2,8 @@
 Hypothesis tests for pg_object module
 """
 
-from hypothesis import given, assume, strategies as st
-from hypothesis.strategies import lists, integers, composite
+from hypothesis import given, assume
+from hypothesis.strategies import integers, composite
 
 from projgeom.pg_object import PgPoint, PgLine, dot, cross, plckr
 
@@ -73,9 +73,12 @@ def test_cross_with_self_is_zero(vec):
     assert result == [0, 0, 0]
 
 
-@given(integers(min_value=-10, max_value=10), 
-       integers(min_value=-10, max_value=10),
-       non_zero_triplets(), non_zero_triplets())
+@given(
+    integers(min_value=-10, max_value=10),
+    integers(min_value=-10, max_value=10),
+    non_zero_triplets(),
+    non_zero_triplets(),
+)
 def test_plckr_linearity(lambda_val, mu_val, vec_a, vec_b):
     """Test that plckr operation is linear"""
     result = plckr(lambda_val, vec_a, mu_val, vec_b)
@@ -127,25 +130,35 @@ def test_aux_returns_dual_type_for_line(line):
     assert not line.incident(dual)
 
 
-@given(pg_points(), pg_points(), integers(min_value=-5, max_value=5), integers(min_value=-5, max_value=5))
+@given(
+    pg_points(),
+    pg_points(),
+    integers(min_value=-5, max_value=5),
+    integers(min_value=-5, max_value=5),
+)
 def test_parametrize_returns_point_on_line(pt_p, pt_q, lambda_val, mu_val):
     """Test that parametrize returns a point on the line through two points"""
     assume(lambda_val != 0 or mu_val != 0)
     result = pt_p.parametrize(lambda_val, pt_q, mu_val)
     assert isinstance(result, PgPoint)
-    
+
     # The result should be collinear with pt_p and pt_q
     line = pt_p.meet(pt_q)
     assert line.incident(result)
 
 
-@given(pg_lines(), pg_lines(), integers(min_value=-5, max_value=5), integers(min_value=-5, max_value=5))
+@given(
+    pg_lines(),
+    pg_lines(),
+    integers(min_value=-5, max_value=5),
+    integers(min_value=-5, max_value=5),
+)
 def test_parametrize_returns_line_through_point(ln_l, ln_m, lambda_val, mu_val):
     """Test that parametrize returns a line through the intersection point"""
     assume(lambda_val != 0 or mu_val != 0)
     result = ln_l.parametrize(lambda_val, ln_m, mu_val)
     assert isinstance(result, PgLine)
-    
+
     # The result should pass through the intersection point
     point = ln_l.meet(ln_m)
     assert result.incident(point)
@@ -157,10 +170,10 @@ def test_meet_associativity(pt_a, pt_b, pt_c):
     # (A ∧ B) ∧ C = A ∧ (B ∧ C) in geometric sense
     line_ab = pt_a.meet(pt_b)
     point_abc = line_ab.meet(pt_c)
-    
+
     line_bc = pt_b.meet(pt_c)
     point_abc_alt = line_bc.meet(pt_a)
-    
+
     # Both should represent the same geometric concept
     assert point_abc.__class__ == point_abc_alt.__class__
 
@@ -187,10 +200,10 @@ def test_equality_up_to_scalar(pt1, pt2):
     scale = 3
     scaled_coords = [scale * coord for coord in pt1.coord]
     pt1_scaled = PgPoint(scaled_coords)
-    
+
     # They should be equal in projective space
     assert pt1 == pt1_scaled
-    
+
     # But pt1 and pt2 should generally be different
     # (unless they happen to be scalar multiples)
     # This test mainly checks the equality logic works correctly

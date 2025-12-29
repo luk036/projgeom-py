@@ -77,6 +77,19 @@ class MyCKPoint(PgObject["MyCKLine"]):
             >>> p.perp()
             MyCKLine(-2 : 2 : -6)
         """
+        return self.polar()
+
+    def polar(self):
+        """
+        The polar function returns an instance of the MyCKLine class that represents a polar line.
+        :return: an instance of the MyCKLine class.
+
+        Examples:
+            >>> from projgeom.myck_object import MyCKPoint, MyCKLine
+            >>> p = MyCKPoint([1, 2, 3])
+            >>> p.polar()
+            MyCKLine(-2 : 2 : -6)
+        """
         coord = self.coord
         return MyCKLine([-2 * coord[0], coord[1], -2 * coord[2]])
 
@@ -102,6 +115,18 @@ class MyCKLine(PgObject[MyCKPoint]):
     def perp(self) -> MyCKPoint:
         """Pole of the line.
         :return: The `perp` method returns a `MyCKPoint` object.
+
+        Examples:
+            >>> from projgeom.myck_object import MyCKPoint, MyCKLine
+            >>> l = MyCKLine([1, 2, 3])
+            >>> l.perp()
+            MyCKPoint(-1 : 4 : -3)
+        """
+        return self.pole()
+
+    def pole(self) -> MyCKPoint:
+        """Pole of the line.
+        :return: The `pole` method returns a `MyCKPoint` object.
 
         Examples:
             >>> from projgeom.myck_object import MyCKPoint, MyCKLine

@@ -2,8 +2,8 @@
 Hypothesis tests for persp_object module
 """
 
-from hypothesis import given, assume, strategies as st
-from hypothesis.strategies import lists, integers, composite
+from hypothesis import given, assume
+from hypothesis.strategies import integers, composite
 
 from projgeom.persp_object import PerspPoint, PerspLine, I_RE, I_IM, L_INF
 
@@ -95,12 +95,12 @@ def test_persp_point_midpoint_coordinates(points):
     """Test the coordinate formula for midpoint"""
     pt_p, pt_q = points
     midpoint = pt_p.midpoint(pt_q)
-    
+
     # Calculate expected coordinates based on the implementation
     alpha = L_INF.dot(pt_q)
     beta = L_INF.dot(pt_p)
     expected = pt_p.parametrize(alpha, pt_q, beta)
-    
+
     assert midpoint == expected
 
 
@@ -108,12 +108,12 @@ def test_persp_point_midpoint_coordinates(points):
 def test_persp_line_perp_coordinates(line):
     """Test the coordinate formula for perp"""
     point = line.perp()
-    
+
     # Calculate expected coordinates based on the implementation
     alpha = I_RE.dot(line)
     beta = I_IM.dot(line)
     expected = I_RE.parametrize(alpha, I_IM, beta)
-    
+
     assert point == expected
 
 
@@ -130,10 +130,10 @@ def test_persp_line_perp_incidence(line):
 def test_persp_line_is_parallel_properties(lines):
     """Test properties of is_parallel"""
     ln_l, ln_m = lines
-    
+
     # Parallelism should be symmetric
     assert ln_l.is_parallel(ln_m) == ln_m.is_parallel(ln_l)
-    
+
     # A line is parallel to itself if it meets L_INF at infinity
     # This is a property of perspective geometry
 
@@ -149,7 +149,7 @@ def test_persp_line_parallel_to_l_inf(line):
 def test_persp_line_parallel_meet(lines):
     """Test that parallel lines meet at infinity"""
     ln_l, ln_m = lines
-    
+
     if ln_l.is_parallel(ln_m):
         intersection = ln_l.meet(ln_m)
         assert L_INF.incident(intersection)
@@ -160,15 +160,15 @@ def test_persp_point_meet_perp(points):
     """Test properties of meet and perp for persp points"""
     pt_p, pt_q = points
     line = pt_p.meet(pt_q)
-    
+
     # The perpendicular of any point is L_INF
     perp_p = pt_p.perp()
     perp_q = pt_q.perp()
     perp_line = line.perp()
-    
+
     assert perp_p == L_INF
     assert perp_q == L_INF
-    
+
     # L_INF should be incident with the perpendicular point of the line
     assert L_INF.incident(perp_line)
 
@@ -178,14 +178,14 @@ def test_persp_line_meet_perp(lines):
     """Test properties of meet and perp for persp lines"""
     ln_l, ln_m = lines
     point = ln_l.meet(ln_m)
-    
+
     # The perpendicular of the intersection point should lie on the perpendicular lines
     perp_l = ln_l.perp()
     perp_m = ln_m.perp()
     perp_point = point.perp()  # This is L_INF
-    
+
     assert perp_point == L_INF
-    
+
     # L_INF should be incident with both perpendicular lines
     assert perp_l.incident(L_INF)
     assert perp_m.incident(L_INF)
@@ -196,12 +196,12 @@ def test_persp_point_aux_vs_perp(point):
     """Test difference between aux and perp for persp points"""
     aux_line = point.aux()
     perp_line = point.perp()
-    
+
     # aux returns a line not incident with the point
     assert not point.incident(aux_line)
     # perp returns L_INF
     assert perp_line == L_INF
-    
+
     # They should be different unless point is on L_INF
     if not point.incident(L_INF):
         assert aux_line != perp_line
@@ -212,12 +212,12 @@ def test_persp_line_aux_vs_perp(line):
     """Test difference between aux and perp for persp lines"""
     aux_point = line.aux()
     perp_point = line.perp()
-    
+
     # aux returns a point not incident with the line
     assert not line.incident(aux_point)
     # perp returns a point (dual object) but doesn't need to be incident
     assert isinstance(perp_point, PerspPoint)
-    
+
     # In perspective geometry, aux and perp may return different types of dual objects
     # aux is guaranteed not to be incident, perp is a geometric dual
 
@@ -227,7 +227,7 @@ def test_persp_perp_incidence_symmetry(point, line):
     """Test symmetry of incidence with perpendiculars"""
     perp_point = line.perp()
     perp_line = point.perp()  # This is L_INF
-    
+
     # If point is on line, then line's perp should be on point's perp (L_INF)
     if point.incident(line):
         assert perp_point.incident(perp_line)
@@ -237,7 +237,7 @@ def test_persp_perp_incidence_symmetry(point, line):
 def test_persp_point_midpoint_with_l_inf(point):
     """Test midpoint with L_INF"""
     midpoint = point.midpoint(L_INF)
-    
+
     # The midpoint should be on the line through point and L_INF
     line = point.meet(L_INF)
     assert line.incident(midpoint)
@@ -250,10 +250,10 @@ def test_persp_line_perp_coordinate_scaling(line):
     scale = 3
     scaled_coords = [scale * coord for coord in line.coord]
     scaled_line = PerspLine(scaled_coords)
-    
+
     # They should be equal in projective space
     assert line == scaled_line
-    
+
     # Their perpendiculars should also be equal
     perp_original = line.perp()
     perp_scaled = scaled_line.perp()
@@ -267,10 +267,10 @@ def test_persp_point_midpoint_coordinate_scaling(point):
     scale = 3
     scaled_coords = [scale * coord for coord in point.coord]
     scaled_point = PerspPoint(scaled_coords)
-    
+
     # They should be equal in projective space
     assert point == scaled_point
-    
+
     # Their midpoints with another point should also be equal
     other_point = PerspPoint([1, 2, 3])
     midpoint_original = point.midpoint(other_point)

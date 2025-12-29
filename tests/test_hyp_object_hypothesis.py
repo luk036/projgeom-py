@@ -2,8 +2,8 @@
 Hypothesis tests for hyp_object module
 """
 
-from hypothesis import given, assume, strategies as st
-from hypothesis.strategies import lists, integers, composite
+from hypothesis import given, assume
+from hypothesis.strategies import integers, composite
 
 from projgeom.hyp_object import HyperbolicPoint, HyperbolicLine
 
@@ -119,12 +119,12 @@ def test_hyperbolic_point_meet_perp(points):
     """Test properties of meet and perp for hyperbolic points"""
     pt_p, pt_q = points
     line = pt_p.meet(pt_q)
-    
+
     # The perpendicular of the intersection line should pass through the perpendicular points
     perp_p = pt_p.perp()
     perp_q = pt_q.perp()
     perp_line = line.perp()
-    
+
     assert perp_line.incident(perp_p)
     assert perp_line.incident(perp_q)
 
@@ -134,12 +134,12 @@ def test_hyperbolic_line_meet_perp(lines):
     """Test properties of meet and perp for hyperbolic lines"""
     ln_l, ln_m = lines
     point = ln_l.meet(ln_m)
-    
+
     # The perpendicular of the intersection point should lie on the perpendicular lines
     perp_l = ln_l.perp()
     perp_m = ln_m.perp()
     perp_point = point.perp()
-    
+
     assert perp_point.incident(perp_l)
     assert perp_point.incident(perp_m)
 
@@ -149,12 +149,12 @@ def test_hyperbolic_point_aux_vs_perp(point):
     """Test difference between aux and perp for hyperbolic points"""
     aux_line = point.aux()
     perp_line = point.perp()
-    
+
     # aux returns a line not incident with the point
     assert not point.incident(aux_line)
     # perp returns a line (dual object) but doesn't need to be incident
     assert isinstance(perp_line, HyperbolicLine)
-    
+
     # In hyperbolic geometry, aux and perp may return different types of dual objects
     # aux is guaranteed not to be incident, perp is a geometric dual
 
@@ -164,12 +164,12 @@ def test_hyperbolic_line_aux_vs_perp(line):
     """Test difference between aux and perp for hyperbolic lines"""
     aux_point = line.aux()
     perp_point = line.perp()
-    
+
     # aux returns a point not incident with the line
     assert not line.incident(aux_point)
     # perp returns a point (dual object) but doesn't need to be incident
     assert isinstance(perp_point, HyperbolicPoint)
-    
+
     # In hyperbolic geometry, aux and perp may return different types of dual objects
     # aux is guaranteed not to be incident, perp is a geometric dual
 
@@ -179,7 +179,7 @@ def test_hyperbolic_perp_incidence_symmetry(point, line):
     """Test symmetry of incidence with perpendiculars"""
     perp_point = line.perp()
     perp_line = point.perp()
-    
+
     # If point is on line, then line's perp should be on point's perp
     if point.incident(line):
         assert perp_point.incident(perp_line)
@@ -190,12 +190,12 @@ def test_hyperbolic_point_perp_not_aux(point):
     """Test that perp is not the same as aux for hyperbolic points"""
     aux_line = point.aux()
     perp_line = point.perp()
-    
+
     # The aux line should not be incident with the point
     assert not point.incident(aux_line)
     # The perp line is a dual object
     assert isinstance(perp_line, HyperbolicLine)
-    
+
     # They should generally be different since aux is guaranteed not to be incident
     # and perp is a geometric dual with specific coordinate transformation
 
@@ -205,11 +205,11 @@ def test_hyperbolic_line_perp_not_aux(line):
     """Test that perp is not the same as aux for hyperbolic lines"""
     aux_point = line.aux()
     perp_point = line.perp()
-    
+
     # The aux point should not be incident with the line
     assert not line.incident(aux_point)
     # The perp point is a dual object
     assert isinstance(perp_point, HyperbolicPoint)
-    
+
     # They should generally be different since aux is guaranteed not to be incident
     # and perp is a geometric dual with specific coordinate transformation

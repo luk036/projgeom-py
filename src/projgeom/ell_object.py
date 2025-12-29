@@ -28,6 +28,19 @@ class EllipticPoint(PgObject["EllipticLine"]):
             >>> p.perp()
             EllipticLine(1 : 2 : 3)
         """
+        return self.polar()
+
+    def polar(self) -> "EllipticLine":
+        """
+        The `polar` function returns an `EllipticLine` object representing the polar line of this point.
+        :return: The `polar` method is returning an instance of the `EllipticLine` class.
+
+        Examples:
+            >>> from projgeom.ell_object import EllipticPoint, EllipticLine
+            >>> p = EllipticPoint([1, 2, 3])
+            >>> p.polar()
+            EllipticLine(1 : 2 : 3)
+        """
         return EllipticLine(self.coord)
 
 
@@ -59,6 +72,19 @@ class EllipticLine(PgObject[EllipticPoint]):
             >>> from projgeom.ell_object import EllipticPoint, EllipticLine
             >>> l = EllipticLine([1, 2, 3])
             >>> l.perp()
+            EllipticPoint(1 : 2 : 3)
+        """
+        return self.pole()
+
+    def pole(self) -> EllipticPoint:
+        """
+        The `pole` function returns an `EllipticPoint` object, which represents the pole of this line.
+        :return: An `EllipticPoint` object is being returned.
+
+        Examples:
+            >>> from projgeom.ell_object import EllipticPoint, EllipticLine
+            >>> l = EllipticLine([1, 2, 3])
+            >>> l.pole()
             EllipticPoint(1 : 2 : 3)
         """
         return EllipticPoint(self.coord)

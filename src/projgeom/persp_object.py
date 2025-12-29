@@ -29,6 +29,14 @@ class PerspPoint(PgObject["PerspLine"]):
         The function returns the polar line.
         :return: The code is returning the value "L_INF".
         """
+        return self.polar()
+
+    def polar(self) -> "PerspLine":
+        """Polar line
+
+        The function returns the polar line.
+        :return: The code is returning the value "L_INF".
+        """
         return L_INF
 
     def midpoint(self, other: "PerspPoint") -> "PerspPoint":
@@ -72,9 +80,12 @@ class PerspLine(PgObject[PerspPoint]):
         return PerspPoint
 
     def perp(self) -> PerspPoint:
+        return self.pole()
+
+    def pole(self) -> PerspPoint:
         """Pole
 
-        The `perp` function returns a `PerspPoint` object that is obtained by taking the dot product of
+        The `pole` function returns a `PerspPoint` object that is obtained by taking the dot product of
         `self` with `I_RE` and `I_IM`, and then using the results to create a new `PerspPoint` object
         using the `parametrize` method of `I_RE`.
         :return: a PerspPoint object.
