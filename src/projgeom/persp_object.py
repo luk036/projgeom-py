@@ -2,12 +2,12 @@ from .pg_object import PgObject
 
 
 # The PerspPoint class represents a point in a perspective plane and provides methods for calculating
-# the dual, perpendicular line, and midpoint of the point.
+# the polar line, and midpoint of the point.
 class PerspPoint(PgObject["PerspLine"]):
     """A point in a perspective plane.
 
     The PerspPoint class represents a point in a perspective plane and provides methods for calculating
-    the dual, perpendicular line, and midpoint of the point.
+    the polar line, and midpoint of the point.
 
     .. svgbob::
        :align: center
@@ -27,6 +27,7 @@ class PerspPoint(PgObject["PerspLine"]):
         """Polar line
 
         The function returns the polar line.
+        Note: This represents the polar operation in projective geometry, not perpendicular.
         :return: The code is returning the value "L_INF".
         """
         return self.polar()
@@ -35,6 +36,7 @@ class PerspPoint(PgObject["PerspLine"]):
         """Polar line
 
         The function returns the polar line.
+        Note: This represents the polar operation in projective geometry, not perpendicular.
         :return: The code is returning the value "L_INF".
         """
         return L_INF
@@ -63,7 +65,7 @@ class PerspLine(PgObject[PerspPoint]):
     """A line in a perspective plane.
 
     The PerspLine class represents a line in a perspective plane and provides methods for calculating
-    the dual and perpendicular point, as well as checking if two lines are parallel.
+    the pole, as well as checking if two lines are parallel.
 
     .. svgbob::
        :align: center
@@ -88,6 +90,7 @@ class PerspLine(PgObject[PerspPoint]):
         The `pole` function returns a `PerspPoint` object that is obtained by taking the dot product of
         `self` with `I_RE` and `I_IM`, and then using the results to create a new `PerspPoint` object
         using the `parametrize` method of `I_RE`.
+        Note: This represents the pole operation in projective geometry, not perpendicular.
         :return: a PerspPoint object.
         """
         alpha = I_RE.dot(self)

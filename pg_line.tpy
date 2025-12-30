@@ -93,9 +93,11 @@ class PgLine:
     # impl CayleyKleinPlanePrimitive<PgPoint> for PgLine:
 
     def perp(self) -> PgPoint:
-        """_summary_
+        """Pole of the line.
+        
+        Note: This represents the pole operation in projective geometry, not perpendicular.
 
         Returns:
-            PgPoint: _description_
+            PgPoint: The pole point of this line.
         """
         return PgPoint([self.coord[0], self.coord[1], -self.coord[2]])

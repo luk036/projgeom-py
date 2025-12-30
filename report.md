@@ -18,15 +18,15 @@ This report documents the implementation of comprehensive hypothesis-based prope
 
 3. **test_ell_object_hypothesis.py** (13 tests)
    - Tests for elliptic geometry objects
-   - Covers perpendicular operations, duality properties, and coordinate transformations
+   - Covers polar/pole operations, duality properties, and coordinate transformations
 
 4. **test_hyp_object_hypothesis.py** (15 tests)
    - Tests for hyperbolic geometry objects
-   - Covers perpendicular operations with sign changes, duality properties, and coordinate transformations
+   - Covers polar/pole operations with sign changes, duality properties, and coordinate transformations
 
 5. **test_myck_object_hypothesis.py** (17 tests)
    - Tests for Cayley-Klein geometry objects
-   - Covers perpendicular operations with specific transformations, duality properties, and coordinate scaling
+   - Covers polar/pole operations with specific transformations, duality properties, and coordinate scaling
 
 6. **test_persp_object_hypothesis.py** (19 tests)
    - Tests for perspective geometry objects
@@ -49,7 +49,7 @@ This report documents the implementation of comprehensive hypothesis-based prope
 
 **Solution**: 
 - Corrected understanding of non-Euclidean geometries
-- In elliptic, hyperbolic, and Cayley-Klein geometries, the `perp` operation creates a dual object but doesn't necessarily imply incidence
+- In elliptic, hyperbolic, and Cayley-Klein geometries, the `perp` operation creates a polar/pole dual object but doesn't necessarily imply incidence
 - Updated tests to verify dual object creation rather than incidence
 
 ### 3. Edge Cases and Degenerate Configurations
@@ -70,13 +70,13 @@ This report documents the implementation of comprehensive hypothesis-based prope
 ## Key Insights Gained
 
 1. **Non-Euclidean Geometry Properties**:
-   - Elliptic geometry: Perpendicular operation preserves coordinates but doesn't imply incidence
-   - Hyperbolic geometry: Perpendicular operation negates the third coordinate
-   - Cayley-Klein geometry: Perpendicular operation applies specific coordinate transformations
+   - Elliptic geometry: Polar/pole operation preserves coordinates but doesn't imply incidence
+   - Hyperbolic geometry: Polar/pole operation negates the third coordinate
+   - Cayley-Klein geometry: Polar/pole operation applies specific coordinate transformations
 
 2. **Perspective Geometry Special Features**:
    - The line at infinity (L_INF) has special parallelism properties
-   - Points I_RE and I_IM are used for perpendicular calculations
+   - Points I_RE and I_IM are used for polar/pole calculations
    - Midpoint operations have special properties with respect to L_INF
 
 3. **Projective Geometry Theorems**:
@@ -108,7 +108,7 @@ The tests run in approximately 24 seconds and provide thorough validation of the
    - Performance benchmarks
    - Integration tests between different geometry types
 
-4. **Documentation**: Update documentation to clarify the behavior of perpendicular operations in non-Euclidean geometries
+4. **Documentation**: Update documentation to clarify the behavior of polar/pole operations in non-Euclidean geometries
 
 ## Conclusion
 

@@ -52,21 +52,21 @@ def distinct_elliptic_lines(draw):
 
 @given(elliptic_points())
 def test_elliptic_point_perp_returns_line(point):
-    """Test that perp of an EllipticPoint returns an EllipticLine"""
+    """Test that perp of an EllipticPoint returns an EllipticLine (polar line)"""
     line = point.perp()
     assert isinstance(line, EllipticLine)
 
 
 @given(elliptic_lines())
 def test_elliptic_line_perp_returns_point(line):
-    """Test that perp of an EllipticLine returns an EllipticPoint"""
+    """Test that perp of an EllipticLine returns an EllipticPoint (pole point)"""
     point = line.perp()
     assert isinstance(point, EllipticPoint)
 
 
 @given(elliptic_points())
 def test_elliptic_point_perp_incidence(point):
-    """Test that a point has a perpendicular line"""
+    """Test that a point has a polar line"""
     line = point.perp()
     assert isinstance(line, EllipticLine)
     # In elliptic geometry, the perp operation creates a dual object
@@ -75,7 +75,7 @@ def test_elliptic_point_perp_incidence(point):
 
 @given(elliptic_lines())
 def test_elliptic_line_perp_incidence(line):
-    """Test that a line has a perpendicular point"""
+    """Test that a line has a pole point"""
     point = line.perp()
     assert isinstance(point, EllipticPoint)
     # In elliptic geometry, the perp operation creates a dual object
@@ -118,7 +118,7 @@ def test_elliptic_point_meet_perp(points):
     pt_p, pt_q = points
     line = pt_p.meet(pt_q)
 
-    # The perpendicular of the intersection line should pass through the perpendicular points
+    # The polar of the intersection line should pass through the polar points
     perp_p = pt_p.perp()
     perp_q = pt_q.perp()
     perp_line = line.perp()
@@ -133,7 +133,7 @@ def test_elliptic_line_meet_perp(lines):
     ln_l, ln_m = lines
     point = ln_l.meet(ln_m)
 
-    # The perpendicular of the intersection point should lie on the perpendicular lines
+    # The pole of the intersection point should lie on the pole lines
     perp_l = ln_l.perp()
     perp_m = ln_m.perp()
     perp_point = point.perp()
@@ -174,10 +174,10 @@ def test_elliptic_line_aux_vs_perp(line):
 
 @given(elliptic_points(), elliptic_lines())
 def test_elliptic_perp_incidence_symmetry(point, line):
-    """Test symmetry of incidence with perpendiculars"""
+    """Test symmetry of incidence with polar/pole operations"""
     perp_point = line.perp()
     perp_line = point.perp()
 
-    # If point is on line, then line's perp should be on point's perp
+    # If point is on line, then line's pole should be on point's polar
     if point.incident(line):
         assert perp_point.incident(perp_line)

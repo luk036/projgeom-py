@@ -24,7 +24,7 @@ The code achieves its purpose through a series of mathematical operations and
 
 Some important logic flows in this code include:
 
-1. The use of the perp() method to find polar lines or poles of points, which are essential for various geometric constructions.
+1. The use of the perp() method to find polar lines or poles of points, which are essential for various geometric constructions. Note: perp() represents the polar/pole operation in projective geometry, not perpendicular.
 2. The calculation of altitudes using the meet() operation between lines and points.
 3. The determination of the orthocenter by finding the intersection of two altitudes of a triangle.
 4. The reflection of points using an involution operation.
@@ -60,6 +60,7 @@ class CayleyKleinPlane(ProjectivePlane[Dual, Value]):
         """Pole or Polar
 
         The `perp` function returns the pole or polar of an object.
+        Note: This represents the polar/pole operation in projective geometry, not perpendicular.
         """
         pass
 

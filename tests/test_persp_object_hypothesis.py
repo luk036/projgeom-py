@@ -52,14 +52,14 @@ def distinct_persp_lines(draw):
 
 @given(persp_points())
 def test_persp_point_perp_returns_line(point):
-    """Test that perp of a PerspPoint returns L_INF"""
+    """Test that perp of a PerspPoint returns L_INF (polar line)"""
     line = point.perp()
     assert line == L_INF
 
 
 @given(persp_lines())
 def test_persp_line_perp_returns_point(line):
-    """Test that perp of a PerspLine returns a PerspPoint"""
+    """Test that perp of a PerspLine returns a PerspPoint (pole point)"""
     point = line.perp()
     assert isinstance(point, PerspPoint)
 
@@ -119,7 +119,7 @@ def test_persp_line_perp_coordinates(line):
 
 @given(persp_lines())
 def test_persp_line_perp_incidence(line):
-    """Test that a line has a perpendicular point"""
+    """Test that a line has a pole"""
     point = line.perp()
     assert isinstance(point, PerspPoint)
     # In perspective geometry, the perp operation creates a dual object
@@ -161,7 +161,7 @@ def test_persp_point_meet_perp(points):
     pt_p, pt_q = points
     line = pt_p.meet(pt_q)
 
-    # The perpendicular of any point is L_INF
+    # The polar of any point is L_INF
     perp_p = pt_p.perp()
     perp_q = pt_q.perp()
     perp_line = line.perp()
@@ -169,7 +169,7 @@ def test_persp_point_meet_perp(points):
     assert perp_p == L_INF
     assert perp_q == L_INF
 
-    # L_INF should be incident with the perpendicular point of the line
+    # L_INF should be incident with the pole point of the line
     assert L_INF.incident(perp_line)
 
 
@@ -179,14 +179,14 @@ def test_persp_line_meet_perp(lines):
     ln_l, ln_m = lines
     point = ln_l.meet(ln_m)
 
-    # The perpendicular of the intersection point should lie on the perpendicular lines
+    # The pole of the intersection point should lie on the pole lines
     perp_l = ln_l.perp()
     perp_m = ln_m.perp()
     perp_point = point.perp()  # This is L_INF
 
     assert perp_point == L_INF
 
-    # L_INF should be incident with both perpendicular lines
+    # L_INF should be incident with both pole lines
     assert perp_l.incident(L_INF)
     assert perp_m.incident(L_INF)
 
@@ -224,11 +224,11 @@ def test_persp_line_aux_vs_perp(line):
 
 @given(persp_points(), persp_lines())
 def test_persp_perp_incidence_symmetry(point, line):
-    """Test symmetry of incidence with perpendiculars"""
+    """Test symmetry of incidence with poles/polars"""
     perp_point = line.perp()
     perp_line = point.perp()  # This is L_INF
 
-    # If point is on line, then line's perp should be on point's perp (L_INF)
+    # If point is on line, then line's pole should be on point's polar (L_INF)
     if point.incident(line):
         assert perp_point.incident(perp_line)
 
@@ -254,7 +254,7 @@ def test_persp_line_perp_coordinate_scaling(line):
     # They should be equal in projective space
     assert line == scaled_line
 
-    # Their perpendiculars should also be equal
+    # Their poles should also be equal
     perp_original = line.perp()
     perp_scaled = scaled_line.perp()
     assert perp_original == perp_scaled

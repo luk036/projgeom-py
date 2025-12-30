@@ -21,6 +21,8 @@ class HyperbolicPoint(PgObject["HyperbolicLine"]):
     def perp(self):
         """Polar line of the point.
 
+        Note: This represents the polar operation in projective geometry, not perpendicular.
+
         :return: a HyperbolicLine object.
 
         Examples:
@@ -48,7 +50,7 @@ class HyperbolicPoint(PgObject["HyperbolicLine"]):
 class HyperbolicLine(PgObject[HyperbolicPoint]):
     """
     The HyperbolicLine class represents a line in Hyperbolic geometry and provides methods for finding its
-    dual and perpendicular point.
+    pole.
 
     .. svgbob::
        :align: center
@@ -68,6 +70,7 @@ class HyperbolicLine(PgObject[HyperbolicPoint]):
     def perp(self) -> HyperbolicPoint:
         """
         The `perp` function returns a HyperbolicPoint object that represents the pole to the given line.
+        Note: This represents the pole operation in projective geometry, not perpendicular.
         :return: The `perp` method returns a `HyperbolicPoint` object.
 
         Examples:

@@ -8,8 +8,8 @@ geometric operations.
 
 The purpose of this code is to create a framework for working with points and
     lines in Cayley-Klein geometry. It allows users to create point and line
-    objects and perform operations on them, such as finding the perpendicular (or
-    polar) line to a point, or the pole of a line.
+    objects and perform operations on them, such as finding the
+    polar line to a point, or the pole of a line.
 
 Both classes inherit from a PgObject class, which likely provides some common
 functionality for projective geometry objects. The classes don't explicitly
@@ -24,13 +24,13 @@ The code achieves its purpose by implementing two key methods for each class:
 1.  dual(): This method returns the type of the dual object. For a point, the
     dual is a line, and vice versa.
 
-2.  perp(): This method calculates the perpendicular (or polar) object. For a
+2.  perp(): This method calculates the polar object. For a
     point, it calculates the polar line, and for a line, it calculates the pole
     point.
 
 The perp() methods contain the core logic of the classes. They perform
     coordinate transformations to convert between points and lines. For
-    MyCKPoint, the perpendicular line is calculated by doubling the first and
+    MyCKPoint, the polar line is calculated by doubling the first and
     third coordinates and negating the first and third. For MyCKLine, the pole
     point is calculated by doubling the second coordinate and negating the first
     and third.
@@ -69,6 +69,7 @@ class MyCKPoint(PgObject["MyCKLine"]):
     def perp(self):
         """
         The perp function returns an instance of the MyCKLine class that represents a polar line.
+        Note: This represents the polar operation in projective geometry, not perpendicular.
         :return: an instance of the MyCKLine class.
 
         Examples:
@@ -114,6 +115,7 @@ class MyCKLine(PgObject[MyCKPoint]):
 
     def perp(self) -> MyCKPoint:
         """Pole of the line.
+        Note: This represents the pole operation in projective geometry, not perpendicular.
         :return: The `perp` method returns a `MyCKPoint` object.
 
         Examples:

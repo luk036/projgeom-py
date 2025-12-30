@@ -52,14 +52,14 @@ def distinct_hyperbolic_lines(draw):
 
 @given(hyperbolic_points())
 def test_hyperbolic_point_perp_returns_line(point):
-    """Test that perp of a HyperbolicPoint returns a HyperbolicLine"""
+    """Test that perp of a HyperbolicPoint returns a HyperbolicLine (polar line)"""
     line = point.perp()
     assert isinstance(line, HyperbolicLine)
 
 
 @given(hyperbolic_lines())
 def test_hyperbolic_line_perp_returns_point(line):
-    """Test that perp of a HyperbolicLine returns a HyperbolicPoint"""
+    """Test that perp of a HyperbolicLine returns a HyperbolicPoint (pole point)"""
     point = line.perp()
     assert isinstance(point, HyperbolicPoint)
 
@@ -98,7 +98,7 @@ def test_hyperbolic_line_perp_duality(line):
 
 @given(hyperbolic_points())
 def test_hyperbolic_point_perp_incidence(point):
-    """Test that a point has a perpendicular line"""
+    """Test that a point has a polar line"""
     line = point.perp()
     assert isinstance(line, HyperbolicLine)
     # In hyperbolic geometry, the perp operation creates a dual object
@@ -107,7 +107,7 @@ def test_hyperbolic_point_perp_incidence(point):
 
 @given(hyperbolic_lines())
 def test_hyperbolic_line_perp_incidence(line):
-    """Test that a line has a perpendicular point"""
+    """Test that a line has a pole point"""
     point = line.perp()
     assert isinstance(point, HyperbolicPoint)
     # In hyperbolic geometry, the perp operation creates a dual object
@@ -120,7 +120,7 @@ def test_hyperbolic_point_meet_perp(points):
     pt_p, pt_q = points
     line = pt_p.meet(pt_q)
 
-    # The perpendicular of the intersection line should pass through the perpendicular points
+    # The polar of the intersection line should pass through the polar points
     perp_p = pt_p.perp()
     perp_q = pt_q.perp()
     perp_line = line.perp()
@@ -135,7 +135,7 @@ def test_hyperbolic_line_meet_perp(lines):
     ln_l, ln_m = lines
     point = ln_l.meet(ln_m)
 
-    # The perpendicular of the intersection point should lie on the perpendicular lines
+    # The pole of the intersection point should lie on the pole lines
     perp_l = ln_l.perp()
     perp_m = ln_m.perp()
     perp_point = point.perp()
@@ -176,11 +176,11 @@ def test_hyperbolic_line_aux_vs_perp(line):
 
 @given(hyperbolic_points(), hyperbolic_lines())
 def test_hyperbolic_perp_incidence_symmetry(point, line):
-    """Test symmetry of incidence with perpendiculars"""
+    """Test symmetry of incidence with polar/pole operations"""
     perp_point = line.perp()
     perp_line = point.perp()
 
-    # If point is on line, then line's perp should be on point's perp
+    # If point is on line, then line's pole should be on point's polar
     if point.incident(line):
         assert perp_point.incident(perp_line)
 
