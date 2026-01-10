@@ -2,10 +2,10 @@
 Hypothesis tests for myck_object module
 """
 
-from hypothesis import given, assume
-from hypothesis.strategies import integers, composite
+from hypothesis import assume, given
+from hypothesis.strategies import composite, integers
 
-from projgeom.myck_object import MyCKPoint, MyCKLine
+from projgeom.myck_object import MyCKLine, MyCKPoint
 
 
 @composite

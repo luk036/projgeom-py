@@ -2,10 +2,10 @@
 Hypothesis tests for persp_object module
 """
 
-from hypothesis import given, assume
-from hypothesis.strategies import integers, composite
+from hypothesis import assume, given
+from hypothesis.strategies import composite, integers
 
-from projgeom.persp_object import PerspPoint, PerspLine, I_RE, I_IM, L_INF
+from projgeom.persp_object import I_IM, I_RE, L_INF, PerspLine, PerspPoint
 
 
 @composite

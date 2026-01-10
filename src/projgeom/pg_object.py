@@ -42,7 +42,7 @@ Overall, this code provides a foundation for working with projective geometry,
 """
 
 from abc import abstractmethod
-from typing import List, TypeVar, cast, Self
+from typing import List, Self, TypeVar, cast
 
 from .pg_plane import ProjectivePlane, Value
 

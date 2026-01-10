@@ -1,11 +1,7 @@
 from hypothesis import given
 from hypothesis.strategies import integers
 
-from projgeom.ck_plane import (
-    is_perpendicular,
-    orthocenter,
-    tri_altitude,
-)
+from projgeom.ck_plane import is_perpendicular, orthocenter, tri_altitude
 from projgeom.ell_object import EllipticLine, EllipticPoint
 from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
 from projgeom.myck_object import MyCKLine, MyCKPoint

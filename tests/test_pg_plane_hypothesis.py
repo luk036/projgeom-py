@@ -2,20 +2,20 @@
 Hypothesis tests for pg_plane module
 """
 
-from hypothesis import given, assume
-from hypothesis.strategies import integers, composite
+from hypothesis import assume, given
+from hypothesis.strategies import composite, integers
 
-from projgeom.pg_object import PgPoint, PgLine
+from projgeom.pg_object import PgLine, PgPoint
 from projgeom.pg_plane import (
     check_axiom,
     check_axiom2,
-    coincident,
-    check_pappus,
-    tri_dual,
-    persp,
     check_desargue,
+    check_pappus,
+    coincident,
     harm_conj,
     involution,
+    persp,
+    tri_dual,
 )
 
 

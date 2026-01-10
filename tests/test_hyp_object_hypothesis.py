@@ -2,10 +2,10 @@
 Hypothesis tests for hyp_object module
 """
 
-from hypothesis import given, assume
-from hypothesis.strategies import integers, composite
+from hypothesis import assume, given
+from hypothesis.strategies import composite, integers
 
-from projgeom.hyp_object import HyperbolicPoint, HyperbolicLine
+from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
 
 
 @composite

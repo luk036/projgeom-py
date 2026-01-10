@@ -2,10 +2,10 @@
 Hypothesis tests for pg_object module
 """
 
-from hypothesis import given, assume
-from hypothesis.strategies import integers, composite
+from hypothesis import assume, given
+from hypothesis.strategies import composite, integers
 
-from projgeom.pg_object import PgPoint, PgLine, dot, cross, plckr
+from projgeom.pg_object import PgLine, PgPoint, cross, dot, plckr
 
 
 @composite

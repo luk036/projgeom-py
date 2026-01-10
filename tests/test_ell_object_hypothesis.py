@@ -2,10 +2,10 @@
 Hypothesis tests for ell_object module
 """
 
-from hypothesis import given, assume
-from hypothesis.strategies import integers, composite
+from hypothesis import assume, given
+from hypothesis.strategies import composite, integers
 
-from projgeom.ell_object import EllipticPoint, EllipticLine
+from projgeom.ell_object import EllipticLine, EllipticPoint
 
 
 @composite

@@ -94,7 +94,7 @@ class PgLine:
 
     def perp(self) -> PgPoint:
         """Pole of the line.
-        
+
         Note: This represents the pole operation in projective geometry, not perpendicular.
 
         Returns:

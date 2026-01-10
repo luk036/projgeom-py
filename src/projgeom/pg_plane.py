@@ -54,7 +54,7 @@ This code serves as a foundation for implementing and exploring projective
 """
 
 from abc import abstractmethod
-from typing import Generic, List, TypeVar, Self
+from typing import Generic, List, Self, TypeVar
 
 Dual = TypeVar("Dual", bound="ProjectivePlane")
 Value = TypeVar("Value", bound=int)

@@ -2,12 +2,12 @@ from projgeom.pg_object import PgLine, PgPoint
 from projgeom.pg_plane import (
     check_axiom,
     check_axiom2,
-    coincident,
-    check_pappus,
-    tri_dual,
-    persp,
     check_desargue,
+    check_pappus,
+    coincident,
     involution,
+    persp,
+    tri_dual,
 )
 
 
