@@ -1,22 +1,26 @@
 class Foo:
-    def __init__(self, a):
-        self.a = a
+    def __init__(self, a: int) -> None:
+        self.a: int = a
 
-    def whatisme(self):
+    def whatisme(self) -> None:
         print(type(self))
 
-    def dual(self):
+    def dual(self) -> type:
         return float
 
-    def print_dual(self):
-        print(self.dual_type())
+    @property
+    def dual_type(self) -> type:
+        return self.dual()
+
+    def print_dual(self) -> None:
+        print(self.dual_type)
 
 
 class FooBar(Foo):
-    def __init__(self, a):
+    def __init__(self, a: int) -> None:
         Foo.__init__(self, a)
 
-    def dual(self):
+    def dual(self) -> type:
         return bool
 
 

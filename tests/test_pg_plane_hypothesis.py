@@ -7,6 +7,8 @@ from hypothesis.strategies import composite, integers
 
 from projgeom.pg_object import PgLine, PgPoint
 from projgeom.pg_plane import (
+    Line,
+    Point,
     check_axiom,
     check_axiom2,
     check_desargue,
@@ -222,9 +224,9 @@ def test_harm_conj_fixed_points(pt_a, pt_b):
 
 
 @given(pg_points(), pg_points(), pg_points())
-def test_involution_properties(origin, mirror, pt_p):
+def test_involution_properties(origin: Point, mirror: Point, pt_p: Point) -> None:
     """Test properties of involution"""
-    assume(not origin.incident(mirror))
+    assume(not origin.incident(mirror))  # type: ignore[arg-type]
     assume(pt_p != origin)
 
     # Apply involution twice should return the original point
@@ -236,16 +238,16 @@ def test_involution_properties(origin, mirror, pt_p):
 
 
 @given(pg_points(), pg_points())
-def test_involution_fixed_points(origin, mirror):
+def test_involution_fixed_points(origin: Point, mirror: Point) -> None:
     """Test that involution has fixed points"""
-    assume(not origin.incident(mirror))
+    assume(not origin.incident(mirror))  # type: ignore[arg-type]
 
     # The origin should be a fixed point
     assert involution(origin, mirror, origin) == origin
 
     # Apply involution twice to any point should return the original point
     # This is a fundamental property of involution
-    test_point = PgPoint([1, 2, 3])  # Use a fixed test point
+    test_point: Point = PgPoint([1, 2, 3])  # type: ignore[assignment]
     pt_transformed = involution(origin, mirror, test_point)
     pt_back = involution(origin, mirror, pt_transformed)
     assert pt_back == test_point
