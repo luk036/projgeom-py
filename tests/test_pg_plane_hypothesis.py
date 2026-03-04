@@ -7,7 +7,6 @@ from hypothesis.strategies import composite, integers
 
 from projgeom.pg_object import PgLine, PgPoint
 from projgeom.pg_plane import (
-    Line,
     Point,
     check_axiom,
     check_axiom2,
