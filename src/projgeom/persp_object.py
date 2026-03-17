@@ -103,7 +103,7 @@ class PerspLine(PgObject[PerspPoint]):
         vectors.
 
         :param other: The "other" parameter is an object of the same class as the current object. It represents another instance of the class that we want to check for parallelism with the current object
-        :type other: "PerspPoint"
+        :type other: "PerspLine"
         :return: a boolean value, indicating whether the two objects are parallel or not.
 
         Examples:

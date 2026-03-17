@@ -152,8 +152,8 @@ def check_axiom(pt_p: Point, pt_q: Point, ln_l: Line):
     :type pt_p: Point
     :param pt_q: The parameter `pt_q` is a ProjectivePlanePrimitive object, which represents a point or a line in a projective plane
     :type pt_q: Point
-    :param line: The `line` parameter represents a projective plane line
-    :type line: Line
+    :param ln_l: The `ln_l` parameter represents a projective plane line
+    :type ln_l: Line
     """
     assert pt_p == pt_p
     assert (pt_p == pt_q) == (pt_q == pt_p)
@@ -227,8 +227,8 @@ def tri_dual(triangle: List[Point]) -> List[Line]:
     returns a list of three `ProjectivePlanePrimitive` objects representing the circumcircles of the triangle's
     three edges.
 
-    :param triangle: The `triangle` parameter is expected to be a sequence (pt_e.pt_g., list, tuple) of three elements. Each element should be an object of type `ProjectivePlanePrimitive`
-    :type triangle: Sequence
+    :param triangle: The `triangle` parameter is expected to be a list of three elements. Each element should be an object of type `ProjectivePlanePrimitive`
+    :type triangle: List[Point]
     :return: The function `tri_dual` returns a list of three `ProjectivePlanePrimitive` objects.
 
     .. svgbob::
@@ -361,7 +361,7 @@ def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point):
     :type pt_a: Point
     :param pt_b: The parameter `pt_b` represents a point on the projective plane
     :type pt_b: Point
-    :param pt_c: The parameters `pt_a`, `pt_b`, and `pt_c` are of type `ProjectivePlane`
+    :param pt_c: The parameter `pt_c` represents a point on the projective plane
     :type pt_c: Point
     :return: The function `harm_conj` returns a `ProjectivePlane` object.
 
