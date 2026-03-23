@@ -64,6 +64,16 @@ class MyCKPoint(PgObject["MyCKLine"]):
     """
 
     def dual_type(self) -> type:
+        """Returns the type of the dual object (MyCKLine for MyCKPoint).
+
+        :return: The type of the dual geometric object.
+
+        Examples:
+            >>> from projgeom.myck_object import MyCKPoint
+            >>> pt = MyCKPoint([1, 2, 3])
+            >>> pt.dual_type()
+            <class 'projgeom.myck_object.MyCKLine'>
+        """
         return MyCKLine
 
     def perp(self):
@@ -111,6 +121,16 @@ class MyCKLine(PgObject[MyCKPoint]):
     """
 
     def dual_type(self) -> type:
+        """Returns the type of the dual object (MyCKPoint for MyCKLine).
+
+        :return: The type of the dual geometric object.
+
+        Examples:
+            >>> from projgeom.myck_object import MyCKLine
+            >>> ln = MyCKLine([1, 2, 3])
+            >>> ln.dual_type()
+            <class 'projgeom.myck_object.MyCKPoint'>
+        """
         return MyCKPoint
 
     def perp(self) -> MyCKPoint:

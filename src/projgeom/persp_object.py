@@ -21,23 +21,47 @@ class PerspPoint(PgObject["PerspLine"]):
     """
 
     def dual_type(self) -> type:
+        """Returns the type of the dual object (PerspLine for PerspPoint).
+
+        :return: The type of the dual geometric object.
+
+        Examples:
+            >>> from projgeom.persp_object import PerspPoint
+            >>> pt = PerspPoint([1, 2, 3])
+            >>> pt.dual_type()
+            <class 'projgeom.persp_object.PerspLine'>
+        """
         return PerspLine
 
     def perp(self) -> "PerspLine":
-        """Polar line
+        """Polar line.
 
-        The function returns the polar line.
+        Returns the line at infinity as the polar for any point in a perspective plane.
         Note: This represents the polar operation in projective geometry, not perpendicular.
-        :return: The code is returning the value "L_INF".
+
+        :return: The PerspLine representing the line at infinity.
+
+        Examples:
+            >>> from projgeom.persp_object import PerspPoint
+            >>> p = PerspPoint([1, 2, 3])
+            >>> p.perp()
+            PerspLine(0 : -1 : 1)
         """
         return self.polar()
 
     def polar(self) -> "PerspLine":
-        """Polar line
+        """Polar line.
 
-        The function returns the polar line.
+        Returns the line at infinity as the polar for any point in a perspective plane.
         Note: This represents the polar operation in projective geometry, not perpendicular.
-        :return: The code is returning the value "L_INF".
+
+        :return: The PerspLine representing the line at infinity.
+
+        Examples:
+            >>> from projgeom.persp_object import PerspPoint
+            >>> p = PerspPoint([1, 2, 3])
+            >>> p.polar()
+            PerspLine(0 : -1 : 1)
         """
         return L_INF
 
@@ -79,9 +103,32 @@ class PerspLine(PgObject[PerspPoint]):
     """
 
     def dual_type(self) -> type:
+        """Returns the type of the dual object (PerspPoint for PerspLine).
+
+        :return: The type of the dual geometric object.
+
+        Examples:
+            >>> from projgeom.persp_object import PerspLine
+            >>> ln = PerspLine([1, 2, 3])
+            >>> ln.dual_type()
+            <class 'projgeom.persp_object.PerspPoint'>
+        """
         return PerspPoint
 
     def perp(self) -> PerspPoint:
+        """Pole of the line.
+
+        Returns the pole (dual point) for any line in a perspective plane.
+        Note: This represents the pole operation in projective geometry, not perpendicular.
+
+        :return: The PerspPoint representing the pole.
+
+        Examples:
+            >>> from projgeom.persp_object import PerspLine
+            >>> l = PerspLine([1, 2, 3])
+            >>> l.perp()
+            PerspPoint(1 : 5 : 5)
+        """
         return self.pole()
 
     def pole(self) -> PerspPoint:

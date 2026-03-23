@@ -214,9 +214,21 @@ class PgObject(ProjectivePlane[Dual, int]):
 
     # impl ProjectivePlane<PgLine, int> for PgObject:
 
-    @abstractmethod
     def dual_type(self) -> type:
-        pass
+        """Returns the type of the dual object (PgLine for PgPoint, PgPoint for PgLine).
+
+        :return: The type of the dual geometric object.
+
+        Examples:
+            >>> from projgeom.pg_object import PgPoint, PgLine
+            >>> pt = PgPoint([1, 2, 3])
+            >>> pt.dual_type()
+            <class 'projgeom.pg_object.PgLine'>
+            >>> ln = PgLine([1, 2, 3])
+            >>> ln.dual_type()
+            <class 'projgeom.pg_object.PgPoint'>
+        """
+        return PgLine
 
     def aux(self) -> Dual:
         """

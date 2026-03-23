@@ -15,6 +15,16 @@ class EllipticPoint(PgObject["EllipticLine"]):
     """
 
     def dual_type(self) -> type:
+        """Returns the type of the dual object (EllipticLine for EllipticPoint).
+
+        :return: The type of the dual geometric object.
+
+        Examples:
+            >>> from projgeom.ell_object import EllipticPoint
+            >>> pt = EllipticPoint([1, 2, 3])
+            >>> pt.dual_type()
+            <class 'projgeom.ell_object.EllipticLine'>
+        """
         return EllipticLine
 
     def perp(self) -> "EllipticLine":
@@ -62,6 +72,16 @@ class EllipticLine(PgObject[EllipticPoint]):
     """
 
     def dual_type(self) -> type:
+        """Returns the type of the dual object (EllipticPoint for EllipticLine).
+
+        :return: The type of the dual geometric object.
+
+        Examples:
+            >>> from projgeom.ell_object import EllipticLine
+            >>> ln = EllipticLine([1, 2, 3])
+            >>> ln.dual_type()
+            <class 'projgeom.ell_object.EllipticPoint'>
+        """
         return EllipticPoint
 
     def perp(self) -> EllipticPoint:

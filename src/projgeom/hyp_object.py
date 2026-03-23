@@ -16,6 +16,16 @@ class HyperbolicPoint(PgObject["HyperbolicLine"]):
     """
 
     def dual_type(self) -> type:
+        """Returns the type of the dual object (HyperbolicLine for HyperbolicPoint).
+
+        :return: The type of the dual geometric object.
+
+        Examples:
+            >>> from projgeom.hyp_object import HyperbolicPoint
+            >>> pt = HyperbolicPoint([1, 2, 3])
+            >>> pt.dual_type()
+            <class 'projgeom.hyp_object.HyperbolicLine'>
+        """
         return HyperbolicLine
 
     def perp(self):
@@ -65,6 +75,16 @@ class HyperbolicLine(PgObject[HyperbolicPoint]):
     """
 
     def dual_type(self) -> type:
+        """Returns the type of the dual object (HyperbolicPoint for HyperbolicLine).
+
+        :return: The type of the dual geometric object.
+
+        Examples:
+            >>> from projgeom.hyp_object import HyperbolicLine
+            >>> ln = HyperbolicLine([1, 2, 3])
+            >>> ln.dual_type()
+            <class 'projgeom.hyp_object.HyperbolicPoint'>
+        """
         return HyperbolicPoint
 
     def perp(self) -> HyperbolicPoint:
