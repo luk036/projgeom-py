@@ -76,7 +76,7 @@ class MyCKPoint(PgObject["MyCKLine"]):
         """
         return MyCKLine
 
-    def perp(self):
+    def perp(self) -> "MyCKLine":
         """
         The perp function returns an instance of the MyCKLine class that represents a polar line.
         Note: This represents the polar operation in projective geometry, not perpendicular.
@@ -90,7 +90,7 @@ class MyCKPoint(PgObject["MyCKLine"]):
         """
         return self.polar()
 
-    def polar(self):
+    def polar(self) -> "MyCKLine":
         """
         The polar function returns an instance of the MyCKLine class that represents a polar line.
         :return: an instance of the MyCKLine class.

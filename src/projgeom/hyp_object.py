@@ -28,7 +28,7 @@ class HyperbolicPoint(PgObject["HyperbolicLine"]):
         """
         return HyperbolicLine
 
-    def perp(self):
+    def perp(self) -> "HyperbolicLine":
         """Polar line of the point.
 
         Note: This represents the polar operation in projective geometry, not perpendicular.
@@ -43,7 +43,7 @@ class HyperbolicPoint(PgObject["HyperbolicLine"]):
         """
         return self.polar()
 
-    def polar(self):
+    def polar(self) -> "HyperbolicLine":
         """Polar line of the point.
 
         :return: a HyperbolicLine object.

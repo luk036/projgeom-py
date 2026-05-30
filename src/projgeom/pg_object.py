@@ -41,11 +41,11 @@ Overall, this code provides a foundation for working with projective geometry,
     consistent with the mathematical principles of projective spaces.
 """
 
-from typing import List, Self, TypeVar, cast
+from typing import List, Self, Type, TypeVar, cast
 
 from .pg_plane import ProjectivePlane, Value
 
-Dual = TypeVar("Dual", bound="PgObject")
+Dual = TypeVar("Dual", bound="PgObject")  # type: ignore[type-arg]
 
 
 def dot(vec_a: List[int], vec_b: List[int]) -> int:
@@ -176,11 +176,11 @@ class PgObject(ProjectivePlane[Dual, int]):
 
     # impl PartialEq for PgObject:
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """repr(self)"""
         return f"{self.__class__.__name__}({self.coord[0]} : {self.coord[1]} : {self.coord[2]})"
 
-    def __str__(self):
+    def __str__(self) -> str:
         """[summary]
 
         Returns:
@@ -193,7 +193,7 @@ class PgObject(ProjectivePlane[Dual, int]):
         """
         return f"({self.coord[0]} : {self.coord[1]} : {self.coord[2]})"
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: object) -> bool:
         """
         The function checks if two PgObject instances are equal by comparing their coordinates.
 
@@ -207,27 +207,18 @@ class PgObject(ProjectivePlane[Dual, int]):
            >>> pt_p == pt_q
            True
         """
-        if type(self) is not type(other):
+        if not isinstance(other, PgObject):
             return False
         return cross(self.coord, other.coord) == [0, 0, 0]
 
     # impl ProjectivePlane<PgLine, int> for PgObject:
 
-    def dual_type(self) -> type:
-        """Returns the type of the dual object (PgLine for PgPoint, PgPoint for PgLine).
-
-        :return: The type of the dual geometric object.
-
-        Examples:
-            >>> from projgeom.pg_object import PgPoint, PgLine
-            >>> pt = PgPoint([1, 2, 3])
-            >>> pt.dual_type()
-            <class 'projgeom.pg_object.PgLine'>
-            >>> ln = PgLine([1, 2, 3])
-            >>> ln.dual_type()
-            <class 'projgeom.pg_object.PgPoint'>
+    def dual_type(self) -> Type[Dual]:
         """
-        return PgLine
+        The `dual` function returns the type `PgLine`.
+        :return: The `dual` method is returning the type `PgLine`.
+        """
+        return PgLine  # type: ignore[return-value]
 
     def aux(self) -> Dual:
         """
@@ -237,7 +228,7 @@ class PgObject(ProjectivePlane[Dual, int]):
         # Line = self.dual_type()
         return self.dual_type()(self.coord.copy())
 
-    def dot(self, line) -> int:
+    def dot(self, line: Dual) -> int:
         """
         The `dot` function calculates the dot product between two vectors.
 

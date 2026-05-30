@@ -38,19 +38,19 @@ The code uses object-oriented programming concepts to represent geometric
 """
 
 from abc import abstractmethod
-from typing import List, TypeVar
+from typing import Generic, List, TypeVar, cast
 
-from .pg_plane import ProjectivePlane, Value, involution
+from .pg_plane import Point, ProjectivePlane, Value, involution
 
 # CayleyKleinPlanePrimitive = Union[HyperbolicLine, HyperbolicPoint]
 
 # trait CayleyKleinPlanePrimitive<Line>: ProjectivePlanePrimitive<Line>:
 #     def perp(self) -> Line
 
-Dual = TypeVar("Dual", bound="CayleyKleinPlane")
+Dual = TypeVar("Dual", bound="CayleyKleinPlane")  # type: ignore[type-arg]
 
 
-class CayleyKleinPlane(ProjectivePlane[Dual, Value]):
+class CayleyKleinPlane(ProjectivePlane[Dual, Value], Generic[Dual, Value]):
     """
     The class CayleyKleinPlane represents a Cayley-Klein plane in projective geometry.
     """
@@ -65,8 +65,8 @@ class CayleyKleinPlane(ProjectivePlane[Dual, Value]):
         pass
 
 
-PointCk = CayleyKleinPlane["LineCk", Value]
-LineCk = CayleyKleinPlane["PointCk", Value]
+PointCk = CayleyKleinPlane["LineCk", int]
+LineCk = CayleyKleinPlane["PointCk", int]
 
 
 def is_perpendicular(l_1: LineCk, l_2: LineCk) -> bool:
@@ -129,7 +129,7 @@ def altitude(pt_p: PointCk, ln_l: LineCk) -> LineCk:
     return ln_l.perp().meet(pt_p)
 
 
-def orthocenter(triangle: List[PointCk]):
+def orthocenter(triangle: List[PointCk]) -> PointCk:
     """
     The `orthocenter` function calculates the orthocenter of a triangle in Cayley-Klein geometry.
 
@@ -159,7 +159,7 @@ def orthocenter(triangle: List[PointCk]):
     return t_1.meet(t_2)
 
 
-def tri_altitude(triangle):
+def tri_altitude(triangle: List[PointCk]) -> List[LineCk]:
     """
     The function `tri_altitude` calculates the altitudes of a triangle.
 
@@ -183,7 +183,7 @@ def tri_altitude(triangle):
 # trait CayleyKleinPlane<Line, Value: Default + Eq>: ProjectivePlane<Line, Value> + CayleyKleinPlanePrimitive<Line> {}
 
 
-def reflect(mirror: CayleyKleinPlane, pt_p: CayleyKleinPlane):
+def reflect(mirror: LineCk, pt_p: PointCk) -> PointCk:
     """
     The `reflect` function performs a reflection of a plane `pt_p` across a mirror plane `mirror`.
 
@@ -209,4 +209,11 @@ def reflect(mirror: CayleyKleinPlane, pt_p: CayleyKleinPlane):
         >>> t == HyperbolicPoint([0, 1, 0])
         False
     """
-    involution(mirror.perp(), mirror, pt_p)
+    return cast(
+        PointCk,
+        involution(
+            cast(Point, mirror.perp()),
+            mirror,
+            cast(Point, pt_p),
+        ),
+    )

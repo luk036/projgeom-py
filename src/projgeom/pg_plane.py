@@ -54,9 +54,9 @@ This code serves as a foundation for implementing and exploring projective
 """
 
 from abc import abstractmethod
-from typing import Generic, List, Self, TypeVar
+from typing import Any, Generic, List, Self, TypeVar
 
-Dual = TypeVar("Dual", bound="ProjectivePlane")
+Dual = TypeVar("Dual", bound="ProjectivePlane")  # type: ignore[type-arg]
 Value = TypeVar("Value", bound=int)
 
 
@@ -72,7 +72,7 @@ class ProjectivePlane(Generic[Dual, Value]):
         """Returns the dual of this point or line."""
 
     @abstractmethod
-    def __eq__(self, rhs) -> bool:
+    def __eq__(self, rhs: object) -> bool:
         """Returns true if the two objects are equal."""
 
     @abstractmethod
@@ -140,11 +140,11 @@ class ProjectivePlane(Generic[Dual, Value]):
     #     return pt_a.parametrize(ln_c.dot(pt_b), pt_b, ln_c.dot(pt_a))
 
 
-Point = ProjectivePlane["Line", Value]
-Line = ProjectivePlane["Point", Value]
+Point = ProjectivePlane["Line", int]
+Line = ProjectivePlane["Point", int]
 
 
-def check_axiom(pt_p: Point, pt_q: Point, ln_l: Line):
+def check_axiom(pt_p: Point, pt_q: Point, ln_l: Line) -> None:
     """
     The function `check_axiom` checks various axioms related to a projective plane.
 
@@ -353,7 +353,7 @@ def check_axiom2(
     assert ln_m.incident(pt_p.parametrize(alpha, pt_q, beta))
 
 
-def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point):
+def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point) -> Point:
     """
     The `harm_conj` function calculates the harmonic conjugate of three points on a projective plane.
 
@@ -386,7 +386,7 @@ def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point):
     return pt_a.parametrize(ln_c.dot(pt_b), pt_b, ln_c.dot(pt_a))
 
 
-def involution(origin: Point, mirror: Point, pt_p: Point):
+def involution(origin: Point, mirror: Any, pt_p: Point) -> Point:
     """
     The function `involution` performs an involution transformation on a point `pt_p` with respect to an
     origin point `origin` and a mirror line `mirror`.
