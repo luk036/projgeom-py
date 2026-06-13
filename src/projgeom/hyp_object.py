@@ -1,3 +1,10 @@
+"""
+Hyperbolic geometry objects (HyperbolicPoint, HyperbolicLine).
+
+This module defines points and lines in hyperbolic geometry using the
+Cayley-Klein model of the hyperbolic plane.
+"""
+
 from .pg_object import PgObject
 
 

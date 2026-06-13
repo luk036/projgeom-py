@@ -185,7 +185,7 @@ def tri_altitude(triangle: List[PointCk]) -> List[LineCk]:
 
 def reflect(mirror: LineCk, pt_p: PointCk) -> PointCk:
     """
-    The `reflect` function performs a reflection of a plane `pt_p` across a mirror plane `mirror`.
+    The `reflect` function performs a reflection of a point `pt_p` across a mirror line `mirror`.
 
     :param mirror: The `mirror` parameter is of type `CayleyKleinPlane<Line>`, which represents a mirror plane. It is used to define the mirror in which the point `pt_p` will be reflected
     :type mirror: CayleyKleinPlane

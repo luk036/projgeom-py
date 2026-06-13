@@ -153,7 +153,7 @@ class MyCKLine(PgObject[MyCKPoint]):
         Examples:
             >>> from projgeom.myck_object import MyCKPoint, MyCKLine
             >>> l = MyCKLine([1, 2, 3])
-            >>> l.perp()
+            >>> l.pole()
             MyCKPoint(-1 : 4 : -3)
         """
         coord = self.coord

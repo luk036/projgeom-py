@@ -181,10 +181,9 @@ class PgObject(ProjectivePlane[Dual, int]):
         return f"{self.__class__.__name__}({self.coord[0]} : {self.coord[1]} : {self.coord[2]})"
 
     def __str__(self) -> str:
-        """[summary]
+        """String representation of the projective object.
 
-        Returns:
-            [type]: [description]
+        :return: A string in the form (x : y : z).
 
         Examples:
             >>> pt_p = PgObject([3, 4, 5])
@@ -214,16 +213,16 @@ class PgObject(ProjectivePlane[Dual, int]):
     # impl ProjectivePlane<PgLine, int> for PgObject:
 
     def dual_type(self) -> Type[Dual]:
-        """
-        The `dual` function returns the type `PgLine`.
-        :return: The `dual` method is returning the type `PgLine`.
+        """Returns the type of the dual object.
+
+        :return: The type of the dual geometric object.
         """
         return PgLine  # type: ignore[return-value]
 
     def aux(self) -> Dual:
-        """
-        The `aux` function returns a `Dual` object with a copy of the `coord` attribute.
-        :return: The `aux` function is returning a `Dual` object.
+        """Returns a dual object not incident with this object.
+
+        :return: A Dual object with a copy of the coordinates.
         """
         # Line = self.dual_type()
         return self.dual_type()(self.coord.copy())
@@ -307,8 +306,8 @@ class PgObject(ProjectivePlane[Dual, int]):
 class PgPoint(PgObject["PgLine"]):
     """Projective Geometry Point
 
-    The `PgPoint` class represents a point in projective geometry and has a method `dual()` that returns
-    the dual line of the point.
+    The `PgPoint` class represents a point in projective geometry and has a method `dual_type()` that returns
+    the type of the dual object (a line).
 
     .. svgbob::
        :align: center
@@ -322,9 +321,9 @@ class PgPoint(PgObject["PgLine"]):
     """
 
     def dual_type(self) -> type:
-        """
-        The `dual` function returns the type `PgLine`.
-        :return: The `dual` method is returning the type `PgLine`.
+        """Returns the type of the dual object (PgLine for PgPoint).
+
+        :return: The type of the dual geometric object.
         """
         return PgLine
 
@@ -332,8 +331,8 @@ class PgPoint(PgObject["PgLine"]):
 class PgLine(PgObject[PgPoint]):
     """Projective Geometry Line
 
-    The `PgLine` class represents a projective geometry line and has a method `dual()` that returns the
-    dual object, which is a `PgPoint`.
+    The `PgLine` class represents a projective geometry line and has a method `dual_type()` that returns
+    the type of the dual object, which is a `PgPoint`.
 
     .. svgbob::
        :align: center
@@ -354,4 +353,8 @@ class PgLine(PgObject[PgPoint]):
     """
 
     def dual_type(self) -> type:
+        """Returns the type of the dual object (PgPoint for PgLine).
+
+        :return: The type of the dual geometric object.
+        """
         return PgPoint

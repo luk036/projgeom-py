@@ -1,3 +1,9 @@
+"""
+Elliptic geometry objects (EllipticPoint, EllipticLine).
+
+This module defines points and lines in elliptic geometry.
+"""
+
 from .pg_object import PgObject
 
 

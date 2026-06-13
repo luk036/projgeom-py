@@ -1,13 +1,18 @@
+"""
+Perspective geometry objects (PerspPoint, PerspLine).
+
+This module defines points and lines in a perspective (affine) plane,
+including the line at infinity and midpoint calculation.
+"""
+
 from .pg_object import PgObject
 
 
-# The PerspPoint class represents a point in a perspective plane and provides methods for calculating
-# the polar line, and midpoint of the point.
 class PerspPoint(PgObject["PerspLine"]):
     """A point in a perspective plane.
 
     The PerspPoint class represents a point in a perspective plane and provides methods for calculating
-    the polar line, and midpoint of the point.
+    the polar line and midpoint.
 
     .. svgbob::
        :align: center

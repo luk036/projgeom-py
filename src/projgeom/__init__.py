@@ -1,3 +1,10 @@
+"""
+projgeom - Projective Geometry in Python
+
+This package provides classes and functions for working with projective geometry,
+including points, lines, and various geometric transformations in the projective plane.
+"""
+
 import sys
 
 if sys.version_info[:2] >= (3, 8):

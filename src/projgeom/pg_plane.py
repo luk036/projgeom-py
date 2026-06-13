@@ -96,11 +96,7 @@ class ProjectivePlane(Generic[Dual, Value]):
         """Check if two objects are incident"""
         return self.dot(line) == 0
 
-    # def coincident(
-    #     self, pt_q: "ProjectivePlane[Dual, Value]", pt_r: "ProjectivePlane[Dual, Value]"
-    # ) -> bool:
-    #     r"""
-    #     The `coincident` function checks if three points `pt_p`, `pt_q`, and `pt_r` are collinear.
+
 
     #     :param pt_q: pt_q is an instance of the class ProjectivePlanePrimitive<Point>
     #     :type pt_q: "ProjectivePlane[Dual, Value]"
@@ -224,8 +220,8 @@ def check_pappus(coline1: List[Point], coline2: List[Point]) -> bool:
 def tri_dual(triangle: List[Point]) -> List[Line]:
     """
     The function `tri_dual` takes a list of three `ProjectivePlanePrimitive` objects representing a triangle and
-    returns a list of three `ProjectivePlanePrimitive` objects representing the circumcircles of the triangle's
-    three edges.
+    returns a list of three `ProjectivePlanePrimitive` objects representing the trilateral
+    (the lines opposite each vertex of the triangle).
 
     :param triangle: The `triangle` parameter is expected to be a list of three elements. Each element should be an object of type `ProjectivePlanePrimitive`
     :type triangle: List[Point]
@@ -333,8 +329,8 @@ def check_axiom2(
     :type pt_p: Point
     :param pt_q: The parameter `pt_q` is a ProjectivePlanePrimitive object, which represents a point or a line in a projective plane
     :type pt_q: Point
-    :param line: The `line` parameter represents a projective plane line
-    :type line: Line
+    :param ln_l: The `ln_l` parameter represents a projective plane line
+    :type ln_l: Line
     :param alpha: The parameter `alpha` is a value of type Value, which represents an element in the projective plane's underlying field
     :type alpha: Value
     :param beta: The parameter `beta` is a value of type Value, which represents an element in the projective plane's underlying field
@@ -393,7 +389,7 @@ def involution(origin: Point, mirror: Any, pt_p: Point) -> Point:
 
     :param origin: The `origin` parameter represents a point in a projective plane
     :type origin: Point
-    :param mirror: The `mirror` parameter represents a mirror line or mirror plane in a projective plane. It is used to perform a reflection or mirror transformation on a point `pt_p` with respect to the mirror line or plane
+    :param mirror: The `mirror` parameter represents a mirror line in a projective plane. It is used to perform a reflection of a point `pt_p` across the mirror line
     :type mirror: Point
     :param pt_p: The parameter `pt_p` represents a point in a projective plane
     :type pt_p: Point
