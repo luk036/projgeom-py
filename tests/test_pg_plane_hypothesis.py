@@ -2,11 +2,14 @@
 Hypothesis tests for pg_plane module
 """
 
+from typing import List, Tuple
+
 from hypothesis import assume, given
-from hypothesis.strategies import composite, integers
+from hypothesis.strategies import DrawFn, composite, integers
 
 from projgeom.pg_object import PgLine, PgPoint
 from projgeom.pg_plane import (
+    Line,
     Point,
     check_axiom,
     check_axiom2,
@@ -21,7 +24,7 @@ from projgeom.pg_plane import (
 
 
 @composite
-def non_zero_triplets(draw):
+def non_zero_triplets(draw: DrawFn) -> List[int]:
     """Generate non-zero triplets of integers"""
     a = draw(integers(min_value=-100, max_value=100))
     b = draw(integers(min_value=-100, max_value=100))
@@ -31,21 +34,21 @@ def non_zero_triplets(draw):
 
 
 @composite
-def pg_points(draw):
+def pg_points(draw: DrawFn) -> PgPoint:
     """Generate valid PgPoint objects"""
     coords = draw(non_zero_triplets())
     return PgPoint(coords)
 
 
 @composite
-def pg_lines(draw):
+def pg_lines(draw: DrawFn) -> PgLine:
     """Generate valid PgLine objects"""
     coords = draw(non_zero_triplets())
     return PgLine(coords)
 
 
 @composite
-def distinct_pg_points(draw):
+def distinct_pg_points(draw: DrawFn) -> Tuple[PgPoint, PgPoint]:
     """Generate two distinct PgPoint objects"""
     pt1 = draw(pg_points())
     pt2 = draw(pg_points())
@@ -54,23 +57,23 @@ def distinct_pg_points(draw):
 
 
 @composite
-def non_collinear_triplet(draw):
+def non_collinear_triplet(draw: DrawFn) -> Tuple[PgPoint, PgPoint, PgPoint]:
     """Generate three non-collinear points"""
     pt1 = draw(pg_points())
     pt2 = draw(pg_points())
     pt3 = draw(pg_points())
     assume(pt1 != pt2 and pt2 != pt3 and pt1 != pt3)
-    assume(not coincident(pt1, pt2, pt3))
+    assume(not coincident(pt1, pt2, pt3))  # type: ignore[arg-type]
     return pt1, pt2, pt3
 
 
 @composite
-def collinear_triplet(draw):
+def collinear_triplet(draw: DrawFn) -> Tuple[PgPoint, PgPoint, PgPoint]:
     """Generate three collinear points"""
     pt1 = draw(pg_points())
     pt2 = draw(pg_points())
     assume(pt1 != pt2)
-    pt1.meet(pt2)
+    pt1.meet(pt2)  # type: ignore[misc]
 
     # Generate a third point on the same line
     # We'll use parametrize to create a point on the line
@@ -82,7 +85,7 @@ def collinear_triplet(draw):
 
 
 @given(pg_points(), pg_points(), pg_lines())
-def test_check_axiom(pt_p, pt_q, ln_l):
+def test_check_axiom(pt_p: Point, pt_q: Point, ln_l: Line) -> None:
     """Test basic projective plane axioms"""
     assume(pt_p != pt_q)
     check_axiom(pt_p, pt_q, ln_l)
@@ -95,7 +98,7 @@ def test_check_axiom(pt_p, pt_q, ln_l):
     integers(min_value=-5, max_value=5),
     integers(min_value=-5, max_value=5),
 )
-def test_check_axiom2(pt_p, pt_q, ln_l, alpha, beta):
+def test_check_axiom2(pt_p: Point, pt_q: Point, ln_l: Line, alpha: int, beta: int) -> None:
     """Test extended projective plane axioms"""
     assume(pt_p != pt_q)
     assume(alpha != 0 or beta != 0)
@@ -103,7 +106,7 @@ def test_check_axiom2(pt_p, pt_q, ln_l, alpha, beta):
 
 
 @given(pg_points(), pg_points(), pg_points())
-def test_coincident_symmetry(pt_a, pt_b, pt_c):
+def test_coincident_symmetry(pt_a: Point, pt_b: Point, pt_c: Point) -> None:
     """Test that coincidence is symmetric"""
     result1 = coincident(pt_a, pt_b, pt_c)
     result2 = coincident(pt_c, pt_b, pt_a)
@@ -112,21 +115,21 @@ def test_coincident_symmetry(pt_a, pt_b, pt_c):
 
 
 @given(collinear_triplet())
-def test_coincident_true_for_collinear(points):
+def test_coincident_true_for_collinear(points: Tuple[Point, Point, Point]) -> None:
     """Test that coincident returns True for collinear points"""
     pt_a, pt_b, pt_c = points
     assert coincident(pt_a, pt_b, pt_c)
 
 
 @given(non_collinear_triplet())
-def test_coincident_false_for_non_collinear(points):
+def test_coincident_false_for_non_collinear(points: Tuple[Point, Point, Point]) -> None:
     """Test that coincident returns False for non-collinear points"""
     pt_a, pt_b, pt_c = points
     assert not coincident(pt_a, pt_b, pt_c)
 
 
 # @given(pg_points(), pg_points(), pg_points())
-# def test_tri_dual_properties(pt_a, pt_b, pt_c):
+# def test_tri_dual_properties(pt_a, pt_b, pt_c) -> None:
 #     """Test properties of triangle dual"""
 #     assume(pt_a != pt_b and pt_b != pt_c and pt_a != pt_c)
 
@@ -140,19 +143,19 @@ def test_coincident_false_for_non_collinear(points):
 
 
 @given(non_collinear_triplet())
-def test_tri_dual_non_collinear(points):
+def test_tri_dual_non_collinear(points: Tuple[Point, Point, Point]) -> None:
     """Test triangle dual for non-collinear points"""
     pt_a, pt_b, pt_c = points
     trilateral = tri_dual([pt_a, pt_b, pt_c])
 
     # Each line in the trilateral should be incident with the corresponding vertex
-    assert trilateral[0].incident(pt_b) and trilateral[0].incident(pt_c)
-    assert trilateral[1].incident(pt_a) and trilateral[1].incident(pt_c)
-    assert trilateral[2].incident(pt_a) and trilateral[2].incident(pt_b)
+    assert trilateral[0].incident(pt_b) and trilateral[0].incident(pt_c)  # type: ignore[arg-type]
+    assert trilateral[1].incident(pt_a) and trilateral[1].incident(pt_c)  # type: ignore[arg-type]
+    assert trilateral[2].incident(pt_a) and trilateral[2].incident(pt_b)  # type: ignore[arg-type]
 
 
 @given(pg_points(), pg_points(), pg_points(), pg_points(), pg_points(), pg_points())
-def test_persp_symmetry(pt_a, pt_b, pt_c, pt_d, pt_e, pt_f):
+def test_persp_symmetry(pt_a: Point, pt_b: Point, pt_c: Point, pt_d: Point, pt_e: Point, pt_f: Point) -> None:
     """Test that perspectivity is symmetric under dual operation"""
     tri1 = [pt_a, pt_b, pt_c]
     tri2 = [pt_d, pt_e, pt_f]
@@ -178,7 +181,7 @@ def test_persp_symmetry(pt_a, pt_b, pt_c, pt_d, pt_e, pt_f):
 
 
 @given(pg_points(), pg_points(), pg_points(), pg_points(), pg_points(), pg_points())
-def test_check_desargue(pt_a, pt_b, pt_c, pt_d, pt_e, pt_f):
+def test_check_desargue(pt_a: Point, pt_b: Point, pt_c: Point, pt_d: Point, pt_e: Point, pt_f: Point) -> None:
     """Test Desargues' theorem"""
     tri1 = [pt_a, pt_b, pt_c]
     tri2 = [pt_d, pt_e, pt_f]
@@ -196,7 +199,7 @@ def test_check_desargue(pt_a, pt_b, pt_c, pt_d, pt_e, pt_f):
 
 
 @given(collinear_triplet())
-def test_harm_conj_properties(points):
+def test_harm_conj_properties(points: Tuple[Point, Point, Point]) -> None:
     """Test properties of harmonic conjugate"""
     pt_a, pt_b, pt_c = points
 
@@ -204,14 +207,14 @@ def test_harm_conj_properties(points):
     pt_d = harm_conj(pt_a, pt_b, pt_c)
 
     # d should be collinear with a, b, c
-    assert coincident(pt_a, pt_b, pt_d)
+    assert coincident(pt_a, pt_b, pt_d)  # type: ignore[arg-type]
 
     # The harmonic conjugate of d with respect to a and b should be c
-    assert harm_conj(pt_a, pt_b, pt_d) == pt_c
+    assert harm_conj(pt_a, pt_b, pt_d) == pt_c  # type: ignore[arg-type]
 
 
 @given(pg_points(), pg_points())
-def test_harm_conj_fixed_points(pt_a, pt_b):
+def test_harm_conj_fixed_points(pt_a: Point, pt_b: Point) -> None:
     """Test that harmonic conjugate has fixed points"""
     assume(pt_a != pt_b)
 
@@ -253,7 +256,7 @@ def test_involution_fixed_points(origin: Point, mirror: Point) -> None:
 
 
 @given(collinear_triplet(), collinear_triplet())
-def test_pappus_theorem(triple1, triple2):
+def test_pappus_theorem(triple1: Tuple[Point, Point, Point], triple2: Tuple[Point, Point, Point]) -> None:
     """Test Pappus' theorem"""
     # Pappus' theorem should hold for collinear triples
-    assert check_pappus(triple1, triple2)
+    assert check_pappus(triple1, triple2)  # type: ignore[arg-type]

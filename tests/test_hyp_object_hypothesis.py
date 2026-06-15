@@ -2,14 +2,16 @@
 Hypothesis tests for hyp_object module
 """
 
+from typing import List, Tuple
+
 from hypothesis import assume, given
-from hypothesis.strategies import composite, integers
+from hypothesis.strategies import DrawFn, composite, integers
 
 from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint
 
 
 @composite
-def non_zero_triplets(draw):
+def non_zero_triplets(draw: DrawFn) -> List[int]:
     """Generate non-zero triplets of integers"""
     a = draw(integers(min_value=-100, max_value=100))
     b = draw(integers(min_value=-100, max_value=100))
@@ -19,21 +21,21 @@ def non_zero_triplets(draw):
 
 
 @composite
-def hyperbolic_points(draw):
+def hyperbolic_points(draw: DrawFn) -> HyperbolicPoint:
     """Generate valid HyperbolicPoint objects"""
     coords = draw(non_zero_triplets())
     return HyperbolicPoint(coords)
 
 
 @composite
-def hyperbolic_lines(draw):
+def hyperbolic_lines(draw: DrawFn) -> HyperbolicLine:
     """Generate valid HyperbolicLine objects"""
     coords = draw(non_zero_triplets())
     return HyperbolicLine(coords)
 
 
 @composite
-def distinct_hyperbolic_points(draw):
+def distinct_hyperbolic_points(draw: DrawFn) -> Tuple[HyperbolicPoint, HyperbolicPoint]:
     """Generate two distinct HyperbolicPoint objects"""
     pt1 = draw(hyperbolic_points())
     pt2 = draw(hyperbolic_points())
@@ -42,7 +44,7 @@ def distinct_hyperbolic_points(draw):
 
 
 @composite
-def distinct_hyperbolic_lines(draw):
+def distinct_hyperbolic_lines(draw: DrawFn) -> Tuple[HyperbolicLine, HyperbolicLine]:
     """Generate two distinct HyperbolicLine objects"""
     ln1 = draw(hyperbolic_lines())
     ln2 = draw(hyperbolic_lines())
@@ -51,21 +53,21 @@ def distinct_hyperbolic_lines(draw):
 
 
 @given(hyperbolic_points())
-def test_hyperbolic_point_perp_returns_line(point):
+def test_hyperbolic_point_perp_returns_line(point: HyperbolicPoint) -> None:
     """Test that perp of a HyperbolicPoint returns a HyperbolicLine (polar line)"""
     line = point.perp()
     assert isinstance(line, HyperbolicLine)
 
 
 @given(hyperbolic_lines())
-def test_hyperbolic_line_perp_returns_point(line):
+def test_hyperbolic_line_perp_returns_point(line: HyperbolicLine) -> None:
     """Test that perp of a HyperbolicLine returns a HyperbolicPoint (pole point)"""
     point = line.perp()
     assert isinstance(point, HyperbolicPoint)
 
 
 @given(hyperbolic_points())
-def test_hyperbolic_point_perp_coordinates(point):
+def test_hyperbolic_point_perp_coordinates(point: HyperbolicPoint) -> None:
     """Test that perp transforms coordinates correctly for hyperbolic points"""
     line = point.perp()
     expected_coords = [point.coord[0], point.coord[1], -point.coord[2]]
@@ -73,7 +75,7 @@ def test_hyperbolic_point_perp_coordinates(point):
 
 
 @given(hyperbolic_lines())
-def test_hyperbolic_line_perp_coordinates(line):
+def test_hyperbolic_line_perp_coordinates(line: HyperbolicLine) -> None:
     """Test that perp transforms coordinates correctly for hyperbolic lines"""
     point = line.perp()
     expected_coords = [line.coord[0], line.coord[1], -line.coord[2]]
@@ -81,7 +83,7 @@ def test_hyperbolic_line_perp_coordinates(line):
 
 
 @given(hyperbolic_points())
-def test_hyperbolic_point_perp_duality(point):
+def test_hyperbolic_point_perp_duality(point: HyperbolicPoint) -> None:
     """Test that perp is dual to itself for hyperbolic points"""
     line = point.perp()
     point_back = line.perp()
@@ -89,7 +91,7 @@ def test_hyperbolic_point_perp_duality(point):
 
 
 @given(hyperbolic_lines())
-def test_hyperbolic_line_perp_duality(line):
+def test_hyperbolic_line_perp_duality(line: HyperbolicLine) -> None:
     """Test that perp is dual to itself for hyperbolic lines"""
     point = line.perp()
     line_back = point.perp()
@@ -97,7 +99,7 @@ def test_hyperbolic_line_perp_duality(line):
 
 
 @given(hyperbolic_points())
-def test_hyperbolic_point_perp_incidence(point):
+def test_hyperbolic_point_perp_incidence(point: HyperbolicPoint) -> None:
     """Test that a point has a polar line"""
     line = point.perp()
     assert isinstance(line, HyperbolicLine)
@@ -106,7 +108,7 @@ def test_hyperbolic_point_perp_incidence(point):
 
 
 @given(hyperbolic_lines())
-def test_hyperbolic_line_perp_incidence(line):
+def test_hyperbolic_line_perp_incidence(line: HyperbolicLine) -> None:
     """Test that a line has a pole point"""
     point = line.perp()
     assert isinstance(point, HyperbolicPoint)
@@ -115,7 +117,7 @@ def test_hyperbolic_line_perp_incidence(line):
 
 
 @given(distinct_hyperbolic_points())
-def test_hyperbolic_point_meet_perp(points):
+def test_hyperbolic_point_meet_perp(points: Tuple[HyperbolicPoint, HyperbolicPoint]) -> None:
     """Test properties of meet and perp for hyperbolic points"""
     pt_p, pt_q = points
     line = pt_p.meet(pt_q)
@@ -130,7 +132,7 @@ def test_hyperbolic_point_meet_perp(points):
 
 
 @given(distinct_hyperbolic_lines())
-def test_hyperbolic_line_meet_perp(lines):
+def test_hyperbolic_line_meet_perp(lines: Tuple[HyperbolicLine, HyperbolicLine]) -> None:
     """Test properties of meet and perp for hyperbolic lines"""
     ln_l, ln_m = lines
     point = ln_l.meet(ln_m)
@@ -145,7 +147,7 @@ def test_hyperbolic_line_meet_perp(lines):
 
 
 @given(hyperbolic_points())
-def test_hyperbolic_point_aux_vs_perp(point):
+def test_hyperbolic_point_aux_vs_perp(point: HyperbolicPoint) -> None:
     """Test difference between aux and perp for hyperbolic points"""
     aux_line = point.aux()
     perp_line = point.perp()
@@ -160,7 +162,7 @@ def test_hyperbolic_point_aux_vs_perp(point):
 
 
 @given(hyperbolic_lines())
-def test_hyperbolic_line_aux_vs_perp(line):
+def test_hyperbolic_line_aux_vs_perp(line: HyperbolicLine) -> None:
     """Test difference between aux and perp for hyperbolic lines"""
     aux_point = line.aux()
     perp_point = line.perp()
@@ -175,7 +177,7 @@ def test_hyperbolic_line_aux_vs_perp(line):
 
 
 @given(hyperbolic_points(), hyperbolic_lines())
-def test_hyperbolic_perp_incidence_symmetry(point, line):
+def test_hyperbolic_perp_incidence_symmetry(point: HyperbolicPoint, line: HyperbolicLine) -> None:
     """Test symmetry of incidence with polar/pole operations"""
     perp_point = line.perp()
     perp_line = point.perp()
@@ -186,7 +188,7 @@ def test_hyperbolic_perp_incidence_symmetry(point, line):
 
 
 @given(hyperbolic_points())
-def test_hyperbolic_point_perp_not_aux(point):
+def test_hyperbolic_point_perp_not_aux(point: HyperbolicPoint) -> None:
     """Test that perp is not the same as aux for hyperbolic points"""
     aux_line = point.aux()
     perp_line = point.perp()
@@ -201,7 +203,7 @@ def test_hyperbolic_point_perp_not_aux(point):
 
 
 @given(hyperbolic_lines())
-def test_hyperbolic_line_perp_not_aux(line):
+def test_hyperbolic_line_perp_not_aux(line: HyperbolicLine) -> None:
     """Test that perp is not the same as aux for hyperbolic lines"""
     aux_point = line.aux()
     perp_point = line.perp()

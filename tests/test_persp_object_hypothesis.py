@@ -2,14 +2,16 @@
 Hypothesis tests for persp_object module
 """
 
+from typing import List, Tuple
+
 from hypothesis import assume, given
-from hypothesis.strategies import composite, integers
+from hypothesis.strategies import DrawFn, composite, integers
 
 from projgeom.persp_object import I_IM, I_RE, L_INF, PerspLine, PerspPoint
 
 
 @composite
-def non_zero_triplets(draw):
+def non_zero_triplets(draw: DrawFn) -> List[int]:
     """Generate non-zero triplets of integers"""
     a = draw(integers(min_value=-100, max_value=100))
     b = draw(integers(min_value=-100, max_value=100))
@@ -19,21 +21,21 @@ def non_zero_triplets(draw):
 
 
 @composite
-def persp_points(draw):
+def persp_points(draw: DrawFn) -> PerspPoint:
     """Generate valid PerspPoint objects"""
     coords = draw(non_zero_triplets())
     return PerspPoint(coords)
 
 
 @composite
-def persp_lines(draw):
+def persp_lines(draw: DrawFn) -> PerspLine:
     """Generate valid PerspLine objects"""
     coords = draw(non_zero_triplets())
     return PerspLine(coords)
 
 
 @composite
-def distinct_persp_points(draw):
+def distinct_persp_points(draw: DrawFn) -> Tuple[PerspPoint, PerspPoint]:
     """Generate two distinct PerspPoint objects"""
     pt1 = draw(persp_points())
     pt2 = draw(persp_points())
@@ -42,7 +44,7 @@ def distinct_persp_points(draw):
 
 
 @composite
-def distinct_persp_lines(draw):
+def distinct_persp_lines(draw: DrawFn) -> Tuple[PerspLine, PerspLine]:
     """Generate two distinct PerspLine objects"""
     ln1 = draw(persp_lines())
     ln2 = draw(persp_lines())
@@ -51,21 +53,21 @@ def distinct_persp_lines(draw):
 
 
 @given(persp_points())
-def test_persp_point_perp_returns_line(point):
+def test_persp_point_perp_returns_line(point: PerspPoint) -> None:
     """Test that perp of a PerspPoint returns L_INF (polar line)"""
     line = point.perp()
     assert line == L_INF
 
 
 @given(persp_lines())
-def test_persp_line_perp_returns_point(line):
+def test_persp_line_perp_returns_point(line: PerspLine) -> None:
     """Test that perp of a PerspLine returns a PerspPoint (pole point)"""
     point = line.perp()
     assert isinstance(point, PerspPoint)
 
 
 @given(persp_points())
-def test_persp_point_midpoint_properties(pt_p):
+def test_persp_point_midpoint_properties(pt_p: PerspPoint) -> None:
     """Test properties of midpoint"""
     # Midpoint of a point with itself should be the same point
     midpoint = pt_p.midpoint(pt_p)
@@ -73,7 +75,7 @@ def test_persp_point_midpoint_properties(pt_p):
 
 
 @given(distinct_persp_points())
-def test_persp_point_midpoint_symmetry(points):
+def test_persp_point_midpoint_symmetry(points: Tuple[PerspPoint, PerspPoint]) -> None:
     """Test that midpoint is symmetric"""
     pt_p, pt_q = points
     midpoint_pq = pt_p.midpoint(pt_q)
@@ -82,7 +84,7 @@ def test_persp_point_midpoint_symmetry(points):
 
 
 @given(distinct_persp_points())
-def test_persp_point_midpoint_incidence(points):
+def test_persp_point_midpoint_incidence(points: Tuple[PerspPoint, PerspPoint]) -> None:
     """Test that midpoint lies on the line through the two points"""
     pt_p, pt_q = points
     midpoint = pt_p.midpoint(pt_q)
@@ -91,7 +93,7 @@ def test_persp_point_midpoint_incidence(points):
 
 
 @given(distinct_persp_points())
-def test_persp_point_midpoint_coordinates(points):
+def test_persp_point_midpoint_coordinates(points: Tuple[PerspPoint, PerspPoint]) -> None:
     """Test the coordinate formula for midpoint"""
     pt_p, pt_q = points
     midpoint = pt_p.midpoint(pt_q)
@@ -105,7 +107,7 @@ def test_persp_point_midpoint_coordinates(points):
 
 
 @given(persp_lines())
-def test_persp_line_perp_coordinates(line):
+def test_persp_line_perp_coordinates(line: PerspLine) -> None:
     """Test the coordinate formula for perp"""
     point = line.perp()
 
@@ -118,7 +120,7 @@ def test_persp_line_perp_coordinates(line):
 
 
 @given(persp_lines())
-def test_persp_line_perp_incidence(line):
+def test_persp_line_perp_incidence(line: PerspLine) -> None:
     """Test that a line has a pole"""
     point = line.perp()
     assert isinstance(point, PerspPoint)
@@ -127,7 +129,7 @@ def test_persp_line_perp_incidence(line):
 
 
 @given(distinct_persp_lines())
-def test_persp_line_is_parallel_properties(lines):
+def test_persp_line_is_parallel_properties(lines: Tuple[PerspLine, PerspLine]) -> None:
     """Test properties of is_parallel"""
     ln_l, ln_m = lines
 
@@ -139,14 +141,14 @@ def test_persp_line_is_parallel_properties(lines):
 
 
 @given(persp_lines())
-def test_persp_line_parallel_to_l_inf(line):
+def test_persp_line_parallel_to_l_inf(line: PerspLine) -> None:
     """Test that all lines are parallel to L_INF"""
     assert line.is_parallel(L_INF)
     assert L_INF.is_parallel(line)
 
 
 @given(distinct_persp_lines())
-def test_persp_line_parallel_meet(lines):
+def test_persp_line_parallel_meet(lines: Tuple[PerspLine, PerspLine]) -> None:
     """Test that parallel lines meet at infinity"""
     ln_l, ln_m = lines
 
@@ -156,7 +158,7 @@ def test_persp_line_parallel_meet(lines):
 
 
 @given(distinct_persp_points())
-def test_persp_point_meet_perp(points):
+def test_persp_point_meet_perp(points: Tuple[PerspPoint, PerspPoint]) -> None:
     """Test properties of meet and perp for persp points"""
     pt_p, pt_q = points
     line = pt_p.meet(pt_q)
@@ -174,7 +176,7 @@ def test_persp_point_meet_perp(points):
 
 
 @given(distinct_persp_lines())
-def test_persp_line_meet_perp(lines):
+def test_persp_line_meet_perp(lines: Tuple[PerspLine, PerspLine]) -> None:
     """Test properties of meet and perp for persp lines"""
     ln_l, ln_m = lines
     point = ln_l.meet(ln_m)
@@ -192,7 +194,7 @@ def test_persp_line_meet_perp(lines):
 
 
 @given(persp_points())
-def test_persp_point_aux_vs_perp(point):
+def test_persp_point_aux_vs_perp(point: PerspPoint) -> None:
     """Test difference between aux and perp for persp points"""
     aux_line = point.aux()
     perp_line = point.perp()
@@ -208,7 +210,7 @@ def test_persp_point_aux_vs_perp(point):
 
 
 @given(persp_lines())
-def test_persp_line_aux_vs_perp(line):
+def test_persp_line_aux_vs_perp(line: PerspLine) -> None:
     """Test difference between aux and perp for persp lines"""
     aux_point = line.aux()
     perp_point = line.perp()
@@ -223,7 +225,7 @@ def test_persp_line_aux_vs_perp(line):
 
 
 @given(persp_points(), persp_lines())
-def test_persp_perp_incidence_symmetry(point, line):
+def test_persp_perp_incidence_symmetry(point: PerspPoint, line: PerspLine) -> None:
     """Test symmetry of incidence with poles/polars"""
     perp_point = line.perp()
     perp_line = point.perp()  # This is L_INF
@@ -234,17 +236,17 @@ def test_persp_perp_incidence_symmetry(point, line):
 
 
 @given(persp_points())
-def test_persp_point_midpoint_with_l_inf(point):
+def test_persp_point_midpoint_with_l_inf(point: PerspPoint) -> None:
     """Test midpoint with L_INF"""
-    midpoint = point.midpoint(L_INF)
+    midpoint = point.midpoint(L_INF)  # type: ignore[arg-type]
 
     # The midpoint should be on the line through point and L_INF
-    line = point.meet(L_INF)
+    line = point.meet(L_INF)  # type: ignore[arg-type]
     assert line.incident(midpoint)
 
 
 @given(persp_lines())
-def test_persp_line_perp_coordinate_scaling(line):
+def test_persp_line_perp_coordinate_scaling(line: PerspLine) -> None:
     """Test how perp transforms coordinate scaling"""
     # Create a scaled version of the line
     scale = 3
@@ -261,7 +263,7 @@ def test_persp_line_perp_coordinate_scaling(line):
 
 
 @given(persp_points())
-def test_persp_point_midpoint_coordinate_scaling(point):
+def test_persp_point_midpoint_coordinate_scaling(point: PerspPoint) -> None:
     """Test how midpoint transforms coordinate scaling"""
     # Create a scaled version of the point
     scale = 3

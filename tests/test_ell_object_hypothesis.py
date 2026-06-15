@@ -2,14 +2,16 @@
 Hypothesis tests for ell_object module
 """
 
+from typing import List, Tuple
+
 from hypothesis import assume, given
-from hypothesis.strategies import composite, integers
+from hypothesis.strategies import DrawFn, composite, integers
 
 from projgeom.ell_object import EllipticLine, EllipticPoint
 
 
 @composite
-def non_zero_triplets(draw):
+def non_zero_triplets(draw: DrawFn) -> List[int]:
     """Generate non-zero triplets of integers"""
     a = draw(integers(min_value=-100, max_value=100))
     b = draw(integers(min_value=-100, max_value=100))
@@ -19,21 +21,21 @@ def non_zero_triplets(draw):
 
 
 @composite
-def elliptic_points(draw):
+def elliptic_points(draw: DrawFn) -> EllipticPoint:
     """Generate valid EllipticPoint objects"""
     coords = draw(non_zero_triplets())
     return EllipticPoint(coords)
 
 
 @composite
-def elliptic_lines(draw):
+def elliptic_lines(draw: DrawFn) -> EllipticLine:
     """Generate valid EllipticLine objects"""
     coords = draw(non_zero_triplets())
     return EllipticLine(coords)
 
 
 @composite
-def distinct_elliptic_points(draw):
+def distinct_elliptic_points(draw: DrawFn) -> Tuple[EllipticPoint, EllipticPoint]:
     """Generate two distinct EllipticPoint objects"""
     pt1 = draw(elliptic_points())
     pt2 = draw(elliptic_points())
@@ -42,7 +44,7 @@ def distinct_elliptic_points(draw):
 
 
 @composite
-def distinct_elliptic_lines(draw):
+def distinct_elliptic_lines(draw: DrawFn) -> Tuple[EllipticLine, EllipticLine]:
     """Generate two distinct EllipticLine objects"""
     ln1 = draw(elliptic_lines())
     ln2 = draw(elliptic_lines())
@@ -51,21 +53,21 @@ def distinct_elliptic_lines(draw):
 
 
 @given(elliptic_points())
-def test_elliptic_point_perp_returns_line(point):
+def test_elliptic_point_perp_returns_line(point: EllipticPoint) -> None:
     """Test that perp of an EllipticPoint returns an EllipticLine (polar line)"""
     line = point.perp()
     assert isinstance(line, EllipticLine)
 
 
 @given(elliptic_lines())
-def test_elliptic_line_perp_returns_point(line):
+def test_elliptic_line_perp_returns_point(line: EllipticLine) -> None:
     """Test that perp of an EllipticLine returns an EllipticPoint (pole point)"""
     point = line.perp()
     assert isinstance(point, EllipticPoint)
 
 
 @given(elliptic_points())
-def test_elliptic_point_perp_incidence(point):
+def test_elliptic_point_perp_incidence(point: EllipticPoint) -> None:
     """Test that a point has a polar line"""
     line = point.perp()
     assert isinstance(line, EllipticLine)
@@ -74,7 +76,7 @@ def test_elliptic_point_perp_incidence(point):
 
 
 @given(elliptic_lines())
-def test_elliptic_line_perp_incidence(line):
+def test_elliptic_line_perp_incidence(line: EllipticLine) -> None:
     """Test that a line has a pole point"""
     point = line.perp()
     assert isinstance(point, EllipticPoint)
@@ -83,21 +85,21 @@ def test_elliptic_line_perp_incidence(line):
 
 
 @given(elliptic_points())
-def test_elliptic_point_perp_coordinates(point):
+def test_elliptic_point_perp_coordinates(point: EllipticPoint) -> None:
     """Test that perp preserves coordinates for elliptic points"""
     line = point.perp()
     assert line.coord == point.coord
 
 
 @given(elliptic_lines())
-def test_elliptic_line_perp_coordinates(line):
+def test_elliptic_line_perp_coordinates(line: EllipticLine) -> None:
     """Test that perp preserves coordinates for elliptic lines"""
     point = line.perp()
     assert point.coord == line.coord
 
 
 @given(elliptic_points())
-def test_elliptic_point_perp_duality(point):
+def test_elliptic_point_perp_duality(point: EllipticPoint) -> None:
     """Test that perp is dual to itself for elliptic points"""
     line = point.perp()
     point_back = line.perp()
@@ -105,7 +107,7 @@ def test_elliptic_point_perp_duality(point):
 
 
 @given(elliptic_lines())
-def test_elliptic_line_perp_duality(line):
+def test_elliptic_line_perp_duality(line: EllipticLine) -> None:
     """Test that perp is dual to itself for elliptic lines"""
     point = line.perp()
     line_back = point.perp()
@@ -113,7 +115,7 @@ def test_elliptic_line_perp_duality(line):
 
 
 @given(distinct_elliptic_points())
-def test_elliptic_point_meet_perp(points):
+def test_elliptic_point_meet_perp(points: Tuple[EllipticPoint, EllipticPoint]) -> None:
     """Test properties of meet and perp for elliptic points"""
     pt_p, pt_q = points
     line = pt_p.meet(pt_q)
@@ -128,7 +130,7 @@ def test_elliptic_point_meet_perp(points):
 
 
 @given(distinct_elliptic_lines())
-def test_elliptic_line_meet_perp(lines):
+def test_elliptic_line_meet_perp(lines: Tuple[EllipticLine, EllipticLine]) -> None:
     """Test properties of meet and perp for elliptic lines"""
     ln_l, ln_m = lines
     point = ln_l.meet(ln_m)
@@ -143,7 +145,7 @@ def test_elliptic_line_meet_perp(lines):
 
 
 @given(elliptic_points())
-def test_elliptic_point_aux_vs_perp(point):
+def test_elliptic_point_aux_vs_perp(point: EllipticPoint) -> None:
     """Test difference between aux and perp for elliptic points"""
     aux_line = point.aux()
     perp_line = point.perp()
@@ -158,7 +160,7 @@ def test_elliptic_point_aux_vs_perp(point):
 
 
 @given(elliptic_lines())
-def test_elliptic_line_aux_vs_perp(line):
+def test_elliptic_line_aux_vs_perp(line: EllipticLine) -> None:
     """Test difference between aux and perp for elliptic lines"""
     aux_point = line.aux()
     perp_point = line.perp()
@@ -173,7 +175,7 @@ def test_elliptic_line_aux_vs_perp(line):
 
 
 @given(elliptic_points(), elliptic_lines())
-def test_elliptic_perp_incidence_symmetry(point, line):
+def test_elliptic_perp_incidence_symmetry(point: EllipticPoint, line: EllipticLine) -> None:
     """Test symmetry of incidence with polar/pole operations"""
     perp_point = line.perp()
     perp_line = point.perp()

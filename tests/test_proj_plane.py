@@ -5,7 +5,7 @@ from projgeom.pg_object import PgLine, PgPoint
 from projgeom.pg_plane import ProjectivePlane, coincident, harm_conj
 
 
-def check_pg_plane(pt_p: ProjectivePlane, pt_q: ProjectivePlane):
+def check_pg_plane(pt_p: ProjectivePlane, pt_q: ProjectivePlane) -> None:
     ln_l = pt_p.meet(pt_q)
     assert ln_l == pt_q.meet(pt_p)
     assert ln_l.incident(pt_p)
@@ -17,14 +17,14 @@ def check_pg_plane(pt_p: ProjectivePlane, pt_q: ProjectivePlane):
 
 
 @given(integers(), integers())
-def test_pg_point(pz, qz) -> None:
+def test_pg_point(pz: int, qz: int) -> None:
     pt_p = PgPoint([133333333333, 322222222222, pz])
     pt_q = PgPoint([-244444444444, 166666666666, qz])
     check_pg_plane(pt_p, pt_q)
 
 
 @given(integers(), integers())
-def test_pg_line(pz, qz) -> None:
+def test_pg_line(pz: int, qz: int) -> None:
     ln_l = PgLine([133333333333, 322222222222, pz])
     ln_m = PgLine([-244444444444, 166666666666, qz])
     check_pg_plane(ln_l, ln_m)

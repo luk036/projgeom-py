@@ -2,14 +2,16 @@
 Hypothesis tests for myck_object module
 """
 
+from typing import List, Tuple
+
 from hypothesis import assume, given
-from hypothesis.strategies import composite, integers
+from hypothesis.strategies import DrawFn, composite, integers
 
 from projgeom.myck_object import MyCKLine, MyCKPoint
 
 
 @composite
-def non_zero_triplets(draw):
+def non_zero_triplets(draw: DrawFn) -> List[int]:
     """Generate non-zero triplets of integers"""
     a = draw(integers(min_value=-100, max_value=100))
     b = draw(integers(min_value=-100, max_value=100))
@@ -19,21 +21,21 @@ def non_zero_triplets(draw):
 
 
 @composite
-def myck_points(draw):
+def myck_points(draw: DrawFn) -> MyCKPoint:
     """Generate valid MyCKPoint objects"""
     coords = draw(non_zero_triplets())
     return MyCKPoint(coords)
 
 
 @composite
-def myck_lines(draw):
+def myck_lines(draw: DrawFn) -> MyCKLine:
     """Generate valid MyCKLine objects"""
     coords = draw(non_zero_triplets())
     return MyCKLine(coords)
 
 
 @composite
-def distinct_myck_points(draw):
+def distinct_myck_points(draw: DrawFn) -> Tuple[MyCKPoint, MyCKPoint]:
     """Generate two distinct MyCKPoint objects"""
     pt1 = draw(myck_points())
     pt2 = draw(myck_points())
@@ -42,7 +44,7 @@ def distinct_myck_points(draw):
 
 
 @composite
-def distinct_myck_lines(draw):
+def distinct_myck_lines(draw: DrawFn) -> Tuple[MyCKLine, MyCKLine]:
     """Generate two distinct MyCKLine objects"""
     ln1 = draw(myck_lines())
     ln2 = draw(myck_lines())
@@ -51,21 +53,21 @@ def distinct_myck_lines(draw):
 
 
 @given(myck_points())
-def test_myck_point_perp_returns_line(point):
+def test_myck_point_perp_returns_line(point: MyCKPoint) -> None:
     """Test that perp of a MyCKPoint returns a MyCKLine (polar line)"""
     line = point.perp()
     assert isinstance(line, MyCKLine)
 
 
 @given(myck_lines())
-def test_myck_line_perp_returns_point(line):
+def test_myck_line_perp_returns_point(line: MyCKLine) -> None:
     """Test that perp of a MyCKLine returns a MyCKPoint (pole point)"""
     point = line.perp()
     assert isinstance(point, MyCKPoint)
 
 
 @given(myck_points())
-def test_myck_point_perp_coordinates(point):
+def test_myck_point_perp_coordinates(point: MyCKPoint) -> None:
     """Test that perp transforms coordinates correctly for MyCK points"""
     line = point.perp()
     expected_coords = [-2 * point.coord[0], point.coord[1], -2 * point.coord[2]]
@@ -73,7 +75,7 @@ def test_myck_point_perp_coordinates(point):
 
 
 @given(myck_lines())
-def test_myck_line_perp_coordinates(line):
+def test_myck_line_perp_coordinates(line: MyCKLine) -> None:
     """Test that perp transforms coordinates correctly for MyCK lines"""
     point = line.perp()
     expected_coords = [-line.coord[0], 2 * line.coord[1], -line.coord[2]]
@@ -81,7 +83,7 @@ def test_myck_line_perp_coordinates(line):
 
 
 @given(myck_points())
-def test_myck_point_perp_duality(point):
+def test_myck_point_perp_duality(point: MyCKPoint) -> None:
     """Test that perp is dual to itself for MyCK points"""
     line = point.perp()
     point_back = line.perp()
@@ -89,7 +91,7 @@ def test_myck_point_perp_duality(point):
 
 
 @given(myck_lines())
-def test_myck_line_perp_duality(line):
+def test_myck_line_perp_duality(line: MyCKLine) -> None:
     """Test that perp is dual to itself for MyCK lines"""
     point = line.perp()
     line_back = point.perp()
@@ -97,7 +99,7 @@ def test_myck_line_perp_duality(line):
 
 
 @given(myck_points())
-def test_myck_point_perp_incidence(point):
+def test_myck_point_perp_incidence(point: MyCKPoint) -> None:
     """Test that a point has a polar line"""
     line = point.perp()
     assert isinstance(line, MyCKLine)
@@ -106,7 +108,7 @@ def test_myck_point_perp_incidence(point):
 
 
 @given(myck_lines())
-def test_myck_line_perp_incidence(line):
+def test_myck_line_perp_incidence(line: MyCKLine) -> None:
     """Test that a line has a pole point"""
     point = line.perp()
     assert isinstance(point, MyCKPoint)
@@ -115,7 +117,7 @@ def test_myck_line_perp_incidence(line):
 
 
 @given(distinct_myck_points())
-def test_myck_point_meet_perp(points):
+def test_myck_point_meet_perp(points: Tuple[MyCKPoint, MyCKPoint]) -> None:
     """Test properties of meet and perp for MyCK points"""
     pt_p, pt_q = points
     line = pt_p.meet(pt_q)
@@ -130,7 +132,7 @@ def test_myck_point_meet_perp(points):
 
 
 @given(distinct_myck_lines())
-def test_myck_line_meet_perp(lines):
+def test_myck_line_meet_perp(lines: Tuple[MyCKLine, MyCKLine]) -> None:
     """Test properties of meet and perp for MyCK lines"""
     ln_l, ln_m = lines
     point = ln_l.meet(ln_m)
@@ -145,7 +147,7 @@ def test_myck_line_meet_perp(lines):
 
 
 @given(myck_points())
-def test_myck_point_aux_vs_perp(point):
+def test_myck_point_aux_vs_perp(point: MyCKPoint) -> None:
     """Test difference between aux and perp for MyCK points"""
     aux_line = point.aux()
     perp_line = point.perp()
@@ -160,7 +162,7 @@ def test_myck_point_aux_vs_perp(point):
 
 
 @given(myck_lines())
-def test_myck_line_aux_vs_perp(line):
+def test_myck_line_aux_vs_perp(line: MyCKLine) -> None:
     """Test difference between aux and perp for MyCK lines"""
     aux_point = line.aux()
     perp_point = line.perp()
@@ -175,7 +177,7 @@ def test_myck_line_aux_vs_perp(line):
 
 
 @given(myck_points(), myck_lines())
-def test_myck_perp_incidence_symmetry(point, line):
+def test_myck_perp_incidence_symmetry(point: MyCKPoint, line: MyCKLine) -> None:
     """Test symmetry of incidence with polar/pole operations"""
     perp_point = line.perp()
     perp_line = point.perp()
@@ -186,7 +188,7 @@ def test_myck_perp_incidence_symmetry(point, line):
 
 
 @given(myck_points())
-def test_myck_point_perp_not_aux(point):
+def test_myck_point_perp_not_aux(point: MyCKPoint) -> None:
     """Test that perp is not the same as aux for MyCK points"""
     aux_line = point.aux()
     perp_line = point.perp()
@@ -201,7 +203,7 @@ def test_myck_point_perp_not_aux(point):
 
 
 @given(myck_lines())
-def test_myck_line_perp_not_aux(line):
+def test_myck_line_perp_not_aux(line: MyCKLine) -> None:
     """Test that perp is not the same as aux for MyCK lines"""
     aux_point = line.aux()
     perp_point = line.perp()
@@ -216,7 +218,7 @@ def test_myck_line_perp_not_aux(line):
 
 
 @given(myck_points())
-def test_myck_point_perp_coordinate_scaling(point):
+def test_myck_point_perp_coordinate_scaling(point: MyCKPoint) -> None:
     """Test how perp transforms coordinate scaling"""
     # Create a scaled version of the point
     scale = 3
@@ -233,7 +235,7 @@ def test_myck_point_perp_coordinate_scaling(point):
 
 
 @given(myck_lines())
-def test_myck_line_perp_coordinate_scaling(line):
+def test_myck_line_perp_coordinate_scaling(line: MyCKLine) -> None:
     """Test how perp transforms coordinate scaling"""
     # Create a scaled version of the line
     scale = 3
