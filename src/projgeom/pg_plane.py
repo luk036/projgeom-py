@@ -96,8 +96,6 @@ class ProjectivePlane(Generic[Dual, Value]):
         """Check if two objects are incident"""
         return self.dot(line) == 0
 
-
-
     #     :param pt_q: pt_q is an instance of the class ProjectivePlanePrimitive<Point>
     #     :type pt_q: "ProjectivePlane[Dual, Value]"
     #     :param pt_r: The parameter `pt_r` is of type `ProjectivePlanePrimitive<Point>`
