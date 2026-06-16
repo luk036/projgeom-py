@@ -93,7 +93,9 @@ def test_persp_point_midpoint_incidence(points: Tuple[PerspPoint, PerspPoint]) -
 
 
 @given(distinct_persp_points())
-def test_persp_point_midpoint_coordinates(points: Tuple[PerspPoint, PerspPoint]) -> None:
+def test_persp_point_midpoint_coordinates(
+    points: Tuple[PerspPoint, PerspPoint]
+) -> None:
     """Test the coordinate formula for midpoint"""
     pt_p, pt_q = points
     midpoint = pt_p.midpoint(pt_q)

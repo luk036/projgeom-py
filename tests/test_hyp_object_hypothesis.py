@@ -117,7 +117,9 @@ def test_hyperbolic_line_perp_incidence(line: HyperbolicLine) -> None:
 
 
 @given(distinct_hyperbolic_points())
-def test_hyperbolic_point_meet_perp(points: Tuple[HyperbolicPoint, HyperbolicPoint]) -> None:
+def test_hyperbolic_point_meet_perp(
+    points: Tuple[HyperbolicPoint, HyperbolicPoint]
+) -> None:
     """Test properties of meet and perp for hyperbolic points"""
     pt_p, pt_q = points
     line = pt_p.meet(pt_q)
@@ -132,7 +134,9 @@ def test_hyperbolic_point_meet_perp(points: Tuple[HyperbolicPoint, HyperbolicPoi
 
 
 @given(distinct_hyperbolic_lines())
-def test_hyperbolic_line_meet_perp(lines: Tuple[HyperbolicLine, HyperbolicLine]) -> None:
+def test_hyperbolic_line_meet_perp(
+    lines: Tuple[HyperbolicLine, HyperbolicLine]
+) -> None:
     """Test properties of meet and perp for hyperbolic lines"""
     ln_l, ln_m = lines
     point = ln_l.meet(ln_m)
@@ -177,7 +181,9 @@ def test_hyperbolic_line_aux_vs_perp(line: HyperbolicLine) -> None:
 
 
 @given(hyperbolic_points(), hyperbolic_lines())
-def test_hyperbolic_perp_incidence_symmetry(point: HyperbolicPoint, line: HyperbolicLine) -> None:
+def test_hyperbolic_perp_incidence_symmetry(
+    point: HyperbolicPoint, line: HyperbolicLine
+) -> None:
     """Test symmetry of incidence with polar/pole operations"""
     perp_point = line.perp()
     perp_line = point.perp()

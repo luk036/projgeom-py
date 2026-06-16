@@ -175,7 +175,9 @@ def test_elliptic_line_aux_vs_perp(line: EllipticLine) -> None:
 
 
 @given(elliptic_points(), elliptic_lines())
-def test_elliptic_perp_incidence_symmetry(point: EllipticPoint, line: EllipticLine) -> None:
+def test_elliptic_perp_incidence_symmetry(
+    point: EllipticPoint, line: EllipticLine
+) -> None:
     """Test symmetry of incidence with polar/pole operations"""
     perp_point = line.perp()
     perp_line = point.perp()

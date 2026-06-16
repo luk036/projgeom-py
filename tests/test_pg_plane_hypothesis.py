@@ -98,7 +98,9 @@ def test_check_axiom(pt_p: Point, pt_q: Point, ln_l: Line) -> None:
     integers(min_value=-5, max_value=5),
     integers(min_value=-5, max_value=5),
 )
-def test_check_axiom2(pt_p: Point, pt_q: Point, ln_l: Line, alpha: int, beta: int) -> None:
+def test_check_axiom2(
+    pt_p: Point, pt_q: Point, ln_l: Line, alpha: int, beta: int
+) -> None:
     """Test extended projective plane axioms"""
     assume(pt_p != pt_q)
     assume(alpha != 0 or beta != 0)
@@ -155,7 +157,9 @@ def test_tri_dual_non_collinear(points: Tuple[Point, Point, Point]) -> None:
 
 
 @given(pg_points(), pg_points(), pg_points(), pg_points(), pg_points(), pg_points())
-def test_persp_symmetry(pt_a: Point, pt_b: Point, pt_c: Point, pt_d: Point, pt_e: Point, pt_f: Point) -> None:
+def test_persp_symmetry(
+    pt_a: Point, pt_b: Point, pt_c: Point, pt_d: Point, pt_e: Point, pt_f: Point
+) -> None:
     """Test that perspectivity is symmetric under dual operation"""
     tri1 = [pt_a, pt_b, pt_c]
     tri2 = [pt_d, pt_e, pt_f]
@@ -181,7 +185,9 @@ def test_persp_symmetry(pt_a: Point, pt_b: Point, pt_c: Point, pt_d: Point, pt_e
 
 
 @given(pg_points(), pg_points(), pg_points(), pg_points(), pg_points(), pg_points())
-def test_check_desargue(pt_a: Point, pt_b: Point, pt_c: Point, pt_d: Point, pt_e: Point, pt_f: Point) -> None:
+def test_check_desargue(
+    pt_a: Point, pt_b: Point, pt_c: Point, pt_d: Point, pt_e: Point, pt_f: Point
+) -> None:
     """Test Desargues' theorem"""
     tri1 = [pt_a, pt_b, pt_c]
     tri2 = [pt_d, pt_e, pt_f]
@@ -256,7 +262,9 @@ def test_involution_fixed_points(origin: Point, mirror: Point) -> None:
 
 
 @given(collinear_triplet(), collinear_triplet())
-def test_pappus_theorem(triple1: Tuple[Point, Point, Point], triple2: Tuple[Point, Point, Point]) -> None:
+def test_pappus_theorem(
+    triple1: Tuple[Point, Point, Point], triple2: Tuple[Point, Point, Point]
+) -> None:
     """Test Pappus' theorem"""
     # Pappus' theorem should hold for collinear triples
     assert check_pappus(triple1, triple2)  # type: ignore[arg-type]

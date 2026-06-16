@@ -81,7 +81,9 @@ def test_cross_with_self_is_zero(vec: List[int]) -> None:
     non_zero_triplets(),
     non_zero_triplets(),
 )
-def test_plckr_linearity(lambda_val: int, mu_val: int, vec_a: List[int], vec_b: List[int]) -> None:
+def test_plckr_linearity(
+    lambda_val: int, mu_val: int, vec_a: List[int], vec_b: List[int]
+) -> None:
     """Test that plckr operation is linear"""
     result = plckr(lambda_val, vec_a, mu_val, vec_b)
     expected = [
@@ -138,7 +140,9 @@ def test_aux_returns_dual_type_for_line(line: PgLine) -> None:
     integers(min_value=-5, max_value=5),
     integers(min_value=-5, max_value=5),
 )
-def test_parametrize_returns_point_on_line(pt_p: PgPoint, pt_q: PgPoint, lambda_val: int, mu_val: int) -> None:
+def test_parametrize_returns_point_on_line(
+    pt_p: PgPoint, pt_q: PgPoint, lambda_val: int, mu_val: int
+) -> None:
     """Test that parametrize returns a point on the line through two points"""
     assume(lambda_val != 0 or mu_val != 0)
     result = pt_p.parametrize(lambda_val, pt_q, mu_val)
@@ -155,7 +159,9 @@ def test_parametrize_returns_point_on_line(pt_p: PgPoint, pt_q: PgPoint, lambda_
     integers(min_value=-5, max_value=5),
     integers(min_value=-5, max_value=5),
 )
-def test_parametrize_returns_line_through_point(ln_l: PgLine, ln_m: PgLine, lambda_val: int, mu_val: int) -> None:
+def test_parametrize_returns_line_through_point(
+    ln_l: PgLine, ln_m: PgLine, lambda_val: int, mu_val: int
+) -> None:
     """Test that parametrize returns a line through the intersection point"""
     assume(lambda_val != 0 or mu_val != 0)
     result = ln_l.parametrize(lambda_val, ln_m, mu_val)
