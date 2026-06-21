@@ -70,8 +70,14 @@ LineCk = CayleyKleinPlane["PointCk", int]
 
 
 def is_perpendicular(l_1: LineCk, l_2: LineCk) -> bool:
-    """
-    The function `is_perpendicular` checks if two lines are perpendicular.
+    r"""Check if two lines are perpendicular in Cayley–Klein geometry.
+
+    Two lines :math:`\ell_1, \ell_2` are perpendicular when the pole of
+    one lies on the other:
+
+    .. math::
+
+       \ell_1 \perp \ell_2 \iff \text{pole}(\ell_1) \in \ell_2
 
     :param l_1: The parameter `l_1` represents a line in Cayley-Klein geometry. It is of type `LineCk`, which is likely a custom class representing a hyperbolic line
     :type l_1: LineCk
@@ -101,15 +107,22 @@ def is_perpendicular(l_1: LineCk, l_2: LineCk) -> bool:
 
 
 def altitude(pt_p: PointCk, ln_l: LineCk) -> LineCk:
-    """
-    The `altitude` function calculates the altitude of a point `pt_p` with respect to a line `ln_l` in a
-    Cayley-Klein geometry.
+    r"""Altitude of a point with respect to a line.
 
-    :param pt_p: pt_p is a CayleyKleinPlanePrimitive object representing a point in three-dimensional space
-    :type pt_p: PointCk
-    :param ln_l: ln_l is a CayleyKleinPlanePrimitive object representing a line in a hyperbolic plane
-    :type ln_l: LineCk
-    :return: The function `altitude` returns a `CayleyKleinPlanePrimitive<Line>` object.
+    The altitude is the line through :math:`P` that is perpendicular to
+    :math:`\ell`. In Cayley–Klein geometry, perpendicularity is defined
+    via the pole–polar relationship:
+
+    .. math::
+
+       \text{altitude}(P, \ell) = \text{polar}(\ell) \wedge P
+
+    where :math:`\text{polar}(\ell)` is the pole of :math:`\ell` and
+    :math:`\wedge` denotes the meet (intersection) operation.
+
+    :param pt_p: Point :math:`P`
+    :param ln_l: Line :math:`\ell`
+    :return: The altitude line through :math:`P` perpendicular to :math:`\ell`
 
     .. svgbob::
        :align: center
@@ -130,12 +143,19 @@ def altitude(pt_p: PointCk, ln_l: LineCk) -> LineCk:
 
 
 def orthocenter(triangle: List[PointCk]) -> PointCk:
-    """
-    The `orthocenter` function calculates the orthocenter of a triangle in Cayley-Klein geometry.
+    r"""Orthocenter of a triangle in Cayley–Klein geometry.
 
-    :param triangle: The `triangle` parameter is a list of three `CayleyKleinPlanePrimitive<Point>` objects.
-    :type triangle: List[PointCk]
-    :return: The function `orthocenter` returns a `CayleyKleinPlanePrimitive<Point>` object.
+    The orthocenter :math:`H` is the intersection of two altitudes:
+
+    .. math::
+
+       H = \text{altitude}(A, BC) \wedge \text{altitude}(B, CA)
+
+    where :math:`\text{altitude}(P, \ell)` is the line through :math:`P`
+    perpendicular to :math:`\ell`.
+
+    :param triangle: Triangle vertices :math:`[A, B, C]`
+    :return: The orthocenter :math:`H`
 
     .. svgbob::
        :align: center

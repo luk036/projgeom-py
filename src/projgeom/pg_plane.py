@@ -348,16 +348,17 @@ def check_axiom2(
 
 
 def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point) -> Point:
-    """
-    The `harm_conj` function calculates the harmonic conjugate of three points on a projective plane.
+    r"""Harmonic conjugate of three collinear points.
 
-    :param pt_a: a is an object of type ProjectivePlane
-    :type pt_a: Point
-    :param pt_b: The parameter `pt_b` represents a point on the projective plane
-    :type pt_b: Point
-    :param pt_c: The parameter `pt_c` represents a point on the projective plane
-    :type pt_c: Point
-    :return: The function `harm_conj` returns a `ProjectivePlane` object.
+    Given collinear points :math:`A, B, C`, the harmonic conjugate
+    :math:`D` satisfies the cross-ratio :math:`(A,B;C,D) = -1`:
+
+    .. math::
+
+       D = A \cdot (\ell_c \cdot B) + B \cdot (\ell_c \cdot A)
+
+    where :math:`\ell_c` is a line through :math:`C` that is **not**
+    incident with :math:`A` or :math:`B`.
 
     .. svgbob::
        :align: center
@@ -381,17 +382,30 @@ def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point) -> Point:
 
 
 def involution(origin: Point, mirror: Any, pt_p: Point) -> Point:
-    """
-    The function `involution` performs an involution transformation on a point `pt_p` with respect to an
-    origin point `origin` and a mirror line `mirror`.
+    r"""Involution (reflection) across a mirror line.
 
-    :param origin: The `origin` parameter represents a point in a projective plane
-    :type origin: Point
-    :param mirror: The `mirror` parameter represents a mirror line in a projective plane. It is used to perform a reflection of a point `pt_p` across the mirror line
-    :type mirror: Point
-    :param pt_p: The parameter `pt_p` represents a point in a projective plane
-    :type pt_p: Point
-    :return: a ProjectivePlane<Point> object.
+    Reflects point :math:`P` across a mirror line using the harmonic
+    conjugate construction. If :math:`O` is the origin and :math:`M`
+    is the mirror, let :math:`\ell = OP` meet the mirror at :math:`B`.
+    Then the reflected point :math:`P'` is:
+
+    .. math::
+
+       P' = \text{harm\_conj}(O, B, P)
+
+    which satisfies :math:`(O,B;P,P') = -1`.
+
+    .. svgbob::
+       :align: center
+
+        P' -----o----- P
+                |
+              mirror
+
+    :param origin: Origin point :math:`O`
+    :param mirror: Mirror line
+    :param pt_p: Point :math:`P` to reflect
+    :return: Reflected point :math:`P'`
 
     .. svgbob::
        :align: center

@@ -91,9 +91,15 @@ class MyCKPoint(PgObject["MyCKLine"]):
         return self.polar()
 
     def polar(self) -> "MyCKLine":
-        """
-        The polar function returns an instance of the MyCKLine class that represents a polar line.
-        :return: an instance of the MyCKLine class.
+        r"""Polar line with respect to a custom conic :math:`2x_1^2 - x_2^2 + 2x_3^2 = 0`.
+
+        The polar of :math:`\mathbf{x} = (x_1:x_2:x_3)` is:
+
+        .. math::
+
+           \mathbf{p} = (-2x_1,\; x_2,\; -2x_3)
+
+        :return: An :class:`MyCKLine` instance.
 
         Examples:
             >>> from projgeom.myck_object import MyCKPoint, MyCKLine
@@ -147,8 +153,15 @@ class MyCKLine(PgObject[MyCKPoint]):
         return self.pole()
 
     def pole(self) -> MyCKPoint:
-        """Pole of the line.
-        :return: The `pole` method returns a `MyCKPoint` object.
+        r"""Pole with respect to the custom conic :math:`2x_1^2 - x_2^2 + 2x_3^2 = 0`.
+
+        The pole of :math:`\mathbf{l} = (l_1:l_2:l_3)` is:
+
+        .. math::
+
+           \mathbf{p} = (-l_1,\; 2l_2,\; -l_3)
+
+        :return: A :class:`MyCKPoint` object.
 
         Examples:
             >>> from projgeom.myck_object import MyCKPoint, MyCKLine

@@ -51,9 +51,16 @@ class HyperbolicPoint(PgObject["HyperbolicLine"]):
         return self.polar()
 
     def polar(self) -> "HyperbolicLine":
-        """Polar line of the point.
+        r"""Polar line of the point in the Cayley–Klein model.
 
-        :return: a HyperbolicLine object.
+        The polar of :math:`\mathbf{x} = (x_1:x_2:x_3)` with respect to
+        the absolute conic :math:`x_1^2 + x_2^2 - x_3^2 = 0` is given by:
+
+        .. math::
+
+           \mathbf{p} = (x_1,\; x_2,\; -x_3)
+
+        :return: A HyperbolicLine object.
 
         Examples:
             >>> from projgeom.hyp_object import HyperbolicPoint, HyperbolicLine
@@ -109,9 +116,18 @@ class HyperbolicLine(PgObject[HyperbolicPoint]):
         return self.pole()
 
     def pole(self) -> HyperbolicPoint:
-        """
-        The `pole` function returns a HyperbolicPoint object that represents the pole to the given line.
-        :return: The `pole` method returns a `HyperbolicPoint` object.
+        r"""Pole of the line with respect to the absolute conic.
+
+        The pole of :math:`\mathbf{l} = (l_1:l_2:l_3)` is:
+
+        .. math::
+
+           \mathbf{p} = (l_1,\; l_2,\; -l_3)
+
+        (same transformation as :meth:`HyperbolicPoint.polar` due to
+        the symmetry of the absolute conic).
+
+        :return: A :class:`HyperbolicPoint` object.
 
         Examples:
             >>> from projgeom.hyp_object import HyperbolicPoint, HyperbolicLine

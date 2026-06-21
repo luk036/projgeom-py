@@ -55,12 +55,18 @@ class PerspPoint(PgObject["PerspLine"]):
         return self.polar()
 
     def polar(self) -> "PerspLine":
-        """Polar line.
+        r"""Polar line of a point in a perspective (affine) plane.
 
-        Returns the line at infinity as the polar for any point in a perspective plane.
-        Note: This represents the polar operation in projective geometry, not perpendicular.
+        All points share the same polar — the line at infinity
+        :math:`\mathbf{L}_\infty = (0:-1:1)`:
 
-        :return: The PerspLine representing the line at infinity.
+        .. math::
+
+           \text{polar}(P) = \mathbf{L}_\infty \quad \forall P
+
+        This reflects the degenerate absolute conic of affine geometry.
+
+        :return: The :class:`PerspLine` representing the line at infinity.
 
         Examples:
             >>> from projgeom.persp_object import PerspPoint
@@ -71,12 +77,19 @@ class PerspPoint(PgObject["PerspLine"]):
         return L_INF
 
     def midpoint(self, other: "PerspPoint") -> "PerspPoint":
-        """
-        The `midpoint` function calculates the midpoint between two PerspPoint objects.
+        r"""Midpoint of two points in a perspective (affine) plane.
 
-        :param other: The `other` parameter is an instance of the same class as `self`. It represents another point that you want to find the midpoint with
-        :type other: "PerspPoint"
-        :return: The `midpoint` method returns an instance of the `PerspPoint` class.
+        The midpoint :math:`M` of :math:`P` and :math:`Q` is the harmonic
+        conjugate of the point at infinity on the line :math:`PQ`:
+
+        .. math::
+
+           \alpha &= \mathbf{L}_\infty \cdot Q \\[4pt]
+           \beta &= \mathbf{L}_\infty \cdot P \\[4pt]
+           M &= P \cdot \alpha + Q \cdot \beta
+
+        :param other: Other point :math:`Q`
+        :return: The midpoint :math:`M`
 
         Examples:
             >>> from projgeom.persp_object import PerspPoint
@@ -137,13 +150,20 @@ class PerspLine(PgObject[PerspPoint]):
         return self.pole()
 
     def pole(self) -> PerspPoint:
-        """Pole
+        r"""Pole of a line in a perspective (affine) plane.
 
-        The `pole` function returns a `PerspPoint` object that is obtained by taking the dot product of
-        `self` with `I_RE` and `I_IM`, and then using the results to create a new `PerspPoint` object
-        using the `parametrize` method of `I_RE`.
-        Note: This represents the pole operation in projective geometry, not perpendicular.
-        :return: a PerspPoint object.
+        The pole is obtained by parametrising the isotropic points
+        :math:`\mathbf{I}_{\text{Re}} = (0:1:1)` and
+        :math:`\mathbf{I}_{\text{Im}} = (1:0:0)`:
+
+        .. math::
+
+           \alpha &= \mathbf{I}_{\text{Re}} \cdot \mathbf{l} \\[4pt]
+           \beta &= \mathbf{I}_{\text{Im}} \cdot \mathbf{l} \\[4pt]
+           \text{pole}(\mathbf{l}) &=
+           \alpha\,\mathbf{I}_{\text{Re}} + \beta\,\mathbf{I}_{\text{Im}}
+
+        :return: A :class:`PerspPoint` object.
         """
         alpha = I_RE.dot(self)
         beta = I_IM.dot(self)

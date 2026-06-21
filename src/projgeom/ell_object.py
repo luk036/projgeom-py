@@ -48,9 +48,18 @@ class EllipticPoint(PgObject["EllipticLine"]):
         return self.polar()
 
     def polar(self) -> "EllipticLine":
-        """
-        The `polar` function returns an `EllipticLine` object representing the polar line of this point.
-        :return: The `polar` method is returning an instance of the `EllipticLine` class.
+        r"""Polar line with respect to the elliptic absolute conic.
+
+        The elliptic polar uses the identity conic :math:`x_1^2 + x_2^2 + x_3^2 = 0`,
+        so the polar of :math:`\mathbf{x}` is simply:
+
+        .. math::
+
+           \mathbf{p} = \mathbf{x}
+
+        (the point and its polar have identical coordinates).
+
+        :return: An :class:`EllipticLine` with the same coordinates.
 
         Examples:
             >>> from projgeom.ell_object import EllipticPoint, EllipticLine
@@ -105,9 +114,16 @@ class EllipticLine(PgObject[EllipticPoint]):
         return self.pole()
 
     def pole(self) -> EllipticPoint:
-        """
-        The `pole` function returns an `EllipticPoint` object, which represents the pole of this line.
-        :return: An `EllipticPoint` object is being returned.
+        r"""Pole of the line with respect to the elliptic absolute conic.
+
+        Same as :meth:`EllipticPoint.polar` — the pole has identical
+        coordinates to the line in elliptic geometry:
+
+        .. math::
+
+           \mathbf{p} = \mathbf{l}
+
+        :return: An :class:`EllipticPoint` with the same coordinates.
 
         Examples:
             >>> from projgeom.ell_object import EllipticPoint, EllipticLine

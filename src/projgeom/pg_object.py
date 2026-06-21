@@ -49,58 +49,51 @@ Dual = TypeVar("Dual", bound="PgObject")  # type: ignore[type-arg]
 
 
 def dot(vec_a: List[int], vec_b: List[int]) -> int:
-    """
-    The `dot` function calculates the dot product of two lists of integers.
+    r"""Dot product of two homogeneous coordinate vectors.
 
-    :param vec_a: a is a list of integers
-    :type vec_a: List[int]
-    :param vec_b: The parameter `vec_b` is a list of integers
-    :type vec_b: List[int]
-    :return: The function `dot` returns the dot product of two lists of integers.
+    For projective coordinates :math:`\mathbf{a} = (a_1:a_2:a_3)` and
+    :math:`\mathbf{b} = (b_1:b_2:b_3)`:
 
-    .. svgbob::
-       :align: center
+    .. math::
 
-        a . b = |a| |b| cos(theta)
+       \mathbf{a} \cdot \mathbf{b} = a_1 b_1 + a_2 b_2 + a_3 b_3
+
+    A point is incident with a line when their dot product is zero.
+
+    :param vec_a: First vector :math:`(a_1,a_2,a_3)`
+    :param vec_b: Second vector :math:`(b_1,b_2,b_3)`
+    :return: The dot product
 
     Examples:
         >>> dot([1, 2, 3], [4, 5, 6])
         32
-        >>> dot([1, 2, 3], [4, 5, 6]) == 32
-        True
     """
     return vec_a[0] * vec_b[0] + vec_a[1] * vec_b[1] + vec_a[2] * vec_b[2]
 
 
 def cross(vec_a: List[int], vec_b: List[int]) -> List[int]:
-    """
-    The `cross` function calculates the cross product of two vectors.
+    r"""Cross product of two homogeneous coordinate vectors.
 
-    :param vec_a: a is a list of integers
-    :type vec_a: List[int]
-    :param vec_b: The parameter `vec_b` is a list of integers
-    :type vec_b: List[int]
-    :return: The function `cross` returns a list of three integers.
+    For :math:`\mathbf{a} = (a_1:a_2:a_3)` and
+    :math:`\mathbf{b} = (b_1:b_2:b_3)`:
 
-    .. svgbob::
-       :align: center
+    .. math::
 
-          a x b
-          ^
-          |
-          |  /
-          | /
-          |/
-          +------> b
-         /
-        /
-       a
+       \mathbf{a} \times \mathbf{b} =
+       \bigl(a_2 b_3 - a_3 b_2,\;
+             a_3 b_1 - a_1 b_3,\;
+             a_1 b_2 - a_2 b_1\bigr)
+
+    In projective geometry the cross product gives the line through two
+    points, or the intersection point of two lines.
+
+    :param vec_a: First vector :math:`(a_1,a_2,a_3)`
+    :param vec_b: Second vector :math:`(b_1,b_2,b_3)`
+    :return: The cross product vector
 
     Examples:
         >>> cross([1, 2, 3], [4, 5, 6])
         [-3, 6, -3]
-        >>> cross([1, 2, 3], [4, 5, 6]) == [-3, 6, -3]
-        True
     """
     return [
         vec_a[1] * vec_b[2] - vec_a[2] * vec_b[1],
@@ -110,19 +103,25 @@ def cross(vec_a: List[int], vec_b: List[int]) -> List[int]:
 
 
 def plckr(lambda_: int, vec_a: List[int], mu_: int, vec_b: List[int]) -> List[int]:
-    """Homogeneous parametrization of point or line
+    r"""Linear combination (Plücker parametrisation) of two coordinates.
 
-    :param `lambda_`: `lambda_` is an integer representing the scalar coefficient for
-        the first vector vec_a in the Plucker operation
-    :type lambda_: int
-    :param vec_a: The parameter `vec_a` is a list of three integers
-    :type vec_a: List[int]
-    :param `mu_`: The `mu_` parameter represents a scalar value that is used in the
-        Plucker operation
-    :type mu_: int
-    :param vec_b: The parameter `vec_b` is a list of integers
-    :type vec_b: List[int]
-    :return: The `plckr` function returns a list of three integers.
+    Computes the linear combination:
+
+    .. math::
+
+       \lambda \mathbf{a} + \mu \mathbf{b} =
+       (\lambda a_1 + \mu b_1,\;
+        \lambda a_2 + \mu b_2,\;
+        \lambda a_3 + \mu b_3)
+
+    This gives a point on the line through :math:`\mathbf{a}` and
+    :math:`\mathbf{b}` (or a line through their meet).
+
+    :param lambda_: Scalar :math:`\lambda`
+    :param vec_a: First vector :math:`(a_1,a_2,a_3)`
+    :param mu_: Scalar :math:`\mu`
+    :param vec_b: Second vector :math:`(b_1,b_2,b_3)`
+    :return: The linear combination :math:`\lambda\mathbf{a} + \mu\mathbf{b}`
 
     Examples:
         >>> plckr(1, [1, 2, 3], 2, [4, 5, 6])
