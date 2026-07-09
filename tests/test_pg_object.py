@@ -1,4 +1,24 @@
-from projgeom.pg_object import PgLine, PgPoint
+from projgeom.pg_object import PgLine, PgObject, PgPoint
+
+
+def test_pg_object_invalid_coord_length() -> None:
+    """PgObject rejects coordinates that are not length 3 (line 173)."""
+    import pytest
+    with pytest.raises(ValueError, match="three integers"):
+        PgObject([1, 2])
+
+
+def test_pg_object_eq_non_pgobject() -> None:
+    """PgObject.__eq__ returns False for non-PgObject types (line 209)."""
+    obj = PgObject([1, 2, 3])
+    assert obj != "not a PgObject"
+    assert obj != 42
+
+
+def test_pg_object_dual_type() -> None:
+    """PgObject.dual_type() returns PgLine (line 219)."""
+    obj = PgObject([1, 2, 3])
+    assert obj.dual_type() == PgLine
 
 
 def test_pg_point_meet() -> None:

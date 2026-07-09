@@ -6,6 +6,7 @@ from projgeom.ck_plane import (
     PointCk,
     is_perpendicular,
     orthocenter,
+    reflect,
     tri_altitude,
 )
 from projgeom.ell_object import EllipticLine, EllipticPoint
@@ -83,3 +84,9 @@ def test_persp_point(a1z: int, a2z: int, a3y: int) -> None:
     a_2: PointCk = PerspPoint([4444444444, -333333333, a2z])  # type: ignore[assignment]
     a_3: PointCk = PerspPoint([-233333333, a3y, 1222222222])  # type: ignore[assignment]
     check_ck_plane(a_1, a_2, a_3)
+
+
+def test_reflect() -> None:
+    """Test reflect function (line 232)."""
+    t = reflect(HyperbolicLine([0, 1, 0]), HyperbolicPoint([0, 0, 1]))
+    assert t is not None
