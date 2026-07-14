@@ -48,7 +48,7 @@ from .pg_plane import ProjectivePlane, Value
 Dual = TypeVar("Dual", bound="PgObject")  # type: ignore[type-arg]
 
 
-def dot(vec_a: List[int], vec_b: List[int]) -> int:
+def dot(v_a: List[int], v_b: List[int]) -> int:
     r"""Dot product of two homogeneous coordinate vectors.
 
     For projective coordinates :math:`\mathbf{a} = (a_1:a_2:a_3)` and
@@ -60,18 +60,18 @@ def dot(vec_a: List[int], vec_b: List[int]) -> int:
 
     A point is incident with a line when their dot product is zero.
 
-    :param vec_a: First vector :math:`(a_1,a_2,a_3)`
-    :param vec_b: Second vector :math:`(b_1,b_2,b_3)`
+    :param v_a: First vector :math:`(a_1,a_2,a_3)`
+    :param v_b: Second vector :math:`(b_1,b_2,b_3)`
     :return: The dot product
 
     Examples:
         >>> dot([1, 2, 3], [4, 5, 6])
         32
     """
-    return vec_a[0] * vec_b[0] + vec_a[1] * vec_b[1] + vec_a[2] * vec_b[2]
+    return v_a[0] * v_b[0] + v_a[1] * v_b[1] + v_a[2] * v_b[2]
 
 
-def cross(vec_a: List[int], vec_b: List[int]) -> List[int]:
+def cross(v_a: List[int], v_b: List[int]) -> List[int]:
     r"""Cross product of two homogeneous coordinate vectors.
 
     For :math:`\mathbf{a} = (a_1:a_2:a_3)` and
@@ -87,8 +87,8 @@ def cross(vec_a: List[int], vec_b: List[int]) -> List[int]:
     In projective geometry the cross product gives the line through two
     points, or the intersection point of two lines.
 
-    :param vec_a: First vector :math:`(a_1,a_2,a_3)`
-    :param vec_b: Second vector :math:`(b_1,b_2,b_3)`
+    :param v_a: First vector :math:`(a_1,a_2,a_3)`
+    :param v_b: Second vector :math:`(b_1,b_2,b_3)`
     :return: The cross product vector
 
     Examples:
@@ -96,13 +96,98 @@ def cross(vec_a: List[int], vec_b: List[int]) -> List[int]:
         [-3, 6, -3]
     """
     return [
-        vec_a[1] * vec_b[2] - vec_a[2] * vec_b[1],
-        vec_a[2] * vec_b[0] - vec_a[0] * vec_b[2],
-        vec_a[0] * vec_b[1] - vec_a[1] * vec_b[0],
+        v_a[1] * v_b[2] - v_a[2] * v_b[1],
+        v_a[2] * v_b[0] - v_a[0] * v_b[2],
+        v_a[0] * v_b[1] - v_a[1] * v_b[0],
     ]
 
 
-def plckr(lambda_: int, vec_a: List[int], mu_: int, vec_b: List[int]) -> List[int]:
+def cross0(v_a: List[int], v_b: List[int]) -> int:
+    r"""Cross product 0th component (yz-plane projection).
+
+    .. math::
+
+        \mathrm{cross}_0(v_a,v_b) = v_{a,y} v_{b,z} - v_{b,y} v_{a,z}
+
+    :param v_a: First vector :math:`(a_1,a_2,a_3)`.
+    :param v_b: Second vector :math:`(b_1,b_2,b_3)`.
+    :return: The yz-plane cross component.
+
+    Examples:
+        >>> cross0([1, 2, 3], [4, 5, 6])
+        -3
+    """
+    return v_a[1] * v_b[2] - v_b[1] * v_a[2]
+
+
+def cross1(v_a: List[int], v_b: List[int]) -> int:
+    r"""Cross product 1st component (xz-plane projection).
+
+    .. math::
+
+        \mathrm{cross}_1(v_a,v_b) = v_{a,x} v_{b,z} - v_{b,x} v_{a,z}
+
+    :param v_a: First vector :math:`(a_1,a_2,a_3)`.
+    :param v_b: Second vector :math:`(b_1,b_2,b_3)`.
+    :return: The xz-plane cross component.
+
+    Examples:
+        >>> cross1([1, 2, 3], [4, 5, 6])
+        -6
+    """
+    return v_a[0] * v_b[2] - v_b[0] * v_a[2]
+
+
+def cross2(v_a: List[int], v_b: List[int]) -> int:
+    r"""Cross product (2d) — xy-plane projection.
+
+    .. math::
+
+        \mathrm{cross}_2(v_a, v_b) = v_{a,x} v_{b,y} - v_{a,y} v_{b,x}
+
+    :param v_a: First vector :math:`(a_1,a_2)`.
+    :param v_b: Second vector :math:`(b_1,b_2)`.
+    :return: The 2d cross product.
+
+    Examples:
+        >>> cross2([1, 2], [3, 4])
+        -2
+    """
+    return v_a[0] * v_b[1] - v_a[1] * v_b[0]
+
+
+def dot1(v_a: List[int], v_b: List[int]) -> int:
+    r"""Dot product of the (x,y)-components (affine part).
+
+    .. math::
+
+        \mathrm{dot}_1(v_a, v_b) = v_{a,x} v_{b,x} + v_{a,y} v_{b,y}
+
+    :param v_a: First vector :math:`(a_1,a_2)`.
+    :param v_b: Second vector :math:`(b_1,b_2)`.
+    :return: The affine dot product.
+
+    Examples:
+        >>> dot1([1, 2], [3, 4])
+        11
+    """
+    return v_a[0] * v_b[0] + v_a[1] * v_b[1]
+
+
+def sq(val: int) -> int:
+    r"""Square function.
+
+    :param val: The value to square.
+    :return: ``val * val``.
+
+    Examples:
+        >>> sq(5)
+        25
+    """
+    return val * val
+
+
+def plckr(lambda_val: int, v_a: List[int], mu_val: int, v_b: List[int]) -> List[int]:
     r"""Linear combination (Plücker parametrisation) of two coordinates.
 
     Computes the linear combination:
@@ -117,10 +202,10 @@ def plckr(lambda_: int, vec_a: List[int], mu_: int, vec_b: List[int]) -> List[in
     This gives a point on the line through :math:`\mathbf{a}` and
     :math:`\mathbf{b}` (or a line through their meet).
 
-    :param lambda_: Scalar :math:`\lambda`
-    :param vec_a: First vector :math:`(a_1,a_2,a_3)`
-    :param mu_: Scalar :math:`\mu`
-    :param vec_b: Second vector :math:`(b_1,b_2,b_3)`
+    :param lambda_val: Scalar :math:`\lambda`
+    :param v_a: First vector :math:`(a_1,a_2,a_3)`
+    :param mu_val: Scalar :math:`\mu`
+    :param v_b: Second vector :math:`(b_1,b_2,b_3)`
     :return: The linear combination :math:`\lambda\mathbf{a} + \mu\mathbf{b}`
 
     Examples:
@@ -130,9 +215,9 @@ def plckr(lambda_: int, vec_a: List[int], mu_: int, vec_b: List[int]) -> List[in
         True
     """
     return [
-        lambda_ * vec_a[0] + mu_ * vec_b[0],
-        lambda_ * vec_a[1] + mu_ * vec_b[1],
-        lambda_ * vec_a[2] + mu_ * vec_b[2],
+        lambda_val * v_a[0] + mu_val * v_b[0],
+        lambda_val * v_a[1] + mu_val * v_b[1],
+        lambda_val * v_a[2] + mu_val * v_b[2],
     ]
 
 
@@ -241,16 +326,13 @@ class PgObject(ProjectivePlane[Dual, int]):
         """
         return dot(self.coord, line.coord)
 
-    def parametrize(self, lambda_: Value, pt_q: Self, mu_: Value) -> Self:
-        """Homogeneous parametrization of point or line
+    def parametrize(self, lambda_val: Value, pt_q: Self, mu_val: Value) -> Self:
+        r"""Homogeneous parametrization of point or line
 
-        :param lambda_: The parameter `lambda_` represents the index of the coordinate to be used in the parametrize operation
-        :type lambda_: int
-        :param pt_q: The parameter `pt_q` is an instance of the `PgObject` class
-        :type pt_q: "PgObject[Dual]"
-        :param mu_: The parameter `mu_` is an integer that represents the scalar multiplier for the `pt_q` object in the parametrize operation
-        :type mu_: int
-        :return: The parametrize method returns an instance of the PgObject class.
+        :param lambda_val: Scalar coefficient :math:`\lambda` for self
+        :param pt_q: The other point/line
+        :param mu_val: Scalar coefficient :math:`\mu` for pt_q
+        :return: The parametrized point/line
 
         Examples:
             >>> pt_p = PgObject([1, 2, 3])
@@ -259,9 +341,8 @@ class PgObject(ProjectivePlane[Dual, int]):
             True
         """
         Point = type(self)
-        # Cast pt_q to PgObject[Dual] to access .coord
         pg_q = cast("PgObject[Dual]", pt_q)
-        return Point(plckr(lambda_, self.coord, mu_, pg_q.coord))
+        return Point(plckr(lambda_val, self.coord, mu_val, pg_q.coord))
 
     # impl ProjectivePlanePrimitive<PgLine> for PgObject:
 

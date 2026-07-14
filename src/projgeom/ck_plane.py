@@ -69,7 +69,7 @@ PointCk = CayleyKleinPlane["LineCk", int]
 LineCk = CayleyKleinPlane["PointCk", int]
 
 
-def is_perpendicular(l_1: LineCk, l_2: LineCk) -> bool:
+def is_perpendicular(ln_l: LineCk, ln_m: LineCk) -> bool:
     r"""Check if two lines are perpendicular in Cayley–Klein geometry.
 
     Two lines :math:`\ell_1, \ell_2` are perpendicular when the pole of
@@ -79,10 +79,10 @@ def is_perpendicular(l_1: LineCk, l_2: LineCk) -> bool:
 
        \ell_1 \perp \ell_2 \iff \text{pole}(\ell_1) \in \ell_2
 
-    :param l_1: The parameter `l_1` represents a line in Cayley-Klein geometry. It is of type `LineCk`, which is likely a custom class representing a hyperbolic line
-    :type l_1: LineCk
-    :param l_2: The parameter `l_2` represents a line in Cayley-Klein geometry
-    :type l_2: LineCk
+    :param ln_l: The parameter `ln_l` represents a line in Cayley-Klein geometry. It is of type `LineCk`, which is likely a custom class representing a hyperbolic line
+    :type ln_l: LineCk
+    :param ln_m: The parameter `ln_m` represents a line in Cayley-Klein geometry
+    :type ln_m: LineCk
     :return: a boolean value, indicating whether the two given lines are perpendicular to each other.
 
     .. svgbob::
@@ -103,7 +103,7 @@ def is_perpendicular(l_1: LineCk, l_2: LineCk) -> bool:
         >>> is_perpendicular(HyperbolicLine([0, 1, 0]), HyperbolicLine([0, 0, -1]))
         True
     """
-    return l_1.perp().incident(l_2)
+    return ln_l.perp().incident(ln_m)
 
 
 def altitude(pt_p: PointCk, ln_l: LineCk) -> LineCk:
