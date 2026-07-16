@@ -9,7 +9,7 @@ from fractions import Fraction
 from typing import List
 
 from .euclid_object import EuclidPoint
-from .pg_object import cross2, dot1, sq
+from .pg_object import cross2, dot1
 
 
 def quad1(x1: int, z1: int, x2: int, z2: int) -> Fraction:

@@ -5,7 +5,6 @@ This module provides cross-ratio computations for projective geometry.
 """
 
 from fractions import Fraction
-from typing import List
 
 from .pg_object import PgObject, cross0, cross1
 from .pg_plane import ProjectivePlane

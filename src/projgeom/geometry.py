@@ -5,7 +5,6 @@ This module provides a unified interface for identifying geometry types.
 """
 
 from abc import abstractmethod
-from typing import List
 
 
 class Geometry:

@@ -12,11 +12,10 @@ defined by the line at infinity z = 0, so:
 - The pole of a line (a:b:c) is its direction vector (a:b:0).
 """
 
-from fractions import Fraction
 from typing import List
 
-from .pg_object import PgObject, cross2, dot1
-from .pg_plane import coincident, tri_dual
+from .pg_object import PgObject, dot1
+from .pg_plane import tri_dual
 
 
 class EuclidPoint(PgObject["EuclidLine"]):
