@@ -27,7 +27,15 @@ from projgeom.euclid_object import (  # noqa: E402
     uc_point,
 )
 from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint  # noqa: E402
-from projgeom.pg_object import PgLine, PgPoint, cross, cross0, cross1, dot, plckr  # noqa: E402
+from projgeom.pg_object import (  # noqa: E402
+    PgLine,
+    PgPoint,
+    cross,
+    cross0,
+    cross1,
+    dot,
+    plckr,
+)
 from projgeom.pg_plane import harm_conj  # noqa: E402
 from projgeom.proj_plane_measure import R, ratio_ratio  # noqa: E402
 from projgeom.transform import Transform  # noqa: E402
