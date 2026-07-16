@@ -88,5 +88,5 @@ def test_persp_point(a1z: int, a2z: int, a3y: int) -> None:
 
 def test_reflect() -> None:
     """Test reflect function (line 232)."""
-    t = reflect(HyperbolicLine([0, 1, 0]), HyperbolicPoint([0, 0, 1]))
+    t = reflect(HyperbolicLine([0, 1, 0]), HyperbolicPoint([0, 0, 1]))  # type: ignore[arg-type]
     assert t is not None

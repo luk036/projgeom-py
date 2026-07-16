@@ -70,7 +70,7 @@ from .ck_plane import (
 from .proj_plane_measure import R, R0, R1, ratio_ratio, x_ratio
 
 # Euclidean geometry
-from .euclid_object import (
+from .euclid_object import (  # type: ignore[assignment]
     EuclidLine,
     EuclidPoint,
     Ptolemy,

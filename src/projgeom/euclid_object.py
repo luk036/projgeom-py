@@ -339,10 +339,10 @@ def tri_altitude(triangle: List[EuclidPoint]) -> List[EuclidLine]:
         >>> alts[2].incident(c)
         True
     """
-    sides = tri_dual(triangle)
+    sides = tri_dual(triangle)  # type: ignore[arg-type]
     a1, a2, a3 = triangle
     l1, l2, l3 = sides
-    return [l1.altitude(a1), l2.altitude(a2), l3.altitude(a3)]
+    return [l1.altitude(a1), l2.altitude(a2), l3.altitude(a3)]  # type: ignore[attr-defined]
 
 
 def orthocenter(triangle: List[EuclidPoint]) -> EuclidPoint:

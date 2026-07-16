@@ -10,14 +10,14 @@ def test_pg_object_invalid_coord_length() -> None:
 
 def test_pg_object_eq_non_pgobject() -> None:
     """PgObject.__eq__ returns False for non-PgObject types (line 209)."""
-    obj = PgObject([1, 2, 3])
+    obj: PgObject = PgObject([1, 2, 3])
     assert obj != "not a PgObject"
     assert obj != 42
 
 
 def test_pg_object_dual_type() -> None:
     """PgObject.dual_type() returns PgLine (line 219)."""
-    obj = PgObject([1, 2, 3])
+    obj: PgObject = PgObject([1, 2, 3])
     assert obj.dual_type() == PgLine
 
 
