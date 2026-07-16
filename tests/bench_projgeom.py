@@ -4,14 +4,12 @@ Benchmarks for projective geometry operations.
 Run with: pytest tests/bench_projgeom.py --benchmark-only --benchmark-sort=name
 """
 
-import pytest
-from fractions import Fraction
 
 from projgeom.pg_object import PgPoint, PgLine, dot, cross, cross0, cross1, cross2, dot1, plckr
-from projgeom.conic import Conic, ConicType
+from projgeom.conic import Conic
 from projgeom.transform import Transform
-from projgeom.euclid_object import EuclidPoint, EuclidLine, orthocenter, tri_altitude, midpoint
-from projgeom.proj_plane_measure import R, R0, R1
+from projgeom.euclid_object import EuclidPoint, orthocenter, tri_altitude, midpoint
+from projgeom.proj_plane_measure import R
 
 
 def test_bench_dot_product(benchmark):
@@ -69,8 +67,8 @@ def test_bench_point_creation_euclid(benchmark):
 def test_bench_meet_points(benchmark):
     """Benchmark meet (join) of two points to form a line."""
     p1, p2 = PgPoint([1, 2, 3]), PgPoint([4, 5, 6])
-    l = benchmark(p1.meet, p2)
-    assert l == PgLine([-3, 6, -3])
+    line_ = benchmark(p1.meet, p2)
+    assert line_ == PgLine([-3, 6, -3])
 
 
 def test_bench_meet_lines(benchmark):
@@ -82,8 +80,8 @@ def test_bench_meet_lines(benchmark):
 
 def test_bench_incident(benchmark):
     """Benchmark incidence check."""
-    p, l = PgPoint([1, 2, 3]), PgLine([4, 5, 6])
-    result = benchmark(p.incident, l)
+    p, line_ = PgPoint([1, 2, 3]), PgLine([4, 5, 6])
+    result = benchmark(p.incident, line_)
     assert not result
 
 

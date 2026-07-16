@@ -12,15 +12,14 @@ sys.path.insert(0, 'src')
 from fractions import Fraction
 
 from projgeom.pg_object import PgPoint, PgLine, dot, cross, cross0, cross1, plckr
-from projgeom.pg_plane import harm_conj, involution, coincident, check_pappus, persp
+from projgeom.pg_plane import harm_conj
 from projgeom.ell_object import EllipticPoint, EllipticLine
 from projgeom.hyp_object import HyperbolicPoint, HyperbolicLine
 from projgeom.euclid_object import (
-    EuclidPoint, EuclidLine, midpoint, orthocenter, tri_altitude,
-    Ptolemy, archimedes, cqq, uc_point, is_parallel, is_perpendicular,
+    EuclidPoint, EuclidLine, midpoint, orthocenter, Ptolemy, archimedes, uc_point, is_parallel, is_perpendicular,
     reflect_involution,
 )
-from projgeom.proj_plane_measure import R, R0, R1, ratio_ratio
+from projgeom.proj_plane_measure import R, ratio_ratio
 from projgeom.transform import Transform
 from projgeom.conic import Conic, ConicType
 
@@ -115,20 +114,20 @@ def test_harmonic_conjugate():
 def test_elliptic_perp():
     """Elliptic: p.perp() == EllipticLine(p.coord) — self-dual"""
     p = EllipticPoint([1, 2, 3])
-    l = p.perp()
-    assert l == EllipticLine([1, 2, 3])
+    line_ = p.perp()
+    assert line_ == EllipticLine([1, 2, 3])
     # Double perp returns to self
-    assert l.perp() == EllipticPoint([1, 2, 3])
+    assert line_.perp() == EllipticPoint([1, 2, 3])
     print("  ✅ Elliptic perp")
 
 
 def test_hyperbolic_perp():
     """Hyperbolic: (x,y,z).perp() == (x,y,-z)"""
     p = HyperbolicPoint([1, 2, 3])
-    l = p.perp()
-    assert l == HyperbolicLine([1, 2, -3]), f"hyp perp = {l}"
+    line_ = p.perp()
+    assert line_ == HyperbolicLine([1, 2, -3]), f"hyp perp = {line_}"
     # Double perp
-    p2 = l.perp()
+    p2 = line_.perp()
     assert p2 == HyperbolicPoint([1, 2, 3])
     print("  ✅ Hyperbolic perp")
 
@@ -136,15 +135,15 @@ def test_hyperbolic_perp():
 def test_euclidean_perp_point():
     """Euclidean point: perp() == L_INF = (0,0,1)"""
     p = EuclidPoint([1, 2, 1])
-    l = p.perp()
-    assert l == EuclidLine([0, 0, 1]), f"euc point perp = {l}"
+    line_ = p.perp()
+    assert line_ == EuclidLine([0, 0, 1]), f"euc point perp = {line_}"
     print("  ✅ Euclidean point perp")
 
 
 def test_euclidean_perp_line():
     """Euclidean line: perp() == direction vector (a,b,0)"""
-    l = EuclidLine([1, 2, -3])
-    p = l.perp()
+    line_ = EuclidLine([1, 2, -3])
+    p = line_.perp()
     assert p == EuclidPoint([1, 2, 0]), f"euc line perp = {p}"
     print("  ✅ Euclidean line perp")
 
