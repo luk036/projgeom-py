@@ -8,7 +8,7 @@ including translation, rotation, scaling, shear, and composition.
 from fractions import Fraction
 from typing import List
 
-from .pg_object import PgPoint, PgLine
+from .pg_object import PgLine, PgPoint
 
 
 class Transform:
@@ -48,11 +48,13 @@ class Transform:
             >>> t.matrix[0][0] == Fraction(1, 1)
             True
         """
-        return Transform([
-            [Fraction(1, 1), Fraction(0, 1), Fraction(0, 1)],
-            [Fraction(0, 1), Fraction(1, 1), Fraction(0, 1)],
-            [Fraction(0, 1), Fraction(0, 1), Fraction(1, 1)],
-        ])
+        return Transform(
+            [
+                [Fraction(1, 1), Fraction(0, 1), Fraction(0, 1)],
+                [Fraction(0, 1), Fraction(1, 1), Fraction(0, 1)],
+                [Fraction(0, 1), Fraction(0, 1), Fraction(1, 1)],
+            ]
+        )
 
     @staticmethod
     def translation(tx: int, ty: int) -> "Transform":
@@ -76,11 +78,13 @@ class Transform:
             >>> t.apply_point(PgPoint([1, 2, 1]))
             PgPoint(6 : 5 : 1)
         """
-        return Transform([
-            [Fraction(1, 1), Fraction(0, 1), Fraction(tx, 1)],
-            [Fraction(0, 1), Fraction(1, 1), Fraction(ty, 1)],
-            [Fraction(0, 1), Fraction(0, 1), Fraction(1, 1)],
-        ])
+        return Transform(
+            [
+                [Fraction(1, 1), Fraction(0, 1), Fraction(tx, 1)],
+                [Fraction(0, 1), Fraction(1, 1), Fraction(ty, 1)],
+                [Fraction(0, 1), Fraction(0, 1), Fraction(1, 1)],
+            ]
+        )
 
     @staticmethod
     def rotation(angle_cos: Fraction, angle_sin: Fraction) -> "Transform":
@@ -106,11 +110,13 @@ class Transform:
             PgPoint(0 : 1 : 1)
         """
         zero = Fraction(0, 1)
-        return Transform([
-            [angle_cos, -angle_sin, zero],
-            [angle_sin, angle_cos, zero],
-            [zero, zero, Fraction(1, 1)],
-        ])
+        return Transform(
+            [
+                [angle_cos, -angle_sin, zero],
+                [angle_sin, angle_cos, zero],
+                [zero, zero, Fraction(1, 1)],
+            ]
+        )
 
     @staticmethod
     def scaling(sx: Fraction, sy: Fraction) -> "Transform":
@@ -136,11 +142,13 @@ class Transform:
             PgPoint(2 : 6 : 1)
         """
         zero = Fraction(0, 1)
-        return Transform([
-            [sx, zero, zero],
-            [zero, sy, zero],
-            [zero, zero, Fraction(1, 1)],
-        ])
+        return Transform(
+            [
+                [sx, zero, zero],
+                [zero, sy, zero],
+                [zero, zero, Fraction(1, 1)],
+            ]
+        )
 
     @staticmethod
     def shear(shx: Fraction, shy: Fraction) -> "Transform":
@@ -166,11 +174,13 @@ class Transform:
             PgPoint(2 : 1 : 1)
         """
         zero = Fraction(0, 1)
-        return Transform([
-            [Fraction(1, 1), shx, zero],
-            [shy, Fraction(1, 1), zero],
-            [zero, zero, Fraction(1, 1)],
-        ])
+        return Transform(
+            [
+                [Fraction(1, 1), shx, zero],
+                [shy, Fraction(1, 1), zero],
+                [zero, zero, Fraction(1, 1)],
+            ]
+        )
 
     def compose(self, other: "Transform") -> "Transform":
         r"""Compose this transformation with another.
@@ -220,21 +230,17 @@ class Transform:
         y = Fraction(point.coord[1], 1)
         z = Fraction(point.coord[2], 1)
 
-        x_new = (
-            self.matrix[0][0] * x + self.matrix[0][1] * y + self.matrix[0][2] * z
-        )
-        y_new = (
-            self.matrix[1][0] * x + self.matrix[1][1] * y + self.matrix[1][2] * z
-        )
-        z_new = (
-            self.matrix[2][0] * x + self.matrix[2][1] * y + self.matrix[2][2] * z
-        )
+        x_new = self.matrix[0][0] * x + self.matrix[0][1] * y + self.matrix[0][2] * z
+        y_new = self.matrix[1][0] * x + self.matrix[1][1] * y + self.matrix[1][2] * z
+        z_new = self.matrix[2][0] * x + self.matrix[2][1] * y + self.matrix[2][2] * z
 
-        return PgPoint([
-            x_new.numerator // x_new.denominator,
-            y_new.numerator // y_new.denominator,
-            z_new.numerator // z_new.denominator,
-        ])
+        return PgPoint(
+            [
+                x_new.numerator // x_new.denominator,
+                y_new.numerator // y_new.denominator,
+                z_new.numerator // z_new.denominator,
+            ]
+        )
 
     def apply_line(self, line: PgLine) -> PgLine:
         r"""Apply the transformation to a line.
@@ -258,21 +264,17 @@ class Transform:
         y = Fraction(line.coord[1], 1)
         z = Fraction(line.coord[2], 1)
 
-        x_new = (
-            inv.matrix[0][0] * x + inv.matrix[1][0] * y + inv.matrix[2][0] * z
-        )
-        y_new = (
-            inv.matrix[0][1] * x + inv.matrix[1][1] * y + inv.matrix[2][1] * z
-        )
-        z_new = (
-            inv.matrix[0][2] * x + inv.matrix[1][2] * y + inv.matrix[2][2] * z
-        )
+        x_new = inv.matrix[0][0] * x + inv.matrix[1][0] * y + inv.matrix[2][0] * z
+        y_new = inv.matrix[0][1] * x + inv.matrix[1][1] * y + inv.matrix[2][1] * z
+        z_new = inv.matrix[0][2] * x + inv.matrix[1][2] * y + inv.matrix[2][2] * z
 
-        return PgLine([
-            x_new.numerator // x_new.denominator,
-            y_new.numerator // y_new.denominator,
-            z_new.numerator // z_new.denominator,
-        ])
+        return PgLine(
+            [
+                x_new.numerator // x_new.denominator,
+                y_new.numerator // y_new.denominator,
+                z_new.numerator // z_new.denominator,
+            ]
+        )
 
     def inverse(self) -> "Transform":
         r"""Compute the inverse of this transformation.
@@ -311,23 +313,25 @@ class Transform:
 
         inv_det = Fraction(1, 1) / det
 
-        return Transform([
+        return Transform(
             [
-                inv_det * (e * i_val - f * h),
-                inv_det * (c * h - b * i_val),
-                inv_det * (b * f - c * e),
-            ],
-            [
-                inv_det * (f * g - d * i_val),
-                inv_det * (a * i_val - c * g),
-                inv_det * (c * d - a * f),
-            ],
-            [
-                inv_det * (d * h - e * g),
-                inv_det * (b * g - a * h),
-                inv_det * (a * e - b * d),
-            ],
-        ])
+                [
+                    inv_det * (e * i_val - f * h),
+                    inv_det * (c * h - b * i_val),
+                    inv_det * (b * f - c * e),
+                ],
+                [
+                    inv_det * (f * g - d * i_val),
+                    inv_det * (a * i_val - c * g),
+                    inv_det * (c * d - a * f),
+                ],
+                [
+                    inv_det * (d * h - e * g),
+                    inv_det * (b * g - a * h),
+                    inv_det * (a * e - b * d),
+                ],
+            ]
+        )
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Transform):
@@ -335,9 +339,7 @@ class Transform:
         return self.matrix == other.matrix
 
 
-def rotate_point(
-    point: PgPoint, angle_cos: Fraction, angle_sin: Fraction
-) -> PgPoint:
+def rotate_point(point: PgPoint, angle_cos: Fraction, angle_sin: Fraction) -> PgPoint:
     r"""Rotate a point around the origin.
 
     .. math::
@@ -406,9 +408,7 @@ def scale_point(point: PgPoint, sx: Fraction, sy: Fraction) -> PgPoint:
     return t.apply_point(point)
 
 
-def projective_transform(
-    src: List[PgPoint], dst: List[PgPoint]
-) -> Transform:
+def projective_transform(src: List[PgPoint], dst: List[PgPoint]) -> Transform:
     r"""Compute a projective transformation mapping four source points to four destination points.
 
     .. math::

@@ -21,56 +21,38 @@ finally:
     del version, PackageNotFoundError
 
 # Sub-modules
-from . import ck_plane
-from . import conic
-from . import ell_object
-from . import error
-from . import euclid_object
-from . import euclid_plane_measure
-from . import geometry
-from . import hyp_object
-from . import myck_object
-from . import persp_object
-from . import pg_object
-from . import pg_plane
-from . import proj_plane_measure
-from . import transform
-
-# Core projective objects
-from .pg_object import PgPoint, PgLine
-from .ell_object import EllipticPoint, EllipticLine
-from .hyp_object import HyperbolicPoint, HyperbolicLine
-from .euclid_object import EuclidPoint, EuclidLine
-from .myck_object import MyCKPoint, MyCKLine
-from .persp_object import PerspPoint, PerspLine
-
-# Projective plane functions
-from .pg_plane import (
-    check_axiom,
-    check_axiom2,
-    check_desargue,
-    check_pappus,
-    coincident,
-    harm_conj,
-    involution,
-    persp,
-    tri_dual,
+from . import (
+    ck_plane,
+    conic,
+    ell_object,
+    error,
+    euclid_object,
+    euclid_plane_measure,
+    geometry,
+    hyp_object,
+    myck_object,
+    persp_object,
+    pg_object,
+    pg_plane,
+    proj_plane_measure,
+    transform,
 )
 
 # Cayley-Klein plane functions
-from .ck_plane import (
-    altitude,
-    is_perpendicular as ck_is_perpendicular,
-    orthocenter as ck_orthocenter,
-    reflect,
-    tri_altitude as ck_tri_altitude,
-)
+from .ck_plane import altitude
+from .ck_plane import is_perpendicular as ck_is_perpendicular
+from .ck_plane import orthocenter as ck_orthocenter
+from .ck_plane import reflect
+from .ck_plane import tri_altitude as ck_tri_altitude
 
-# Cross-ratio functions
-from .proj_plane_measure import R, R0, R1, ratio_ratio, x_ratio
+# Conics
+from .conic import Conic, ConicType
+from .ell_object import EllipticLine, EllipticPoint
 
 # Euclidean geometry
 from .euclid_object import (  # type: ignore[assignment]
+    EuclidLine,
+    EuclidPoint,
     Ptolemy,
     archimedes,
     cqq,
@@ -86,16 +68,29 @@ from .euclid_object import (  # type: ignore[assignment]
 )
 
 # Euclidean measurements
-from .euclid_plane_measure import (
-    cross_s,
-    quadrance,
-    spread,
-    tri_quadrance,
-    tri_spread,
+from .euclid_plane_measure import cross_s, quadrance, spread, tri_quadrance, tri_spread
+from .hyp_object import HyperbolicLine, HyperbolicPoint
+from .myck_object import MyCKLine, MyCKPoint
+from .persp_object import PerspLine, PerspPoint
+
+# Core projective objects
+from .pg_object import PgLine, PgPoint
+
+# Projective plane functions
+from .pg_plane import (
+    check_axiom,
+    check_axiom2,
+    check_desargue,
+    check_pappus,
+    coincident,
+    harm_conj,
+    involution,
+    persp,
+    tri_dual,
 )
 
-# Conics
-from .conic import Conic, ConicType
+# Cross-ratio functions
+from .proj_plane_measure import R0, R1, R, ratio_ratio, x_ratio
 
 # Transforms
 from .transform import (

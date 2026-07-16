@@ -5,11 +5,21 @@ Run with: pytest tests/bench_projgeom.py --benchmark-only --benchmark-sort=name
 """
 
 
-from projgeom.pg_object import PgPoint, PgLine, dot, cross, cross0, cross1, cross2, dot1, plckr
 from projgeom.conic import Conic
-from projgeom.transform import Transform
-from projgeom.euclid_object import EuclidPoint, orthocenter, tri_altitude, midpoint
+from projgeom.euclid_object import EuclidPoint, midpoint, orthocenter, tri_altitude
+from projgeom.pg_object import (
+    PgLine,
+    PgPoint,
+    cross,
+    cross0,
+    cross1,
+    cross2,
+    dot,
+    dot1,
+    plckr,
+)
 from projgeom.proj_plane_measure import R
+from projgeom.transform import Transform
 
 
 def test_bench_dot_product(benchmark):
@@ -95,6 +105,7 @@ def test_bench_parametrize(benchmark):
 def test_bench_harmonic_conjugate(benchmark):
     """Benchmark harmonic conjugate via pg_plane."""
     from projgeom.pg_plane import harm_conj
+
     a, b, c = PgPoint([1, 0, 1]), PgPoint([0, 0, 1]), PgPoint([2, 0, 1])
     d = benchmark(harm_conj, a, b, c)
     assert d == PgPoint([2, 0, 3])

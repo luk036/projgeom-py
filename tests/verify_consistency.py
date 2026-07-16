@@ -7,26 +7,35 @@ projgeom-rs test suite and docstring examples.
 """
 
 import sys
-sys.path.insert(0, 'src')
 
-from fractions import Fraction
+sys.path.insert(0, "src")
 
-from projgeom.pg_object import PgPoint, PgLine, dot, cross, cross0, cross1, plckr
-from projgeom.pg_plane import harm_conj
-from projgeom.ell_object import EllipticPoint, EllipticLine
-from projgeom.hyp_object import HyperbolicPoint, HyperbolicLine
-from projgeom.euclid_object import (
-    EuclidPoint, EuclidLine, midpoint, orthocenter, Ptolemy, archimedes, uc_point, is_parallel, is_perpendicular,
+from fractions import Fraction  # noqa: E402
+
+from projgeom.conic import Conic, ConicType  # noqa: E402
+from projgeom.ell_object import EllipticLine, EllipticPoint  # noqa: E402
+from projgeom.euclid_object import (  # noqa: E402
+    EuclidLine,
+    EuclidPoint,
+    Ptolemy,
+    archimedes,
+    is_parallel,
+    is_perpendicular,
+    midpoint,
+    orthocenter,
     reflect_involution,
+    uc_point,
 )
-from projgeom.proj_plane_measure import R, ratio_ratio
-from projgeom.transform import Transform
-from projgeom.conic import Conic, ConicType
-
+from projgeom.hyp_object import HyperbolicLine, HyperbolicPoint  # noqa: E402
+from projgeom.pg_object import PgLine, PgPoint, cross, cross0, cross1, dot, plckr  # noqa: E402
+from projgeom.pg_plane import harm_conj  # noqa: E402
+from projgeom.proj_plane_measure import R, ratio_ratio  # noqa: E402
+from projgeom.transform import Transform  # noqa: E402
 
 # ===========================================================================
 # Section 1: Vector/Coordinate Operations
 # ===========================================================================
+
 
 def test_dot_product():
     """Rust doc test: dot_product(&[1,2,3], &[4,5,6]) == 26"""
@@ -67,6 +76,7 @@ def test_plucker():
 # Section 2: Projective Point/Line Operations
 # ===========================================================================
 
+
 def test_pgpoint_equality():
     """Rust test: PgPoint([1,2,3]) == PgPoint([2,4,6])"""
     assert PgPoint([1, 2, 3]) == PgPoint([2, 4, 6])
@@ -96,6 +106,7 @@ def test_parametrize():
 # Section 3: Harmonic Conjugate
 # ===========================================================================
 
+
 def test_harmonic_conjugate():
     """
     Rust doc test: harm_conj(PgPoint([1,0,1]), PgPoint([0,0,1]), PgPoint([2,0,1]))
@@ -110,6 +121,7 @@ def test_harmonic_conjugate():
 # ===========================================================================
 # Section 4: Cayley-Klein perp() operations
 # ===========================================================================
+
 
 def test_elliptic_perp():
     """Elliptic: p.perp() == EllipticLine(p.coord) — self-dual"""
@@ -151,6 +163,7 @@ def test_euclidean_perp_line():
 # ===========================================================================
 # Section 5: Euclidean Geometry
 # ===========================================================================
+
 
 def test_midpoint():
     """Rust doc test: midpoint((0,0),(2,4)) == (1,2)"""
@@ -218,6 +231,7 @@ def test_reflect_involution():
 # Section 6: Cross-Ratio
 # ===========================================================================
 
+
 def test_ratio_ratio():
     """C++/Rust: ratio_ratio(1,2,3,4) == 2/3"""
     r = ratio_ratio(1, 2, 3, 4)
@@ -236,6 +250,7 @@ def test_cross_ratio_R():
 # ===========================================================================
 # Section 7: Conic Sections
 # ===========================================================================
+
 
 def test_conic_unit_circle():
     """Rust doc test: Conic.unit_circle()"""
@@ -258,6 +273,7 @@ def test_conic_polar():
 # ===========================================================================
 # Section 8: Transform
 # ===========================================================================
+
 
 def test_transform_translation():
     """Rust doc test: translation(5,3) applied to (1,2,1) == (6,5,1)"""
@@ -312,35 +328,76 @@ if __name__ == "__main__":
     print("Cross-Project Consistency Verification (Python ↔ Rust/C++)")
     print("=" * 60)
     tests = [
-        ("Vector/Coordinate Operations", [
-            test_dot_product, test_cross0, test_cross1, test_cross_product,
-            test_plucker,
-        ]),
-        ("Projective Point/Line", [
-            test_pgpoint_equality, test_meet, test_parametrize,
-        ]),
-        ("Harmonic Conjugate", [
-            test_harmonic_conjugate,
-        ]),
-        ("Cayley-Klein perp()", [
-            test_elliptic_perp, test_hyperbolic_perp,
-            test_euclidean_perp_point, test_euclidean_perp_line,
-        ]),
-        ("Euclidean Geometry", [
-            test_midpoint, test_orthocenter, test_ptolemy, test_archimedes,
-            test_uc_point, test_euclid_is_parallel, test_euclid_is_perpendicular,
-            test_reflect_involution,
-        ]),
-        ("Cross-Ratio", [
-            test_ratio_ratio, test_cross_ratio_R,
-        ]),
-        ("Conic Sections", [
-            test_conic_unit_circle, test_conic_polar,
-        ]),
-        ("Transform", [
-            test_transform_translation, test_transform_inverse,
-            test_transform_rotation, test_transform_scaling, test_transform_compose,
-        ]),
+        (
+            "Vector/Coordinate Operations",
+            [
+                test_dot_product,
+                test_cross0,
+                test_cross1,
+                test_cross_product,
+                test_plucker,
+            ],
+        ),
+        (
+            "Projective Point/Line",
+            [
+                test_pgpoint_equality,
+                test_meet,
+                test_parametrize,
+            ],
+        ),
+        (
+            "Harmonic Conjugate",
+            [
+                test_harmonic_conjugate,
+            ],
+        ),
+        (
+            "Cayley-Klein perp()",
+            [
+                test_elliptic_perp,
+                test_hyperbolic_perp,
+                test_euclidean_perp_point,
+                test_euclidean_perp_line,
+            ],
+        ),
+        (
+            "Euclidean Geometry",
+            [
+                test_midpoint,
+                test_orthocenter,
+                test_ptolemy,
+                test_archimedes,
+                test_uc_point,
+                test_euclid_is_parallel,
+                test_euclid_is_perpendicular,
+                test_reflect_involution,
+            ],
+        ),
+        (
+            "Cross-Ratio",
+            [
+                test_ratio_ratio,
+                test_cross_ratio_R,
+            ],
+        ),
+        (
+            "Conic Sections",
+            [
+                test_conic_unit_circle,
+                test_conic_polar,
+            ],
+        ),
+        (
+            "Transform",
+            [
+                test_transform_translation,
+                test_transform_inverse,
+                test_transform_rotation,
+                test_transform_scaling,
+                test_transform_compose,
+            ],
+        ),
     ]
     total = 0
     for section_name, section_tests in tests:

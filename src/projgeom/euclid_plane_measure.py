@@ -60,9 +60,7 @@ def quadrance(a: EuclidPoint, b: EuclidPoint) -> Fraction:
     )
 
 
-def sbase(
-    l1: EuclidPoint, l2: EuclidPoint, d: int
-) -> Fraction:
+def sbase(l1: EuclidPoint, l2: EuclidPoint, d: int) -> Fraction:
     r"""Base function for spread and cross-spread calculations.
 
     .. math::

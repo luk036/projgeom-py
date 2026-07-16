@@ -68,11 +68,13 @@ class Conic:
         zero = Fraction(0, 1)
         one = Fraction(1, 1)
 
-        return Conic([
-            [one, zero, -cx],
-            [zero, one, -cy],
-            [-cx, -cy, cx * cx + cy * cy - r2],
-        ])
+        return Conic(
+            [
+                [one, zero, -cx],
+                [zero, one, -cy],
+                [-cx, -cy, cx * cx + cy * cy - r2],
+            ]
+        )
 
     @staticmethod
     def unit_circle() -> "Conic":
@@ -111,11 +113,13 @@ class Conic:
         zero = Fraction(0, 1)
         half = Fraction(1, 2)
 
-        return Conic([
-            [-a, zero, zero],
-            [zero, zero, half],
-            [zero, half, zero],
-        ])
+        return Conic(
+            [
+                [-a, zero, zero],
+                [zero, zero, half],
+                [zero, half, zero],
+            ]
+        )
 
     def contains(self, point: PgPoint) -> bool:
         r"""Check if a point lies on the conic.
@@ -138,21 +142,11 @@ class Conic:
         z = Fraction(point.coord[2], 1)
 
         result = (
-            x * (
-                self.matrix[0][0] * x
-                + self.matrix[0][1] * y
-                + self.matrix[0][2] * z
-            )
-            + y * (
-                self.matrix[1][0] * x
-                + self.matrix[1][1] * y
-                + self.matrix[1][2] * z
-            )
-            + z * (
-                self.matrix[2][0] * x
-                + self.matrix[2][1] * y
-                + self.matrix[2][2] * z
-            )
+            x * (self.matrix[0][0] * x + self.matrix[0][1] * y + self.matrix[0][2] * z)
+            + y
+            * (self.matrix[1][0] * x + self.matrix[1][1] * y + self.matrix[1][2] * z)
+            + z
+            * (self.matrix[2][0] * x + self.matrix[2][1] * y + self.matrix[2][2] * z)
         )
         return result == Fraction(0, 1)
 
@@ -181,11 +175,13 @@ class Conic:
         b = self.matrix[1][0] * x + self.matrix[1][1] * y + self.matrix[1][2] * z
         c = self.matrix[2][0] * x + self.matrix[2][1] * y + self.matrix[2][2] * z
 
-        return PgLine([
-            a.numerator // a.denominator,
-            b.numerator // b.denominator,
-            c.numerator // c.denominator,
-        ])
+        return PgLine(
+            [
+                a.numerator // a.denominator,
+                b.numerator // b.denominator,
+                c.numerator // c.denominator,
+            ]
+        )
 
     def pole(self, line: PgLine) -> PgPoint:
         r"""Compute the pole of a line with respect to the conic.

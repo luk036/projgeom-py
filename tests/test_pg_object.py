@@ -4,6 +4,7 @@ from projgeom.pg_object import PgLine, PgObject, PgPoint
 def test_pg_object_invalid_coord_length() -> None:
     """PgObject rejects coordinates that are not length 3 (line 173)."""
     import pytest
+
     with pytest.raises(ValueError, match="three integers"):
         PgObject([1, 2])
 
