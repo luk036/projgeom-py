@@ -56,11 +56,13 @@ This code serves as a foundation for implementing and exploring projective
 from abc import abstractmethod
 from typing import Any, Generic, List, Self, TypeVar
 
+from .geometry import Geometry
+
 Dual = TypeVar("Dual", bound="ProjectivePlane")  # type: ignore[type-arg]
 Value = TypeVar("Value", bound=int)
 
 
-class ProjectivePlane(Generic[Dual, Value]):
+class ProjectivePlane(Generic[Dual, Value], Geometry):
     """The `ProjectivePlane` trait defines the behavior of points and lines in a
     projective plane. It requires two associated types: `Dual`, which represents the
     dual object (line or point) in the projective plane, and `Self`, which

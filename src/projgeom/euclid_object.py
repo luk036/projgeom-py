@@ -100,7 +100,7 @@ class EuclidPoint(PgObject["EuclidLine"]):
             >>> a = EuclidPoint([0, 0, 1])
             >>> b = EuclidPoint([2, 4, 1])
             >>> a.midpoint(b)
-            EuclidPoint(1 : 2 : 1)
+            EuclidPoint(2 : 4 : 2)
         """
         return EuclidPoint.parametrize(self, other.coord[2], other, self.coord[2])
 
@@ -191,7 +191,7 @@ class EuclidLine(PgObject[EuclidPoint]):
             >>> p = EuclidPoint([1, 2, 1])
             >>> l = EuclidLine([1, 0, -1])  # x = 1
             >>> l.altitude(p)
-            EuclidLine(0 : 1 : -2)
+            EuclidLine(0 : -1 : 2)
         """
         return self.perp().meet(pt_a)
 
@@ -286,7 +286,7 @@ def midpoint(a: EuclidPoint, b: EuclidPoint) -> EuclidPoint:
     Examples:
         >>> from projgeom.euclid_object import EuclidPoint, midpoint
         >>> midpoint(EuclidPoint([0, 0, 1]), EuclidPoint([2, 4, 1]))
-        EuclidPoint(1 : 2 : 1)
+        EuclidPoint(2 : 4 : 2)
     """
     return a.midpoint(b)
 
@@ -306,11 +306,11 @@ def tri_midpoint(triangle: List[EuclidPoint]) -> List[EuclidPoint]:
         >>> c = EuclidPoint([0, 2, 1])
         >>> mids = tri_midpoint([a, b, c])
         >>> mids[0]
-        EuclidPoint(1 : 0 : 1)
+        EuclidPoint(2 : 0 : 2)
         >>> mids[1]
-        EuclidPoint(1 : 1 : 1)
+        EuclidPoint(2 : 2 : 2)
         >>> mids[2]
-        EuclidPoint(0 : 1 : 1)
+        EuclidPoint(0 : 2 : 2)
     """
     a1, a2, a3 = triangle
     return [midpoint(a1, a2), midpoint(a2, a3), midpoint(a1, a3)]
@@ -362,7 +362,7 @@ def orthocenter(triangle: List[EuclidPoint]) -> EuclidPoint:
         >>> b = EuclidPoint([2, 0, 1])
         >>> c = EuclidPoint([1, 3, 1])
         >>> orthocenter([a, b, c])
-        EuclidPoint(3 : 1 : 3)
+        EuclidPoint(6 : 2 : 6)
     """
     a1, a2, a3 = triangle
     t1 = a2.meet(a3).altitude(a1)
@@ -440,7 +440,7 @@ def archimedes(a: int, b: int, c: int) -> int:
     Examples:
         >>> from projgeom.euclid_object import archimedes
         >>> archimedes(1, 2, 3)
-        0
+        8
     """
     return 4 * a * b - (a + b - c) * (a + b - c)
 
@@ -466,7 +466,7 @@ def cqq(a: int, b: int, c: int, d: int) -> List[int]:
     Examples:
         >>> from projgeom.euclid_object import cqq
         >>> cqq(3, 4, 3, 4)
-        [0, -2304]
+        [96, 0]
     """
     t1 = 4 * a * b
     t2 = 4 * c * d

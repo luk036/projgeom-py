@@ -54,8 +54,8 @@ def x_ratio(
         >>> from projgeom.pg_object import PgPoint, PgLine
         >>> a = PgPoint([1, 0, 1])
         >>> b = PgPoint([0, 1, 1])
-        >>> l1 = PgLine([1, 1, -1])
-        >>> l2 = PgLine([1, -1, 0])
+        >>> l1 = PgLine([1, 2, -3])
+        >>> l2 = PgLine([3, 4, -5])
         >>> r = x_ratio(a, b, l1, l2)
         >>> abs(r) > 0
         True
@@ -85,9 +85,9 @@ def R0(
         >>> from projgeom.proj_plane_measure import R0
         >>> from projgeom.pg_object import PgPoint
         >>> a = PgPoint([0, 0, 1])
-        >>> b = PgPoint([1, 0, 1])
-        >>> c = PgPoint([2, 0, 1])
-        >>> d = PgPoint([3, 0, 1])
+        >>> b = PgPoint([1, 1, 1])
+        >>> c = PgPoint([2, 2, 1])
+        >>> d = PgPoint([3, 3, 1])
         >>> r = R0(a, b, c, d)
         >>> r is not None
         True
@@ -119,10 +119,10 @@ def R1(
     Examples:
         >>> from projgeom.proj_plane_measure import R1
         >>> from projgeom.pg_object import PgPoint
-        >>> a = PgPoint([0, 1, 1])
-        >>> b = PgPoint([1, 0, 1])
-        >>> c = PgPoint([1, 1, 1])
-        >>> d = PgPoint([2, 1, 1])
+        >>> a = PgPoint([0, 0, 1])
+        >>> b = PgPoint([1, 1, 1])
+        >>> c = PgPoint([2, 2, 1])
+        >>> d = PgPoint([3, 3, 1])
         >>> r = R1(a, b, c, d)
         >>> r is not None
         True
@@ -161,9 +161,9 @@ def R(
         >>> from projgeom.proj_plane_measure import R
         >>> from projgeom.pg_object import PgPoint
         >>> a = PgPoint([1, 0, 1])
-        >>> b = PgPoint([0, 1, 1])
-        >>> c = PgPoint([1, 1, 1])
-        >>> d = PgPoint([2, 1, 1])
+        >>> b = PgPoint([2, 1, 1])
+        >>> c = PgPoint([3, 2, 1])
+        >>> d = PgPoint([4, 3, 1])
         >>> r = R(a, b, c, d)
         >>> r is not None
         True
