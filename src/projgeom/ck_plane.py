@@ -42,11 +42,6 @@ from typing import Generic, List, TypeVar, cast
 
 from .pg_plane import Point, ProjectivePlane, Value, involution
 
-# CayleyKleinPlanePrimitive = Union[HyperbolicLine, HyperbolicPoint]
-
-# trait CayleyKleinPlanePrimitive<Line>: ProjectivePlanePrimitive<Line>:
-#     def perp(self) -> Line
-
 Dual = TypeVar("Dual", bound="CayleyKleinPlane")  # type: ignore[type-arg]
 
 

@@ -1,56 +1,10 @@
 """
-ProjectivePlane Class and Projective Geometry Functions
+ProjectivePlane base class and projective geometry functions.
 
-This code defines a ProjectivePlane class and several functions related to
-    projective geometry. The purpose of this code is to provide a framework for
-    working with points and lines in a projective plane, which is a concept in
-    mathematics.
-
-The ProjectivePlane class is an abstract base class that defines the basic
-    operations and properties of objects in a projective plane. It doesn't take any
-    direct inputs or produce outputs on its own, but it sets up the structure for
-    other classes to inherit from and implement these operations.
-
-The class defines several abstract methods that need to be implemented by any concrete subclass:
-
-- dual(): Returns the dual of the object (e.g., the dual of a point is a line, and vice versa)
-- meet(): Finds the intersection of two objects
-- aux(): Returns a dual object not incident with the current object
-- dot(): Performs a basic measurement operation
-- parametrize(): Creates a new object on the line through two given points
-- incident(): Checks if two objects are incident (i.e., if a point lies on a line)
-
-The code also defines several standalone functions that work with ProjectivePlane objects:
-
-1. check_axiom(): Verifies basic properties of projective geometry, such as the commutativity of equality and incidence.
-
-2. coincident(): Checks if three points are collinear (lie on the same line).
-
-3. check_pappus(): Implements Pappus's hexagon theorem, which is a fundamental theorem in projective geometry.
-
-4. tri_dual(): Computes the dual of a triangle (the lines formed by its sides).
-
-5. persp(): Checks if two triangles are in perspective (their corresponding sides intersect at collinear points).
-
-6. check_desargue(): Implements Desargues's theorem, another important result in projective geometry.
-
-7. harm_conj(): Calculates the harmonic conjugate of three collinear points.
-
-8. involution(): Performs an involution transformation on a point with respect to an origin and a mirror line.
-
-These functions take various combinations of Point and Line objects (which are type aliases for ProjectivePlane) as inputs and typically return boolean values or new Point/Line objects as outputs.
-
-The code achieves its purpose by providing a structured way to represent and
-    manipulate geometric objects in a projective plane. It uses abstract methods to
-    define the interface for working with these objects, and then implements
-    higher-level geometric operations using these basic methods. The logic flows
-    from simple operations like checking if points are incident with lines, to more
-    complex geometric constructions and theorems.
-
-This code serves as a foundation for implementing and exploring projective
-    geometry concepts in a programming environment. It allows users to create
-    geometric objects, perform basic operations on them, and verify important
-    theorems in projective geometry.
+Defines the abstract interface for points and lines, and higher-level
+operations: incidence axioms (check_axiom, check_axiom2), Pappus and
+Desargues theorem checks, perspective triangles, triangle duals,
+harmonic conjugates, and involutions.
 """
 
 from abc import abstractmethod
@@ -97,43 +51,6 @@ class ProjectivePlane(Generic[Dual, Value], Geometry):
     def incident(self, line: Dual) -> bool:
         """Check if two objects are incident"""
         return self.dot(line) == 0
-
-    #     :param pt_q: pt_q is an instance of the class ProjectivePlanePrimitive<Point>
-    #     :type pt_q: "ProjectivePlane[Dual, Value]"
-    #     :param pt_r: The parameter `pt_r` is of type `ProjectivePlanePrimitive<Point>`
-    #     :type pt_r: "ProjectivePlane[Dual, Value]"
-    #     :return: A boolean value is being returned.
-
-    #     .. svgbob::
-    #        :align: center
-
-    #              |  /
-    #            \ | /       coincidence
-    #             \|/
-    #              o      -----o------o---o---
-    #             /|\           A      B   C
-    #            / | \
-    #           l  |  \
-    #              m   n
-    #     """
-    #     return self.meet(pt_q).incident(pt_r)
-
-    # def harm_conj(
-    #     self, pt_a: "ProjectivePlane[Dual, Value]", pt_b: "ProjectivePlane[Dual, Value]"
-    # ) -> "ProjectivePlane[Dual, Value]":
-    #     """
-    #     The `harm_conj` function calculates the harmonic conjugate of two points on a projective plane.
-    #
-    #     :param pt_a: The parameter `pt_a` is of type `ProjectivePlane`
-    #     :type pt_a: "ProjectivePlane[Dual, Value]"
-    #     :param pt_b: The parameter `pt_b` is of type `ProjectivePlane`
-    #     :type pt_b: "ProjectivePlane[Dual, Value]"
-    #     :return: a ProjectivePlane object.
-    #     """
-    #     assert self.coincident(pt_a, pt_b)
-    #     ln_ab = pt_a.meet(pt_b)
-    #     ln_c = ln_ab.aux().meet(self)
-    #     return pt_a.parametrize(ln_c.dot(pt_b), pt_b, ln_c.dot(pt_a))
 
 
 Point = ProjectivePlane["Line", int]
@@ -311,14 +228,6 @@ def check_desargue(tri_1: List[Point], tri_2: List[Point]) -> bool:
     return (bool_1 and bool_2) or (not bool_1 and not bool_2)
 
 
-# trait ProjectivePlane<Line, Value: Default + Eq>: ProjectivePlanePrimitive<Line>:
-#     def aux(self) -> Line
-#     def dot(self, line) -> Value; # basic measurement
-#     def parametrize(lambda_: Value, pt_p: "ProjectivePlane[Dual, Value]", mu_: Value, pt_q: "ProjectivePlane[Dual, Value]")
-#     def incident(self, line) -> bool:
-#         self.dot(line) == Value::default()
-
-
 def check_axiom2(
     pt_p: Point, pt_q: Point, ln_l: Line, alpha: Value, beta: Value
 ) -> None:
@@ -379,7 +288,6 @@ def harm_conj(pt_a: Point, pt_b: Point, pt_c: Point) -> Point:
     assert coincident(pt_a, pt_b, pt_c)
     ln_ab = pt_a.meet(pt_b)
     ln_c = ln_ab.aux().meet(pt_c)
-    # Point = type(pt_a)
     return pt_a.parametrize(ln_c.dot(pt_b), pt_b, ln_c.dot(pt_a))
 
 
@@ -408,13 +316,6 @@ def involution(origin: Point, mirror: Any, pt_p: Point) -> Point:
     :param mirror: Mirror line
     :param pt_p: Point :math:`P` to reflect
     :return: Reflected point :math:`P'`
-
-    .. svgbob::
-       :align: center
-
-        P' -----o----- P
-                |
-              mirror
 
     Examples:
         >>> from projgeom.pg_object import PgPoint, PgLine

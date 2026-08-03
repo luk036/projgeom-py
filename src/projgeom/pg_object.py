@@ -1,44 +1,15 @@
 """
-PgObject.py
+Core projective geometry objects (PgObject, PgPoint, PgLine).
 
-This code defines a set of classes and functions for working with projective
-    geometry objects in a 2D plane. The main purpose is to represent and manipulate
-    points and lines in projective space, which is a way of thinking about geometry
-    that includes points at infinity.
+Defines points and lines in homogeneous coordinates, with dot/cross
+product helpers for incidence and meet operations.
 
-    The code takes inputs in the form of coordinates, typically represented as
-    lists of three integers. These coordinates define the position of points
-    or the equation of lines in the projective plane. The outputs are various
-    geometric objects (points and lines) and the results of operations
-    performed on them, such as checking if a point lies on a line or
-    finding the intersection of two lines.
-The main class, PgObject, serves as a base for both points (PgPoint) and
-    lines (PgLine). It provides common functionality like equality checking, string
-    representation, and basic geometric operations. The PgPoint and PgLine classes
-    are specialized versions of PgObject that represent points and lines
-    respectively.
 
-The code achieves its purpose through several key functions:
 
-1. dot: Calculates the dot product of two vectors, which is used to check if points lie on lines.
-2. cross: Computes the cross product of two vectors, used to find intersections of lines.
-3. plckr: Performs a linear combination of two vectors, useful for parametrizing points and lines.
 
-The main logic flow involves creating PgPoint and PgLine objects, then
-    using their methods to perform geometric operations. For example, you can
-    check if a point is incident to a line, find the intersection of two
-    lines, or create a line passing through two points.
 
-An important concept in this code is duality, where points and lines can be interchanged.
-    This is represented by the 'aux' method, which returns the dual object (a line for a point, or a point for a line).
 
-The code uses abstract methods and type hinting to ensure proper implementation
-    and usage of the geometric objects. It also includes docstrings and examples to
-    help users understand how to use the classes and functions.
 
-Overall, this code provides a foundation for working with projective geometry,
-    allowing users to create and manipulate geometric objects in a way that's
-    consistent with the mathematical principles of projective spaces.
 """
 
 from typing import List, Self, Type, TypeVar, cast
@@ -258,10 +229,7 @@ class PgObject(ProjectivePlane[Dual, int]):
             raise ValueError("coord must be a list of three integers")
         self.coord = coord
 
-    # impl PartialEq for PgObject:
-
     def __repr__(self) -> str:
-        """repr(self)"""
         return f"{self.__class__.__name__}({self.coord[0]} : {self.coord[1]} : {self.coord[2]})"
 
     def __str__(self) -> str:
@@ -294,8 +262,6 @@ class PgObject(ProjectivePlane[Dual, int]):
             return False
         return cross(self.coord, other.coord) == [0, 0, 0]
 
-    # impl ProjectivePlane<PgLine, int> for PgObject:
-
     def dual_type(self) -> Type[Dual]:
         """Returns the type of the dual object.
 
@@ -308,7 +274,6 @@ class PgObject(ProjectivePlane[Dual, int]):
 
         :return: A Dual object with a copy of the coordinates.
         """
-        # Line = self.dual_type()
         return self.dual_type()(self.coord.copy())
 
     def dot(self, line: Dual) -> int:
@@ -343,8 +308,6 @@ class PgObject(ProjectivePlane[Dual, int]):
         Point = type(self)
         pg_q = cast("PgObject[Dual]", pt_q)
         return Point(plckr(lambda_val, self.coord, mu_val, pg_q.coord))
-
-    # impl ProjectivePlanePrimitive<PgLine> for PgObject:
 
     def incident(self, rhs: Dual) -> bool:
         """
