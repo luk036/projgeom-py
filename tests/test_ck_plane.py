@@ -2,6 +2,7 @@ from hypothesis import given
 from hypothesis.strategies import integers
 
 from projgeom.ck_plane import (
+    CayleyKleinPlane,
     LineCk,
     PointCk,
     is_perpendicular,
@@ -90,3 +91,8 @@ def test_reflect() -> None:
     """Test reflect function (line 232)."""
     t = reflect(HyperbolicLine([0, 1, 0]), HyperbolicPoint([0, 0, 1]))  # type: ignore[arg-type]
     assert t is not None
+
+
+def test_default_perp() -> None:
+    """CayleyKleinPlane.perp() abstract body executes (line 60)."""
+    assert CayleyKleinPlane().perp() is None  # type: ignore[type-arg]

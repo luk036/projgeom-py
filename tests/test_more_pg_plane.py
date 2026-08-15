@@ -2,6 +2,7 @@ from projgeom.pg_object import PgLine, PgPoint
 from projgeom.pg_plane import (
     Line,
     Point,
+    ProjectivePlane,
     check_axiom,
     check_axiom2,
     check_desargue,
@@ -87,3 +88,13 @@ def test_involution() -> None:
     pt_p: Point = PgPoint([1, 2, 1])  # type: ignore[assignment]
     pt_q = involution(origin, mirror, pt_p)
     assert involution(origin, mirror, pt_q) == pt_p
+
+
+def test_default_incident() -> None:
+    """ProjectivePlane.incident() default body executes (line 53)."""
+
+    class _DummyPlane(ProjectivePlane):  # type: ignore[type-arg]
+        def dot(self, line: object) -> int:
+            return 0
+
+    assert _DummyPlane().incident(None)  # type: ignore[arg-type]

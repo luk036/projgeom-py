@@ -16,7 +16,7 @@ pytest tests/test_pg_object.py
 pytest tests/test_pg_object.py::test_pg_point_meet
 
 # Run doctests in source modules + coverage (CI uses this)
-pytest --doctest-modules src/ --cov=src/
+pytest tests/ --doctest-modules src/ --cov=src/
 
 # Property-based tests with hypothesis
 pytest tests/test_pg_plane_hypothesis.py
