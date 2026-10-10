@@ -1,0 +1,12 @@
+---
+# LaTeX/PDF rendering options. Loaded via `--metadata-file=latex.yaml`.
+# IEEEtran journal is the canonical two-column style; booktabs gives the rules
+# used by the raw-LaTeX float tables; colorlinks keeps citations clickable.
+documentclass: IEEEtran
+classoption: journal
+link-citations: true
+colorlinks: true
+header-includes:
+  - '\usepackage{amsmath,amssymb}'
+  - '\usepackage{booktabs}'
+  - '\usepackage{array}'
