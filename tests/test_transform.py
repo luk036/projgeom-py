@@ -99,4 +99,17 @@ def test_projective_transform() -> None:
         PgPoint([2, 2, 1]),
     ]
     t = projective_transform(src, dst)
-    assert t == Transform.identity()
+    for source, target in zip(src, dst):
+        assert t.apply_point(source) == target
+    assert t == Transform.scaling(Fraction(2, 1), Fraction(2, 1))
+
+
+def test_apply_point_clears_denominators() -> None:
+    """Fractional transforms keep exact coordinates instead of truncating to int."""
+    p = scale_point(PgPoint([1, 1, 1]), Fraction(1, 2), Fraction(1, 3))
+    assert p == PgPoint([3, 2, 6])
+
+
+def test_rotation_from_tangent() -> None:
+    t = Transform.rotation_from_tangent(Fraction(1, 1))
+    assert t.apply_point(PgPoint([1, 0, 1])) == PgPoint([0, 1, 1])

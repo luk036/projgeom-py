@@ -8,7 +8,9 @@ including translation, rotation, scaling, shear, and composition.
 from fractions import Fraction
 from typing import List
 
-from .pg_object import PgLine, PgPoint
+from ._linalg import inverse3, matmul3, matvec3
+from .error import InvalidTriangleError
+from .pg_object import PgLine, PgPoint, rationalize
 
 
 class Transform:
@@ -117,6 +119,32 @@ class Transform:
                 [zero, zero, Fraction(1, 1)],
             ]
         )
+
+    @staticmethod
+    def rotation_from_tangent(t: Fraction) -> "Transform":
+        r"""Create a rotation from the tangent of its half-angle.
+
+        For a rational :math:`t = \tan(\theta/2)` this yields an exact rotation
+        through :math:`\theta` with rational entries:
+
+        .. math::
+
+            \cos\theta = \frac{1 - t^2}{1 + t^2}, \qquad
+            \sin\theta = \frac{2 t}{1 + t^2}.
+
+        :param t: The tangent of half the rotation angle.
+        :return: The rotation transform.
+
+        Examples:
+            >>> from fractions import Fraction
+            >>> from projgeom.transform import Transform
+            >>> t = Transform.rotation_from_tangent(Fraction(1, 1))
+            >>> t.apply_point(PgPoint([1, 0, 1]))
+            PgPoint(0 : 1 : 1)
+        """
+        one = Fraction(1, 1)
+        denom = one + t * t
+        return Transform.rotation((one - t * t) / denom, (2 * t) / denom)
 
     @staticmethod
     def scaling(sx: Fraction, sy: Fraction) -> "Transform":
@@ -234,13 +262,7 @@ class Transform:
         y_new = self.matrix[1][0] * x + self.matrix[1][1] * y + self.matrix[1][2] * z
         z_new = self.matrix[2][0] * x + self.matrix[2][1] * y + self.matrix[2][2] * z
 
-        return PgPoint(
-            [
-                x_new.numerator // x_new.denominator,
-                y_new.numerator // y_new.denominator,
-                z_new.numerator // z_new.denominator,
-            ]
-        )
+        return PgPoint(rationalize([x_new, y_new, z_new]))
 
     def apply_line(self, line: PgLine) -> PgLine:
         r"""Apply the transformation to a line.
@@ -268,13 +290,7 @@ class Transform:
         y_new = inv.matrix[0][1] * x + inv.matrix[1][1] * y + inv.matrix[2][1] * z
         z_new = inv.matrix[0][2] * x + inv.matrix[1][2] * y + inv.matrix[2][2] * z
 
-        return PgLine(
-            [
-                x_new.numerator // x_new.denominator,
-                y_new.numerator // y_new.denominator,
-                z_new.numerator // z_new.denominator,
-            ]
-        )
+        return PgLine(rationalize([x_new, y_new, z_new]))
 
     def inverse(self) -> "Transform":
         r"""Compute the inverse of this transformation.
@@ -409,20 +425,17 @@ def scale_point(point: PgPoint, sx: Fraction, sy: Fraction) -> PgPoint:
 
 
 def projective_transform(src: List[PgPoint], dst: List[PgPoint]) -> Transform:
-    r"""Compute a projective transformation mapping four source points to four destination points.
+    r"""Compute the projective transformation mapping four points to four points.
 
-    .. math::
+    The correspondences are normalized against their unit point, so that the
+    resulting transform satisfies :math:`M p_i \sim q_i`. The computation is
+    exact over the rationals.
 
-        M = \arg\min_{M \in PGL(3)} \sum_i \|M p_i - q_i\|^2
-
-    .. note::
-
-        This is a placeholder implementation that returns the identity
-        transform. A full implementation would solve a linear system.
-
-    :param src: Four source points.
-    :param dst: Four destination points.
+    :param src: Four source points, no three of which are collinear.
+    :param dst: Four destination points, no three of which are collinear.
     :return: The transformation matrix.
+    :raises ValueError: If the number of correspondences is not four.
+    :raises InvalidTriangleError: If either set of points is degenerate.
 
     Examples:
         >>> from projgeom.pg_object import PgPoint
@@ -430,7 +443,31 @@ def projective_transform(src: List[PgPoint], dst: List[PgPoint]) -> Transform:
         >>> src = [PgPoint([0, 0, 1]), PgPoint([1, 0, 1]), PgPoint([0, 1, 1]), PgPoint([1, 1, 1])]
         >>> dst = [PgPoint([0, 0, 1]), PgPoint([2, 0, 1]), PgPoint([0, 2, 1]), PgPoint([2, 2, 1])]
         >>> t = projective_transform(src, dst)
-        >>> t == Transform.identity()
-        True
+        >>> t.apply_point(PgPoint([1, 1, 1]))
+        PgPoint(2 : 2 : 1)
     """
-    return Transform.identity()
+    if len(src) != 4 or len(dst) != 4:
+        raise ValueError("projective_transform requires four point correspondences")
+
+    def support_matrix(points: List[PgPoint]) -> List[List[Fraction]]:
+        return [[Fraction(points[j].coord[i], 1) for j in range(3)] for i in range(3)]
+
+    src_matrix = support_matrix(src)
+    dst_matrix = support_matrix(dst)
+    try:
+        src_inverse = inverse3(src_matrix)
+        dst_inverse = inverse3(dst_matrix)
+    except ZeroDivisionError as exc:
+        raise InvalidTriangleError("the support points are collinear") from exc
+
+    src_basis = matvec3(src_inverse, [Fraction(value, 1) for value in src[3].coord])
+    dst_basis = matvec3(dst_inverse, [Fraction(value, 1) for value in dst[3].coord])
+    diagonal = [[Fraction(0, 1) for _ in range(3)] for _ in range(3)]
+    for i in range(3):
+        if src_basis[i] == 0 or dst_basis[i] == 0:
+            raise InvalidTriangleError(
+                "the correspondences are not in general position"
+            )
+        diagonal[i][i] = dst_basis[i] / src_basis[i]
+
+    return Transform(matmul3(matmul3(dst_matrix, diagonal), src_inverse))
