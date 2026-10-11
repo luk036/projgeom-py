@@ -12,7 +12,9 @@ product helpers for incidence and meet operations.
 
 """
 
-from typing import List, Self, Type, TypeVar, cast
+from fractions import Fraction
+from math import gcd, lcm
+from typing import Iterable, List, Self, Type, TypeVar, cast
 
 from .pg_plane import ProjectivePlane, Value
 
@@ -71,6 +73,44 @@ def cross(v_a: List[int], v_b: List[int]) -> List[int]:
         v_a[2] * v_b[0] - v_a[0] * v_b[2],
         v_a[0] * v_b[1] - v_a[1] * v_b[0],
     ]
+
+
+def rationalize(values: Iterable[Fraction]) -> List[int]:
+    r"""Convert exact rational coordinates to integer homogeneous coordinates.
+
+    Homogeneous coordinates are defined only up to a non-zero scale, so a
+    triple of :class:`~fractions.Fraction` values is equivalent to the integer
+    triple obtained by clearing denominators (multiplying through by their
+    least common multiple) and then dividing by the greatest common divisor.
+    The sign is normalized so that the first non-zero coordinate is positive.
+    Unlike floor division, this conversion is exact.
+
+    :param values: The rational coordinates.
+    :return: Integer coordinates proportional to *values*.
+
+    Examples:
+        >>> rationalize([Fraction(1, 2), Fraction(1, 3), Fraction(1, 1)])
+        [3, 2, 6]
+        >>> rationalize([Fraction(0, 1), Fraction(1, 2), Fraction(1, 2)])
+        [0, 1, 1]
+    """
+    fracs = [Fraction(value) for value in values]
+    denom = 1
+    for frac in fracs:
+        denom = lcm(denom, frac.denominator)
+    ints = [frac.numerator * (denom // frac.denominator) for frac in fracs]
+    divisor = 0
+    for value in ints:
+        divisor = gcd(divisor, value)
+    if divisor > 1:
+        ints = [value // divisor for value in ints]
+    for value in ints:
+        if value < 0:
+            ints = [-value for value in ints]
+            break
+        if value > 0:
+            break
+    return ints
 
 
 def cross0(v_a: List[int], v_b: List[int]) -> int:
@@ -370,6 +410,19 @@ class PgPoint(PgObject["PgLine"]):
         """
         return PgLine
 
+    @classmethod
+    def from_fractions(cls, values: Iterable[Fraction]) -> "PgPoint":
+        """Create a point from exact rational homogeneous coordinates.
+
+        :param values: Rational homogeneous coordinates.
+        :return: A point whose integer coordinates are proportional to *values*.
+
+        Examples:
+            >>> PgPoint.from_fractions([Fraction(1, 2), Fraction(1, 3), Fraction(1, 1)])
+            PgPoint(3 : 2 : 6)
+        """
+        return cls(rationalize(values))
+
 
 class PgLine(PgObject[PgPoint]):
     """Projective Geometry Line
@@ -401,3 +454,16 @@ class PgLine(PgObject[PgPoint]):
         :return: The type of the dual geometric object.
         """
         return PgPoint
+
+    @classmethod
+    def from_fractions(cls, values: Iterable[Fraction]) -> "PgLine":
+        """Create a line from exact rational homogeneous coordinates.
+
+        :param values: Rational homogeneous coordinates.
+        :return: A line whose integer coordinates are proportional to *values*.
+
+        Examples:
+            >>> PgLine.from_fractions([Fraction(0, 1), Fraction(1, 2), Fraction(1, 2)])
+            PgLine(0 : 1 : 1)
+        """
+        return cls(rationalize(values))
