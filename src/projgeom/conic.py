@@ -7,9 +7,48 @@ parabolas, hyperbolas) in projective geometry using homogeneous coordinates.
 
 from enum import Enum
 from fractions import Fraction
-from typing import List
+from math import isqrt
+from typing import List, Optional
 
-from .pg_object import PgLine, PgPoint
+from ._linalg import adjugate3, determinant3
+from .error import DivisionByZeroError
+from .pg_object import PgLine, PgPoint, rationalize
+
+
+def _cross3(v_a: List[Fraction], v_b: List[Fraction]) -> List[Fraction]:
+    return [
+        v_a[1] * v_b[2] - v_a[2] * v_b[1],
+        v_a[2] * v_b[0] - v_a[0] * v_b[2],
+        v_a[0] * v_b[1] - v_a[1] * v_b[0],
+    ]
+
+
+def _quadratic_form(matrix: List[List[Fraction]], x: List[Fraction]) -> Fraction:
+    return (
+        x[0] * (matrix[0][0] * x[0] + matrix[0][1] * x[1] + matrix[0][2] * x[2])
+        + x[1] * (matrix[1][0] * x[0] + matrix[1][1] * x[1] + matrix[1][2] * x[2])
+        + x[2] * (matrix[2][0] * x[0] + matrix[2][1] * x[1] + matrix[2][2] * x[2])
+    )
+
+
+def _bilinear_form(
+    matrix: List[List[Fraction]], x: List[Fraction], y: List[Fraction]
+) -> Fraction:
+    qy = [
+        matrix[i][0] * y[0] + matrix[i][1] * y[1] + matrix[i][2] * y[2]
+        for i in range(3)
+    ]
+    return x[0] * qy[0] + x[1] * qy[1] + x[2] * qy[2]
+
+
+def _rational_sqrt(value: Fraction) -> Optional[Fraction]:
+    if value < 0:
+        return None
+    num = isqrt(value.numerator)
+    den = isqrt(value.denominator)
+    if num * num == value.numerator and den * den == value.denominator:
+        return Fraction(num, den)
+    return None
 
 
 class ConicType(Enum):
@@ -175,13 +214,7 @@ class Conic:
         b = self.matrix[1][0] * x + self.matrix[1][1] * y + self.matrix[1][2] * z
         c = self.matrix[2][0] * x + self.matrix[2][1] * y + self.matrix[2][2] * z
 
-        return PgLine(
-            [
-                a.numerator // a.denominator,
-                b.numerator // b.denominator,
-                c.numerator // c.denominator,
-            ]
-        )
+        return PgLine(rationalize([a, b, c]))
 
     def pole(self, line: PgLine) -> PgPoint:
         r"""Compute the pole of a line with respect to the conic.
@@ -189,24 +222,41 @@ class Conic:
         .. math::
 
             \mathbf{x} = Q^{-1} \mathbf{l}
+            = \frac{\operatorname{adj}(Q)\, \mathbf{l}}{\det Q}
 
-        .. note::
-
-            This is a placeholder returning a point on the line.
-            A full implementation requires inverting Q.
+        The scalar :math:`1/\det Q` is dropped because the result is a
+        homogeneous point, so the computation stays exact over the rationals.
 
         :param line: The line.
         :return: The pole point.
+        :raises DivisionByZeroError: If the conic is degenerate (``det Q == 0``).
 
         Examples:
             >>> from projgeom.conic import Conic
             >>> from projgeom.pg_object import PgLine
             >>> c = Conic.unit_circle()
-            >>> pole = c.pole(PgLine([1, 0, -1]))
-            >>> isinstance(pole, PgPoint)
-            True
+            >>> c.pole(PgLine([1, 0, -1]))
+            PgPoint(1 : 0 : 1)
         """
-        return PgPoint([line.coord[0], line.coord[1], line.coord[2]])
+        if determinant3(self.matrix) == 0:
+            raise DivisionByZeroError("Cannot compute the pole of a degenerate conic")
+        adj = adjugate3(self.matrix)
+        line_coord = line.coord
+        return PgPoint(
+            rationalize(
+                [
+                    adj[0][0] * line_coord[0]
+                    + adj[0][1] * line_coord[1]
+                    + adj[0][2] * line_coord[2],
+                    adj[1][0] * line_coord[0]
+                    + adj[1][1] * line_coord[1]
+                    + adj[1][2] * line_coord[2],
+                    adj[2][0] * line_coord[0]
+                    + adj[2][1] * line_coord[1]
+                    + adj[2][2] * line_coord[2],
+                ]
+            )
+        )
 
     def tangent(self, point: PgPoint) -> PgLine:
         r"""Compute the tangent line at a point on the conic.
@@ -227,27 +277,66 @@ class Conic:
         return self.polar(point)
 
     def intersect(self, line: PgLine) -> List[PgPoint]:
-        r"""Find the intersection points of a line with the conic.
+        r"""Find the real intersection points of a line with the conic.
 
-        Solves for :math:`\mathbf{x}` satisfying both
-        :math:`\mathbf{x}^T Q \mathbf{x} = 0` and :math:`\mathbf{l}^T \mathbf{x} = 0`.
-
-        .. note::
-
-            This is a placeholder returning an empty list.
-            A full implementation requires solving a quadratic equation.
+        The line is parametrized as :math:`\mathbf{x}(t) = u + t\,v` and
+        substituted into :math:`\mathbf{x}^T Q \mathbf{x} = 0`, giving a
+        quadratic in :math:`t`. When its discriminant is a perfect square the
+        roots are rational and the intersection points are returned exactly.
 
         :param line: The line.
-        :return: A list of 0, 1, or 2 intersection points.
+        :return: The list of intersection points.
+        :raises NotImplementedError: If the intersection is irrational or
+            complex, or the line lies on the conic; those cases require a
+            quadratic field extension that this module does not provide.
 
         Examples:
             >>> from projgeom.conic import Conic
             >>> from projgeom.pg_object import PgLine
             >>> c = Conic.unit_circle()
-            >>> c.intersect(PgLine([1, 0, 0]))
-            []
+            >>> points = c.intersect(PgLine([1, 0, 0]))
+            >>> len(points)
+            2
+            >>> all(c.contains(p) for p in points)
+            True
         """
-        return []
+        line_coord = [Fraction(value, 1) for value in line.coord]
+        vectors: List[List[Fraction]] = []
+        for j in range(3):
+            axis = [Fraction(0, 1), Fraction(0, 1), Fraction(0, 1)]
+            axis[j] = Fraction(1, 1)
+            candidate = _cross3(line_coord, axis)
+            if candidate != [0, 0, 0]:
+                vectors.append(candidate)
+        origin = vectors[0]
+        direction = next(v for v in vectors[1:] if _cross3(origin, v) != [0, 0, 0])
+
+        quad = _quadratic_form(self.matrix, direction)
+        lin = 2 * _bilinear_form(self.matrix, origin, direction)
+        const = _quadratic_form(self.matrix, origin)
+
+        def point_at(t: Fraction) -> PgPoint:
+            return PgPoint(
+                rationalize([origin[i] + t * direction[i] for i in range(3)])
+            )
+
+        if quad == 0:
+            if lin == 0:
+                raise NotImplementedError("line lies on the conic")
+            return [point_at(-const / lin)]
+
+        disc = lin * lin - 4 * quad * const
+        if disc < 0:
+            raise NotImplementedError("line does not meet the conic in real points")
+        root = _rational_sqrt(disc)
+        if root is None:
+            raise NotImplementedError("intersection requires a quadratic surd")
+        if root == 0:
+            return [point_at(-lin / (2 * quad))]
+        return [
+            point_at((-lin + root) / (2 * quad)),
+            point_at((-lin - root) / (2 * quad)),
+        ]
 
     def discriminant(self) -> Fraction:
         r"""Compute the discriminant of the conic (determinant of the 2x2 upper-left submatrix).
