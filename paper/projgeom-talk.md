@@ -373,7 +373,7 @@ Euclidean point    & $(x, y, z)$ & $[0, 0, 1]$ \\
 ## Cross-Language Verification and Benchmarks
 
 - **30 / 30** shared reference cases agree across Python, Rust and C++
-- **157** collected tests, **91** of them Hypothesis property tests of algebraic invariants
+- **163** collected tests, **91** of them Hypothesis property tests of algebraic invariants
 - Microbenchmarks:
 
 ```{=latex}
@@ -408,7 +408,7 @@ Harmonic conjugate & 2.9 & 13.2 & 4{,}650 \\
 
 ## What the Framework Does Not Do 🚧
 
-- **Exactness stops at the rationals:** no sqrt, trig, float or symbolic layer; conic-line intersection, rotation-from-rationals, and the general transform are stubs
+- **Exactness stops at the rationals:** no sqrt, trig, float or symbolic layer. Rational polar/pole, conic-line intersection (square discriminant) and the 4-point projective transform are exact; irrational or complex results are refused, not approximated
 - **Confined to $\mathbb{P}^2$:** $\mathbb{P}^3$ needs Grassmann-Cayley / Plucker coordinates; "join = meet = cross" is a two-dimensional accident
 - **Coordinate growth:** each join/meet doubles the degree; bit-length explodes without interpolation or filtered predicates
 - **Non-additive measurements:** quadrance and spread are quadratic; distance and angle are recovered only at the boundary

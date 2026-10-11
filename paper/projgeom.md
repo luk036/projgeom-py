@@ -27,7 +27,7 @@ abstract: >-
   robustness problems of floating-point predicates at the cost of an
   overflow and normalization budget; we report cross-language consistency
   verification (30/30 shared reference cases), a property-based test suite of
-  157 tests, and a microbenchmark study showing that the C++ and Rust cores
+  163 tests, and a microbenchmark study showing that the C++ and Rust cores
   execute a primitive operation in roughly 2.5--5 ns while the Python core,
   though 400--5000 times slower, remains below 150 microseconds per
   operation. We close with the limits of the approach: exactness that stops
@@ -719,8 +719,10 @@ two operations.
 The arithmetic that backs these routines deserves a note. Integers and
 rationals are the default; a rational is kept in lowest terms with a positive
 denominator, and every operation performs a greatest-common-divisor
-normalization. Floating point appears only at the boundary, when a distance
-or an angle is actually requested. This is the design that makes the
+normalization. The library uses no floating-point arithmetic anywhere: a
+rational that must be returned as an integer coordinate is converted exactly,
+by clearing denominators and reducing by their greatest common divisor, so
+that no value is ever rounded or truncated. This is the design that makes the
 cross-language consistency of @sec:experiments meaningful: because the
 algorithms are polynomial identities over the rationals, different languages
 must produce numerically identical results, not merely close ones.
@@ -734,7 +736,7 @@ projective point and line operations, the harmonic conjugate, the three
 polarities, eight Euclidean routines, the cross ratio, the conic and
 transform modules---are evaluated identically in all three languages, and all
 thirty pass. The Python core carries a further property-based suite of
-$157$ collected tests, $91$ of them Hypothesis tests that assert algebraic
+$163$ collected tests, $91$ of them Hypothesis tests that assert algebraic
 invariants---the idempotence of duality, the involution property of
 reflection, collinearity constraints under construction---across the
 Euclidean, Cayley-Klein, elliptic, hyperbolic and perspective models, in
@@ -813,13 +815,18 @@ few, and the limitations are the mirror image of that economy.
 *Exactness stops at the rationals.* The library computes exactly over the
 integers and the rationals and stops there. The source contains no square
 root, no trigonometric function, and no floating-point or complex arithmetic,
-and the constructions whose exact result would leave the rationals are
-deliberately not performed. Intersection of a line with a conic is declared
-but unimplemented---it returns the empty list---precisely because the general
-solution requires a quadratic surd; a rotation is built from a caller-supplied,
-already-rational cosine and sine, so a $45^\circ$ rotation is representable
-only through a rational approximation supplied from outside; and the general
-projective transform, which would solve a linear system, is likewise a stub.
+and a construction whose exact result would leave the rationals is refused
+rather than approximated. The operations that are exact over the rationals are
+implemented in full: the polar of a point and the pole of a line are a matrix
+product and its adjugate, the intersection of a line with a conic returns its
+rational points when the discriminant is a perfect square, and the projective
+transformation carrying four points to four points is solved from a
+$3 \times 3$ linear system. The boundary is stated rather than crossed: a
+rotation by an irrational angle is representable only through a rational
+$\tan(\theta/2)$ or a caller-supplied rational cosine and sine, and a
+line-conic intersection whose discriminant is not a perfect square raises
+\texttt{NotImplementedError}, as does any construction whose exact result is
+complex.
 The guarantee is therefore a *scope boundary* fixed at the field of
 computation, not a symbolic or floating-point fallback: no such fallback
 exists. An application that needs irrational or complex coordinates must
