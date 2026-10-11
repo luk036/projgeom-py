@@ -72,6 +72,12 @@ def test_conic_intersect_irrational_raises() -> None:
         c.intersect(PgLine([1, 1, 0]))
 
 
+def test_conic_intersect_nonsecant_empty() -> None:
+    """A line that misses the conic has no real points (empty, not an error)."""
+    c = Conic.unit_circle()
+    assert c.intersect(PgLine([1, 0, 2])) == []
+
+
 def test_conic_circle() -> None:
     c = Conic.circle(0, 0, 1)
     assert c.contains(PgPoint([1, 0, 1]))

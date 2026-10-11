@@ -285,10 +285,11 @@ class Conic:
         roots are rational and the intersection points are returned exactly.
 
         :param line: The line.
-        :return: The list of intersection points.
-        :raises NotImplementedError: If the intersection is irrational or
-            complex, or the line lies on the conic; those cases require a
-            quadratic field extension that this module does not provide.
+        :return: The list of intersection points (empty if the line does not
+            meet the conic in real points).
+        :raises NotImplementedError: If the intersection is irrational or the
+            line lies on the conic; those cases require a quadratic field
+            extension that this module does not provide.
 
         Examples:
             >>> from projgeom.conic import Conic
@@ -327,7 +328,7 @@ class Conic:
 
         disc = lin * lin - 4 * quad * const
         if disc < 0:
-            raise NotImplementedError("line does not meet the conic in real points")
+            return []
         root = _rational_sqrt(disc)
         if root is None:
             raise NotImplementedError("intersection requires a quadratic surd")
