@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="780" viewBox="0 0 440 780">
+<title>Fold-a-ladder trick art</title>
+<rect width="100%" height="100%" fill="#fbfbf7"/>
+<polyline points="45,633 45,615 45,597 45,580 45,564 45,547 45,531 45,516 45,500 45,486 45,471 45,457 45,443 45,429 45,416 45,403 45,390 45,377 45,365 45,353 45,341 45,330 45,319 45,307 45,297 45,286 45,275 45,265 45,255 45,245 45,235 45,226 45,216 45,207 45,198 45,189 45,180 45,172 45,163 45,155 45,147" fill="none" stroke="#333333" stroke-width="4"/>
+<polyline points="395,633 391,615 386,597 382,580 378,564 374,547 371,531 367,516 363,500 360,486 356,471 353,457 349,443 346,429 343,416 340,403 337,390 334,377 331,365 328,353 325,341 322,330 320,319 317,307 314,297 312,286 309,275 307,265 304,255 302,245 300,235 297,226 295,216 293,207 291,198 288,189 286,180 284,172 282,163 280,155 278,147" fill="none" stroke="#333333" stroke-width="4"/>
+<line x1="45" y1="570" x2="380" y2="570" stroke="#333333" stroke-width="3"/>
+<line x1="45" y1="512" x2="366" y2="512" stroke="#333333" stroke-width="3"/>
+<line x1="45" y1="458" x2="353" y2="458" stroke="#333333" stroke-width="3"/>
+<line x1="45" y1="409" x2="341" y2="409" stroke="#333333" stroke-width="3"/>
+<line x1="45" y1="363" x2="330" y2="363" stroke="#333333" stroke-width="3"/>
+<line x1="45" y1="321" x2="320" y2="321" stroke="#333333" stroke-width="3"/>
+<line x1="45" y1="281" x2="311" y2="281" stroke="#333333" stroke-width="3"/>
+<line x1="45" y1="244" x2="302" y2="244" stroke="#333333" stroke-width="3"/>
+<line x1="45" y1="210" x2="293" y2="210" stroke="#333333" stroke-width="3"/>
+<line x1="45" y1="177" x2="286" y2="177" stroke="#333333" stroke-width="3"/>
+<text x="22" y="758" font-family="sans-serif" font-size="15" fill="#555555">The same sheet seen from the viewpoint once folded.</text>
+</svg>
