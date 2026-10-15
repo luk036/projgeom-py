@@ -1,17 +1,18 @@
-"""Fold-a-ladder trick art generated with projgeom.
+"""Fold-a-ladder trick art on an A4 sheet, following the "3D ladder" illusion.
 
-A ladder leans in the 90-degree corner between a floor (z = 0) and a wall
-(y = 0), with its left rail on the viewing axis and its right rail to the side,
-so the right rail swings out to a chevron where it crosses the horizon.  A
-viewer at V sees the ladder; each visible point is projected along the ray
-V -> point onto whichever plane the ray meets first, and the two planes are then
-unfolded into one flat sheet.  That sheet is the printable drawing: fold it 90
-degrees along the horizon and, viewed from V, the flat chevron ladder stands up
-as a real 3D ladder.
+The sheet is A4 landscape (297 mm x 210 mm).  Folded in half it has a vertical
+crease down the middle.  Two parallel lines near the bottom are the shadow; from
+their ends straight lines run up to the crease, giving a symmetric chevron whose
+apex sits on the crease, and vertical lines join the chevron's rails (the rungs).
+Matching rungs are drawn on the shadow.
 
-The map from the ladder's ``(side, v)`` plane onto the floor and onto the wall is
-a projectivity, built exactly with :func:`projective_transform`.  All coordinates
-are exact :class:`fractions.Fraction` values, so no floating point is used.
+Because the apex lies on the crease, folding 90 degrees puts the two arms in two
+perpendicular planes; viewed along the fold's bisector they are exactly
+collinear, so the flat chevron reads as a straight 3D ladder.
+
+The SVG is sized in millimetres (printable at 100%), vertices are projgeom
+:class:`PgPoint` objects, and every coordinate is an exact
+:class:`fractions.Fraction` in millimetres -- no floating point is used.
 
 Usage::
 
@@ -20,24 +21,28 @@ Usage::
 
 from fractions import Fraction
 from pathlib import Path
-from typing import List, Sequence, Tuple
+from typing import List, Tuple
 
-from projgeom import PgPoint, projective_transform
+from projgeom import PgPoint
 
-VX, VY, VZ = Fraction(0), Fraction(-300), Fraction(300)
-XC, W = Fraction(60), Fraction(60)
-FOOT_DEPTH, TOP_HEIGHT = Fraction(100), Fraction(100)
+SHEET_W = Fraction(297)
+SHEET_H = Fraction(210)
+PX_PER_MM = 4
+
+CREASE_X = SHEET_W / 2
+HALF_WIDTH = Fraction(237, 2)
+SHADOW_LOW = Fraction(30)
+SHADOW_HIGH = Fraction(38)
+APEX_HEIGHT = Fraction(182)
 RUNGS = 11
 
-FLAT_W, FLAT_H = 560, 780
-VIEW_W, VIEW_H = 440, 780
-VIEW_PLANE_Y = Fraction(-150)
-
-INK = "#333333"
+INK = "#26356b"
+LIGHT = "#a9a9a9"
 FOLD = "#4d90c8"
-PAPER = "#fbfbf7"
+PAPER = "#fdfcf8"
 
-Flat = Tuple[Fraction, Fraction]
+Pt = Tuple[Fraction, Fraction]
+Vec3 = Tuple[Fraction, Fraction, Fraction]
 
 
 def round_frac(value: Fraction) -> int:
@@ -48,187 +53,118 @@ def round_frac(value: Fraction) -> int:
     return whole
 
 
-def ladder_point(side: Fraction, v: Fraction) -> Tuple[Fraction, Fraction, Fraction]:
-    return XC + side * W, -FOOT_DEPTH * (Fraction(1) - v), TOP_HEIGHT * v
+def clean(x: Fraction, y: Fraction) -> Pt:
+    px, py, pz = PgPoint.from_fractions([x, y, Fraction(1)]).coord
+    return Fraction(px, pz), Fraction(py, pz)
 
 
-def ray_hit(px: Fraction, py: Fraction, pz: Fraction) -> Flat:
-    best_t = Fraction(-1)
-    result: Flat = (Fraction(0), Fraction(0))
-
-    if pz != VZ:
-        t = -VZ / (pz - VZ)
-        if t > 0:
-            qy = VY + t * (py - VY)
-            if qy <= 0 and (best_t < 0 or t < best_t):
-                best_t, result = t, (VX + t * (px - VX), qy)
-
-    if py != VY:
-        t = -VY / (py - VY)
-        if t > 0:
-            qz = VZ + t * (pz - VZ)
-            if qz >= 0 and (best_t < 0 or t < best_t):
-                best_t, result = t, (VX + t * (px - VX), qz)
-
-    return result
+def rail_y(base: Fraction, x: Fraction) -> Fraction:
+    return base + (APEX_HEIGHT - SHADOW_LOW) * (HALF_WIDTH - abs(x - CREASE_X)) / HALF_WIDTH
 
 
-def crossover() -> Fraction:
-    ratio = VZ / VY
-    return -ratio * FOOT_DEPTH / (TOP_HEIGHT - ratio * FOOT_DEPTH)
-
-
-def homogeneous(side: Fraction, v: Fraction) -> PgPoint:
-    return PgPoint.from_fractions([side, v, Fraction(1)])
-
-
-def as_flat(pt: PgPoint) -> Flat:
-    x, y, z = pt.coord
-    return Fraction(x, z), Fraction(y, z)
-
-
-def projectivity(corners: Sequence[Tuple[Fraction, Fraction]]):
-    src = [homogeneous(side, v) for side, v in corners]
-    dst = [
-        PgPoint.from_fractions([*ray_hit(*ladder_point(side, v)), Fraction(1)])
-        for side, v in corners
+def columns() -> List[Fraction]:
+    return [
+        CREASE_X + Fraction(k, RUNGS) * HALF_WIDTH
+        for k in range(-RUNGS, RUNGS + 1)
     ]
-    return projective_transform(src, dst)
 
 
-def sample(low: Fraction, high: Fraction, count: int) -> List[Fraction]:
-    return [low + (high - low) * Fraction(k, count) for k in range(count + 1)]
+def fold3(point: Pt) -> Vec3:
+    x, y = point
+    if x <= CREASE_X:
+        return x, y, Fraction(0)
+    return CREASE_X, y, x - CREASE_X
 
 
-def scene():
-    v_star = crossover()
-    eps = Fraction(1, 10**6)
-    floor_map = projectivity(
-        [
-            (Fraction(-1), Fraction(0)),
-            (Fraction(1), Fraction(0)),
-            (Fraction(1), v_star - eps),
-            (Fraction(-1), v_star - eps),
-        ]
+def view_xy(point: Vec3) -> Pt:
+    x, y, z = point
+    return x - z, y
+
+
+def flat_spans() -> List[Tuple[Pt, Pt, str]]:
+    spans: List[Tuple[Pt, Pt, str]] = []
+    cols = columns()
+
+    for base, color in ((SHADOW_LOW, INK), (SHADOW_HIGH, INK)):
+        for i in range(len(cols) - 1):
+            spans.append(
+                (
+                    clean(cols[i], rail_y(base, cols[i])),
+                    clean(cols[i + 1], rail_y(base, cols[i + 1])),
+                    color,
+                )
+            )
+
+    for x in cols:
+        spans.append((clean(x, rail_y(SHADOW_LOW, x)), clean(x, rail_y(SHADOW_HIGH, x)), INK))
+        spans.append((clean(x, SHADOW_LOW), clean(x, SHADOW_HIGH), LIGHT))
+
+    spans.append((clean(CREASE_X - HALF_WIDTH, SHADOW_LOW), clean(CREASE_X + HALF_WIDTH, SHADOW_LOW), LIGHT))
+    spans.append((clean(CREASE_X - HALF_WIDTH, SHADOW_HIGH), clean(CREASE_X + HALF_WIDTH, SHADOW_HIGH), LIGHT))
+
+    spans.append(
+        (
+            clean(CREASE_X, Fraction(2)),
+            clean(CREASE_X, APEX_HEIGHT + Fraction(18)),
+            FOLD,
+        )
     )
-    wall_map = projectivity(
-        [
-            (Fraction(-1), v_star + eps),
-            (Fraction(1), v_star + eps),
-            (Fraction(1), Fraction(1)),
-            (Fraction(-1), Fraction(1)),
-        ]
-    )
+    return spans
 
-    def map_point(side: Fraction, v: Fraction) -> Flat:
-        transform = floor_map if v < v_star else wall_map
-        return as_flat(transform.apply_point(homogeneous(side, v)))
 
-    rails = [
-        [map_point(Fraction(side), v) for v in sample(Fraction(0), Fraction(1), 120)]
-        for side in (-1, 1)
+def view_spans() -> List[Tuple[Pt, Pt, str]]:
+    return [
+        (view_xy(fold3(a)), view_xy(fold3(b)), color)
+        for a, b, color in flat_spans()
     ]
-    rungs = [
-        (map_point(Fraction(-1), Fraction(k, RUNGS)), map_point(Fraction(1), Fraction(k, RUNGS)))
-        for k in range(1, RUNGS)
-    ]
-    return rails, rungs
 
 
-def render(
-    width: int,
-    height: int,
-    rails: List[List[Flat]],
-    rungs: List[Tuple[Flat, Flat]],
-    horizon: bool,
-    footnote: str,
-) -> str:
-    pts = [p for rail in rails for p in rail] + [p for a, b in rungs for p in (a, b)]
+def render(spans: List[Tuple[Pt, Pt, str]], spans_for_fit: List[Tuple[Pt, Pt, str]]) -> str:
+    pts = [p for a, b, _ in spans_for_fit for p in (a, b)]
     xs = [p[0] for p in pts]
     ys = [p[1] for p in pts]
     min_x, max_x = min(xs), max(xs)
     min_y, max_y = min(ys), max(ys)
+    span_x = max(max_x - min_x, Fraction(1))
+    span_y = max(max_y - min_y, Fraction(1))
+    margin = Fraction(8)
     scale = min(
-        Fraction(width - 90, 1) / (max_x - min_x),
-        Fraction(height - 120, 1) / (max_y - min_y),
+        (SHEET_W - 2 * margin) / span_x,
+        (SHEET_H - 2 * margin) / span_y,
     )
-    cx = (min_x + max_x) / 2
-    cy = (min_y + max_y) / 2
+    off_x = margin + (SHEET_W - 2 * margin - span_x * scale) / 2 - min_x * scale
+    off_y = margin + (SHEET_H - 2 * margin - span_y * scale) / 2 - min_y * scale
 
-    def px(p: Flat) -> Tuple[int, int]:
-        return (
-            round_frac((p[0] - cx) * scale + Fraction(width, 2)),
-            round_frac(-(p[1] - cy) * scale + Fraction(height, 2)),
-        )
+    def px(point: Pt) -> Tuple[int, int]:
+        mx = point[0] * scale + off_x
+        my = point[1] * scale + off_y
+        return round_frac(mx * PX_PER_MM), round_frac((SHEET_H - my) * PX_PER_MM)
 
     doc = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{SHEET_W}mm" height="{SHEET_H}mm" '
+        f'viewBox="0 0 {round_frac(SHEET_W * PX_PER_MM)} {round_frac(SHEET_H * PX_PER_MM)}">',
         "<title>Fold-a-ladder trick art</title>",
         f'<rect width="100%" height="100%" fill="{PAPER}"/>',
     ]
-    for rail in rails:
-        coords = " ".join(f"{x},{y}" for x, y in (px(p) for p in rail))
-        doc.append(f'<polyline points="{coords}" fill="none" stroke="{INK}" stroke-width="4"/>')
-    for a_flat, b_flat in rungs:
-        a, b = px(a_flat), px(b_flat)
+    for a, b, color in spans:
+        pa, pb = px(a), px(b)
         doc.append(
-            f'<line x1="{a[0]}" y1="{a[1]}" x2="{b[0]}" y2="{b[1]}" stroke="{INK}" stroke-width="3"/>'
+            f'<line x1="{pa[0]}" y1="{pa[1]}" x2="{pb[0]}" y2="{pb[1]}" '
+            f'stroke="{color}" stroke-width="1.2"/>'
         )
-    if horizon:
-        a, b = px((min_x - 1, Fraction(0))), px((max_x + 1, Fraction(0)))
-        doc.append(
-            f'<line x1="{a[0]}" y1="{a[1]}" x2="{b[0]}" y2="{b[1]}" '
-            f'stroke="{FOLD}" stroke-width="2" stroke-dasharray="12,8"/>'
-        )
-    doc.append(
-        f'<text x="22" y="{height - 22}" font-family="sans-serif" font-size="15" fill="#555555">{footnote}</text>'
-    )
     doc.append("</svg>")
     doc.append("")
     return "\n".join(doc)
 
 
-def build_view() -> str:
-    def vhit(side: Fraction, v: Fraction) -> Flat:
-        px, py, pz = ladder_point(side, v)
-        t = (VIEW_PLANE_Y - VY) / (py - VY)
-        return VX + t * (px - VX), VZ + t * (pz - VZ)
-
-    rails = [
-        [vhit(Fraction(side), v) for v in sample(Fraction(0), Fraction(1), 40)]
-        for side in (-1, 1)
-    ]
-    rungs = [
-        (vhit(Fraction(-1), Fraction(k, RUNGS)), vhit(Fraction(1), Fraction(k, RUNGS)))
-        for k in range(1, RUNGS)
-    ]
-    return render(
-        VIEW_W,
-        VIEW_H,
-        rails,
-        rungs,
-        False,
-        "The same sheet seen from the viewpoint once folded.",
-    )
-
-
 def main() -> None:
     out = Path(__file__).resolve().parent
-    rails, rungs = scene()
-    documents = {
-        "fold_ladder.svg": render(
-            FLAT_W,
-            FLAT_H,
-            rails,
-            rungs,
-            True,
-            "Fold 90 degrees along the dashed horizon, then view from V.",
-        ),
-        "fold_ladder_view.svg": build_view(),
-    }
-    for name, document in documents.items():
-        (out / name).write_text(document, encoding="utf-8")
-        print(f"wrote {name} ({len(document)} bytes)")
+    flat = flat_spans()
+    (out / "fold_ladder.svg").write_text(render(flat, flat), encoding="utf-8")
+    print("wrote fold_ladder.svg")
+    view = view_spans()
+    (out / "fold_ladder_view.svg").write_text(render(view, view), encoding="utf-8")
+    print("wrote fold_ladder_view.svg")
 
 
 if __name__ == "__main__":
