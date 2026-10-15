@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 840 1188">
+<title>Fold-a-house trick art</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<polygon points="178,940 265,940 399,790 294,790" fill="#7a4a2b" stroke="none"/>
+<polygon points="64,694 64,938 280,584 280,545 132,545" fill="#cec4ab" stroke="none"/>
+<polygon points="64,938 379,938 752,584 280,584" fill="#ece5d6" stroke="none"/>
+<polygon points="450,745 540,745 613,672 516,672" fill="#8fd0e8" stroke="none"/>
+<polygon points="280,545 132,329 132,545" fill="#cec4ab" stroke="none"/>
+<polygon points="776,545 623,248 206,248 294,545" fill="#b5523a" stroke="none"/>
+<polygon points="280,584 752,584 776,545 294,545" fill="#b5523a" stroke="none"/>
+<polygon points="132,329 280,545 294,545 206,248" fill="#cec4ab" stroke="none"/>
+<polygon points="280,545 280,584 294,545" fill="#cec4ab" stroke="none"/>
+<line x1="64" y1="694" x2="379" y2="694" stroke="#111111" stroke-width="2"/>
+<line x1="379" y1="694" x2="379" y2="938" stroke="#111111" stroke-width="2"/>
+<line x1="379" y1="938" x2="64" y2="938" stroke="#111111" stroke-width="2"/>
+<line x1="64" y1="938" x2="64" y2="694" stroke="#111111" stroke-width="2"/>
+<line x1="64" y1="938" x2="280" y2="584" stroke="#111111" stroke-width="2"/>
+<line x1="379" y1="938" x2="752" y2="584" stroke="#111111" stroke-width="2"/>
+<line x1="64" y1="694" x2="132" y2="545" stroke="#111111" stroke-width="2"/>
+<line x1="132" y1="545" x2="132" y2="329" stroke="#111111" stroke-width="2"/>
+<line x1="132" y1="329" x2="280" y2="545" stroke="#111111" stroke-width="2"/>
+<line x1="280" y1="545" x2="280" y2="584" stroke="#111111" stroke-width="2"/>
+<line x1="280" y1="584" x2="752" y2="584" stroke="#111111" stroke-width="2"/>
+<line x1="132" y1="329" x2="206" y2="248" stroke="#111111" stroke-width="2"/>
+<line x1="206" y1="248" x2="294" y2="545" stroke="#111111" stroke-width="2"/>
+<line x1="294" y1="545" x2="280" y2="584" stroke="#111111" stroke-width="2"/>
+<line x1="206" y1="248" x2="623" y2="248" stroke="#111111" stroke-width="2"/>
+<line x1="623" y1="248" x2="776" y2="545" stroke="#111111" stroke-width="2"/>
+<line x1="776" y1="545" x2="752" y2="584" stroke="#111111" stroke-width="2"/>
+<line x1="178" y1="938" x2="265" y2="938" stroke="#111111" stroke-width="2"/>
+<line x1="178" y1="938" x2="294" y2="788" stroke="#111111" stroke-width="2"/>
+<line x1="265" y1="938" x2="399" y2="788" stroke="#111111" stroke-width="2"/>
+<line x1="294" y1="788" x2="399" y2="788" stroke="#111111" stroke-width="2"/>
+<line x1="450" y1="742" x2="540" y2="742" stroke="#111111" stroke-width="2"/>
+<line x1="516" y1="670" x2="613" y2="670" stroke="#111111" stroke-width="2"/>
+<line x1="450" y1="742" x2="516" y2="670" stroke="#111111" stroke-width="2"/>
+<line x1="540" y1="742" x2="613" y2="670" stroke="#111111" stroke-width="2"/>
+<line x1="9" y1="545" x2="831" y2="545" stroke="#d21f1f" stroke-width="2" stroke-dasharray="12 8"/>
+<text x="831" y="537" font-size="20" fill="#d21f1f" text-anchor="end">fold here (crease)</text>
+</svg>
