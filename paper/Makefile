@@ -39,12 +39,16 @@ SLIDE_FLAGS := -F pandoc-crossref --citeproc -t beamer --slide-level=2 \
 
 FIG_PDF := $(wildcard figures/*.pdf)
 
-.PHONY: paper talk clean
+.PHONY: paper fold-trick talk clean
 
 paper: projgeom.pdf
+fold-trick: fold-trick.pdf
 
 projgeom.pdf: projgeom.md projgeom.bib ieee.csl latex.yaml crossref.yaml $(FIG_PDF)
 	$(PANDOC) $(FLAGS) projgeom.md -o $@
+
+fold-trick.pdf: fold-trick.md projgeom.bib ieee.csl latex.yaml crossref.yaml $(FIG_PDF) $(wildcard figures/*.png)
+	$(PANDOC) $(FLAGS) fold-trick.md -o $@
 
 talk: projgeom-talk.pdf
 
