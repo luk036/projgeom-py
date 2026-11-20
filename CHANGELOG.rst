@@ -2,6 +2,41 @@
 Changelog
 =========
 
+Version 0.3 (2026-11-20)
+========================
+
+Features
+--------
+
+- **Exact rational linear algebra**: Added ``rationalize()`` and
+  ``from_fractions()``, plus internal 3x3 determinant/adjugate/inverse/product
+  helpers over ``Fraction``, so conic and transform results are never truncated
+  to ``int``. (#80a1ac7, #94b129c)
+- **Exact conic and projective transforms**: ``Conic.polar``/``pole``/``intersect``
+  and ``Transform.apply_point``/``apply_line``/``projective_transform`` now stay
+  exact over the rationals; added ``rotation_from_tangent()``. (#8218800,
+  #7da448f)
+- **Fold trick-art generators**: Added anamorphic fold-a-ladder, fold-a-chair,
+  fold-a-table and fold-a-house printables, plus fold-reveal/flat-screen/
+  foldable-phone movies and the supporting single-module pipeline. (#2997cd1,
+  #55da756, #c42447e, #723eba5, #6b7135c, #9b622af)
+
+Bug Fixes
+---------
+
+- **Non-secant line/conic intersection**: ``intersect`` now returns an empty
+  list instead of raising, matching the C++ and Rust ports. (#fb411a5)
+
+Documentation
+-------------
+
+- **Papers, talks and reference bundle**: Added the projective-geometry paper
+  and Beamer talk, the fold trick-art paper and reviewer response, reference
+  PDFs, and a downloads checklist. (#729ff18, #d896f2c, #a068626, #d230d73,
+  #13cd931, #9241345)
+- **Anamorphosis session report** and printable/viewpoint SVGs. (#83df275,
+  #3893b29, #05ccb44)
+
 Version 0.2 (2026-10-09)
 ========================
 
